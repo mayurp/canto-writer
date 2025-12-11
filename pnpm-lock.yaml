@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      hanzi-writer:
+        specifier: ^3.7.3
+        version: 3.7.3
       react:
         specifier: ^19.2.0
         version: 19.2.1
@@ -820,6 +823,9 @@ packages:
   globals@16.5.0:
     resolution: {integrity: sha512-c/c15i26VrJ4IRt5Z89DnIzCGDn9EcebibhAOjw5ibqEHsE1wLUgkPn9RDmNcUKyU87GeaL633nyJ+pplFR2ZQ==}
     engines: {node: '>=18'}
+
+  hanzi-writer@3.7.3:
+    resolution: {integrity: sha512-fdOFrb1cXWL/pV/oplJkcdziCvjJzhhf+qoIBm5IpVGxPBZEu4eLB6ZG5RJDbKXyNbNlyx8oIpa3XrcUBcSXpg==}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -1836,6 +1842,8 @@ snapshots:
   globals@14.0.0: {}
 
   globals@16.5.0: {}
+
+  hanzi-writer@3.7.3: {}
 
   has-flag@4.0.0: {}
 

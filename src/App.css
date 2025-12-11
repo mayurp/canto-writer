@@ -1,42 +1,235 @@
-#root {
-  max-width: 1280px;
+.app-shell {
   margin: 0 auto;
-  padding: 2rem;
+  max-width: 1100px;
+  padding: 2.5rem clamp(1.5rem, 5vw, 3rem) 4rem;
+  color: #0f172a;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
+  margin: 0.1rem 0;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: #38bdf8;
+  margin: 0;
+}
+
+.tagline {
+  margin: 0.4rem 0 0;
+  color: #475569;
+  max-width: 36ch;
+}
+
+.session-meta {
+  text-align: right;
+  background: rgba(56, 189, 248, 0.12);
+  border-radius: 0.8rem;
+  padding: 0.75rem 1rem;
+  min-width: 120px;
+  color: #0369a1;
+}
+
+.session-meta strong {
+  display: block;
+  font-size: 2rem;
+  line-height: 1;
+  margin-top: 0.2rem;
+}
+
+.session-meta .total {
+  font-size: 0.8rem;
+  color: #0f172a;
+}
+
+.card-stage {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card-panel,
+.stroke-panel {
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+  box-shadow: 0 30px 50px rgba(15, 23, 42, 0.12);
+}
+
+.card-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.card-character {
+  font-size: clamp(4rem, 8vw, 6rem);
+  font-weight: 600;
+  color: #020617;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.card-meta {
+  text-align: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.jyutping {
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  color: #0f172a;
+  margin: 0;
+}
+
+.meaning {
+  margin: 0.25rem 0 0;
+  color: #475569;
+}
+
+.card-details {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+}
+
+.example {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+}
+
+.example-hanzi {
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+.example-jyutping {
+  font-size: 0.95rem;
+  color: #0369a1;
+}
+
+.example-translation {
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+.card-notes {
+  margin: 0.75rem 0 0;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.card-actions {
+  margin-top: auto;
+}
+
+.reveal {
+  width: 100%;
+  padding: 0.9rem;
+  background: #0f172a;
+  color: #f8fafc;
+  border: none;
+  border-radius: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.reveal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.25);
+}
+
+.grading-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.grade-button {
+  border: none;
+  padding: 0.9rem;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+  background: #e2e8f0;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.grade-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.15);
+}
+
+.grade-again {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.grade-hard {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.grade-good {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.grade-easy {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.stroke-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-label {
+  font-weight: 600;
+  color: #475569;
+  margin: 0;
+}
+
+.stroke-animator {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+}
+
+.empty-state {
+  margin: 4rem auto;
+  padding: 3rem;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1.2rem;
+  text-align: center;
+  color: #475569;
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  to {
-    transform: rotate(360deg);
+
+  .session-meta {
+    align-self: stretch;
+    text-align: left;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
