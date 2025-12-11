@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import { StrokeAnimator } from './components/StrokeAnimator'
+import { LogoMark } from './components/LogoMark'
 import { useScheduler, type ReviewRating } from './hooks/useScheduler'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
+import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -15,6 +17,7 @@ function App() {
   const { deck, loading, error } = useRememberingDeck()
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(deck)
   const [showAnswer, setShowAnswer] = useState(false)
+  const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
 
   if (loading) {
     return (
@@ -57,11 +60,14 @@ function App() {
   return (
     <main className="app-shell">
       <header className="app-header">
-        <div>
-          <p className="eyebrow">Canto Writer</p>
-          <h1>Daily character flow</h1>
-          <p className="tagline">Learn traditional characters with Jyutping and animated stroke order.</p>
+        <div className="brand-mark">
+          <LogoMark size={56} />
+          <div>
+            <p className="eyebrow">Canto Writer</p>
+            <h1>Daily character flow</h1>
+          </div>
         </div>
+        <p className="tagline">Learn traditional characters with Jyutping and animated stroke order.</p>
         <div className="session-meta" aria-live="polite">
           <span>Due today</span>
           <strong>{dueCount}</strong>
@@ -76,6 +82,39 @@ function App() {
           </div>
           <div className="card-meta">
             <p className="card-order">Frame #{currentCard.order}</p>
+            <button
+              type="button"
+              className="audio-button"
+              onClick={() => playPronunciation(currentCard.character)}
+              disabled={!isSupported}
+              aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
+              aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
+            >
+              <svg
+                className="audio-glyph"
+                viewBox="0 0 64 64"
+                role="presentation"
+                aria-hidden="true"
+              >
+                <path
+                  d="M16 28h10l12-10v28l-12-10H16z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M44 22c4 4 4 16 0 20m8-26c6 8 6 24 0 32"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  opacity={speaking ? 1 : 0.6}
+                />
+              </svg>
+            </button>
             {showAnswer ? (
               <p className="meaning">{currentCard.meaning}</p>
             ) : (

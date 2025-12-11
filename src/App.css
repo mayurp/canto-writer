@@ -83,6 +83,10 @@
 
 .card-meta {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .card-order {
@@ -103,6 +107,38 @@
 .meaning-hidden {
   color: #cbd5f5;
   opacity: 0.7;
+}
+
+.audio-button {
+  border: none;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #f8fafc;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+
+.audio-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+}
+
+.audio-button:disabled {
+  background: #cbd5f5;
+  color: #475569;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.audio-glyph {
+  width: 1.8rem;
+  height: 1.8rem;
 }
 
 .card-details {
