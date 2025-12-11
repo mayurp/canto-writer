@@ -87,6 +87,10 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   const [heartbeat, setHeartbeat] = useState(() => Date.now())
 
   useEffect(() => {
+    setCards(hydrateDeck(definitions))
+  }, [definitions])
+
+  useEffect(() => {
     const timer = window.setInterval(() => {
       setHeartbeat(Date.now())
     }, 15000)

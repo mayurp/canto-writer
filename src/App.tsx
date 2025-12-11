@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import { StrokeAnimator } from './components/StrokeAnimator'
-import { starterDeck } from './data/cards'
 import { useScheduler, type ReviewRating } from './hooks/useScheduler'
+import { useRememberingDeck } from './hooks/useRememberingDeck'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -12,8 +12,30 @@ const ratingLabels: Record<ReviewRating, string> = {
 }
 
 function App() {
-  const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(starterDeck)
+  const { deck, loading, error } = useRememberingDeck()
+  const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(deck)
   const [showAnswer, setShowAnswer] = useState(false)
+
+  if (loading) {
+    return (
+      <main className="app-shell">
+        <div className="empty-state">
+          <p>Loading characters…</p>
+        </div>
+      </main>
+    )
+  }
+
+  if (error) {
+    return (
+      <main className="app-shell">
+        <div className="empty-state">
+          <p>Failed to load deck.</p>
+          <p className="error-detail">{error}</p>
+        </div>
+      </main>
+    )
+  }
 
   if (!currentCard) {
     return (
@@ -53,20 +75,13 @@ function App() {
             {currentCard.character}
           </div>
           <div className="card-meta">
-            <p className="jyutping">{currentCard.jyutping}</p>
-            <p className="meaning">{currentCard.meaning}</p>
+            <p className="card-order">Frame #{currentCard.order}</p>
+            {showAnswer ? (
+              <p className="meaning">{currentCard.meaning}</p>
+            ) : (
+              <p className="meaning meaning-hidden">Reveal keyword</p>
+            )}
           </div>
-
-          {showAnswer && (
-            <div className="card-details">
-              <p className="example">
-                <span className="example-hanzi">{currentCard.example.hanzi}</span>
-                <span className="example-jyutping">{currentCard.example.jyutping}</span>
-                <span className="example-translation">{currentCard.example.translation}</span>
-              </p>
-              {currentCard.notes && <p className="card-notes">{currentCard.notes}</p>}
-            </div>
-          )}
 
           <div className="card-actions">
             {!showAnswer ? (
