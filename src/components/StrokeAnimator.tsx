@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import HanziWriter from 'hanzi-writer'
 
 type StrokeAnimatorProps = {
@@ -17,6 +17,7 @@ export function StrokeAnimator({
   sessionKey = 0,
 }: StrokeAnimatorProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const style = useMemo(() => ({ width: `${size}px`, height: `${size}px` }), [size])
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -55,6 +56,7 @@ export function StrokeAnimator({
       className="stroke-animator"
       role="img"
       aria-label={`Stroke order animation for ${character}`}
+      style={style}
     />
   )
 }
