@@ -15,6 +15,7 @@ declare module 'hanzi-writer' {
     loopCharacterAnimation(): void
     pauseAnimation(): void
     quiz(): void
+    hideCharacter(): void
     showCharacter(): void
   }
 

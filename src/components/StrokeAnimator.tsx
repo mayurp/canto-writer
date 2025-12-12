@@ -5,9 +5,17 @@ type StrokeAnimatorProps = {
   character: string
   hanziWriterId: string
   size?: number
+  mode?: 'watch' | 'write'
+  sessionKey?: number
 }
 
-export function StrokeAnimator({ character, hanziWriterId, size = 260 }: StrokeAnimatorProps) {
+export function StrokeAnimator({
+  character,
+  hanziWriterId,
+  size = 260,
+  mode = 'watch',
+  sessionKey = 0,
+}: StrokeAnimatorProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -18,19 +26,28 @@ export function StrokeAnimator({ character, hanziWriterId, size = 260 }: StrokeA
     const writer = HanziWriter.create(containerRef.current, hanziWriterId, {
       width: size,
       height: size,
-      showOutline: true,
+      showOutline: mode !== 'write',
       padding: 8,
       strokeColor: '#f97316',
       delayBetweenLoops: 1200,
     })
 
-    writer.loopCharacterAnimation()
+    if (mode === 'write') {
+      writer.hideCharacter()
+      writer.quiz()
+    } else {
+      writer.loopCharacterAnimation()
+    }
 
     return () => {
-      writer.pauseAnimation()
+      if (mode === 'watch') {
+        writer.pauseAnimation()
+      } else {
+        writer.showCharacter()
+      }
       containerRef.current?.replaceChildren()
     }
-  }, [hanziWriterId, size])
+  }, [hanziWriterId, size, mode, sessionKey])
 
   return (
     <div

@@ -17,6 +17,8 @@ function App() {
   const { deck, loading, error } = useRememberingDeck()
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(deck)
   const [showAnswer, setShowAnswer] = useState(false)
+  const [practiceMode, setPracticeMode] = useState<'watch' | 'write'>('watch')
+  const [strokeSession, setStrokeSession] = useState(0)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
 
   if (loading) {
@@ -57,6 +59,15 @@ function App() {
     setShowAnswer(false)
   }
 
+  const handleModeChange = (mode: 'watch' | 'write') => {
+    setPracticeMode(mode)
+    setStrokeSession((prev) => prev + 1)
+  }
+
+  const handleStrokeReset = () => {
+    setStrokeSession((prev) => prev + 1)
+  }
+
   return (
     <main className="app-shell">
       <header className="app-header">
@@ -87,7 +98,6 @@ function App() {
               className="audio-button"
               onClick={() => playPronunciation(currentCard.character)}
               disabled={!isSupported}
-              aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
               aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
             >
               <svg
@@ -144,8 +154,41 @@ function App() {
         </div>
 
         <div className="stroke-panel">
-          <p className="panel-label">Stroke order</p>
-          <StrokeAnimator character={currentCard.character} hanziWriterId={currentCard.hanziWriterId} />
+          <div className="stroke-panel-header">
+            <p className="panel-label">Stroke practice</p>
+            <div className="stroke-controls">
+              <div className="mode-toggle" role="group" aria-label="Stroke practice mode">
+                <button
+                  type="button"
+                  className={`toggle-button ${practiceMode === 'watch' ? 'is-active' : ''}`}
+                  onClick={() => handleModeChange('watch')}
+                >
+                  Watch
+                </button>
+                <button
+                  type="button"
+                  className={`toggle-button ${practiceMode === 'write' ? 'is-active' : ''}`}
+                  onClick={() => handleModeChange('write')}
+                >
+                  Write
+                </button>
+              </div>
+              <button
+                type="button"
+                className="clear-button"
+                onClick={handleStrokeReset}
+                aria-label="Clear stroke practice"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+          <StrokeAnimator
+            character={currentCard.character}
+            hanziWriterId={currentCard.hanziWriterId}
+            mode={practiceMode}
+            sessionKey={strokeSession}
+          />
         </div>
       </section>
     </main>
