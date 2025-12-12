@@ -19,6 +19,7 @@ function App() {
   const [showAnswer, setShowAnswer] = useState(false)
   const [practiceMode, setPracticeMode] = useState<'watch' | 'write'>('watch')
   const [strokeSession, setStrokeSession] = useState(0)
+  const [customTts, setCustomTts] = useState('')
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
 
   if (loading) {
@@ -79,6 +80,23 @@ function App() {
           </div>
         </div>
         <p className="tagline">Learn traditional characters with Jyutping and animated stroke order.</p>
+        <div className="custom-tts">
+          <input
+            type="text"
+            className="custom-tts-input"
+            placeholder="Type Cantonese text"
+            value={customTts}
+            onChange={(event) => setCustomTts(event.target.value)}
+          />
+          <button
+            type="button"
+            className="custom-tts-button"
+            onClick={() => playPronunciation(customTts, { rate: 0.1 })}
+            disabled={!isSupported || customTts.trim().length === 0}
+          >
+            Play
+          </button>
+        </div>
         <div className="session-meta" aria-live="polite">
           <span>Due today</span>
           <strong>{dueCount}</strong>

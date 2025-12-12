@@ -14,6 +14,10 @@ const selectVoice = (voices: SpeechSynthesisVoice[]) => {
   )
 }
 
+type SpeakOptions = {
+  rate?: number
+}
+
 export const useCantonesePronunciation = () => {
   const isSupported = useMemo(() => getIsSupported(), [])
   const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null)
@@ -37,7 +41,7 @@ export const useCantonesePronunciation = () => {
   }, [isSupported])
 
   const playPronunciation = useCallback(
-    (text: string) => {
+    (text: string, options?: SpeakOptions) => {
       if (!isSupported || !text.trim()) return
       const synth = window.speechSynthesis
       synth.cancel()
@@ -47,7 +51,7 @@ export const useCantonesePronunciation = () => {
         utterance.voice = voice
       }
       utterance.lang = voice?.lang ?? 'zh-HK'
-      utterance.rate = 0.9
+      utterance.rate = options?.rate ?? 0.7
       utterance.onstart = () => setSpeaking(true)
       utterance.onend = () => setSpeaking(false)
       utterance.onerror = () => setSpeaking(false)
