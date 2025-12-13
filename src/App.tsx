@@ -95,6 +95,7 @@ function App() {
             removeCard={removeCard}
             clearAll={clearAll}
             onBack={() => setView('learn')}
+            orderMode={settings.orderMode}
           />
         </main>
         <SettingsPanel

@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
+import type { OrderMode } from '../hooks/useSettings'
 
 type DeckManagerProps = {
   deck: FlashcardDefinition[]
@@ -8,6 +9,7 @@ type DeckManagerProps = {
   removeCard: (id: string) => void
   clearAll: () => void
   onBack: () => void
+  orderMode: OrderMode
 }
 
 const byId = (deck: FlashcardDefinition[]) =>
@@ -16,18 +18,29 @@ const byId = (deck: FlashcardDefinition[]) =>
     return acc
   }, {})
 
-export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll, onBack }: DeckManagerProps) {
+export function DeckManager({
+  deck,
+  selectedIds,
+  addCards,
+  removeCard,
+  clearAll,
+  onBack,
+  orderMode,
+}: DeckManagerProps) {
   const [rangeStart, setRangeStart] = useState('')
   const [rangeEnd, setRangeEnd] = useState('')
   const [charInput, setCharInput] = useState('')
   const [message, setMessage] = useState<string | null>(null)
   const deckById = useMemo(() => byId(deck), [deck])
-  const deckByRth = useMemo(() => {
+  const deckByFrame = useMemo(() => {
     return deck.reduce<Record<number, FlashcardDefinition>>((acc, card) => {
-      if (card.rthOrder) acc[card.rthOrder] = card
+      const key = orderMode === 'rth' ? card.rthOrder : card.order
+      if (typeof key === 'number' && Number.isFinite(key)) {
+        acc[key] = card
+      }
       return acc
     }, {})
-  }, [deck])
+  }, [deck, orderMode])
 
   const handleAddRange = () => {
     const start = Number(rangeStart)
@@ -39,7 +52,7 @@ export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll,
     const [min, max] = start <= end ? [start, end] : [end, start]
     const ids: string[] = []
     for (let i = min; i <= max; i += 1) {
-      const card = deckByRth[i]
+      const card = deckByFrame[i]
       if (card) ids.push(card.id)
     }
     if (!ids.length) {
@@ -63,10 +76,7 @@ export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll,
     setMessage(`Added ${ids.length} cards.`)
   }
 
-  const selectedCards = selectedIds
-    .map((id) => deckById[id])
-    .filter(Boolean)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  const selectedCards = selectedIds.map((id) => deckById[id]).filter(Boolean)
 
   return (
     <section className="manager-panel">
@@ -74,7 +84,10 @@ export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll,
         <div>
           <p className="eyebrow">Deck builder</p>
           <h1>Compose your study run</h1>
-          <p className="tagline">Add characters by RTH frame range or paste specific hanzi you want to learn.</p>
+          <p className="tagline">
+            Add characters by {orderMode === 'rth' ? 'original RTH frames' : 'optimized frames'} or paste specific hanzi you
+            want to learn.
+          </p>
         </div>
         <button className="back-link" onClick={onBack}>
           ← Back to practice
@@ -83,7 +96,7 @@ export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll,
 
       <div className="manager-grid">
         <div className="manager-card">
-          <h2>Add by RTH range</h2>
+          <h2>Add by {orderMode === 'rth' ? 'RTH' : 'Optimized'} range</h2>
           <div className="range-form">
             <input
               type="number"
@@ -134,7 +147,9 @@ export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll,
                 <div className="selected-card-meta">
                   <strong>{card.character}</strong>
                   <span>{card.meaning}</span>
-                  {card.rthOrder && <small>RTH #{card.rthOrder}</small>}
+                  <small>
+                    {orderMode === 'rth' && card.rthOrder ? `RTH #${card.rthOrder}` : `Opt #${card.order}`}
+                  </small>
                 </div>
                 <button onClick={() => removeCard(card.id)}>Remove</button>
               </li>
