@@ -224,15 +224,10 @@ function App() {
             Play
           </button>
         </div>
-        <div className="header-actions">
-          <button type="button" className="deck-link" onClick={() => setView('manage')}>
-            Build deck
-          </button>
-          <div className="session-meta" aria-live="polite">
-            <span>Due today</span>
-            <strong>{dueCount}</strong>
-            <span className="total">/ {totalCount}</span>
-          </div>
+        <div className="session-meta" aria-live="polite">
+          <span>Due today</span>
+          <strong>{dueCount}</strong>
+          <span className="total">/ {totalCount}</span>
         </div>
       </header>
 
