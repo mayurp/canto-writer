@@ -193,7 +193,6 @@ function App() {
               <LogoMark size={20} />
               <div>
                 <p className="eyebrow">Canto Writer</p>
-                <h1>Daily character flow</h1>
               </div>
             </div>
             <div className="nav-tabs">
