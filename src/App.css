@@ -371,13 +371,6 @@
   font-weight: 600;
   color: #020617;
   text-align: center;
-}
-
-.card-character.show-char {
-  font-size: clamp(4rem, 8vw, 6rem);
-}
-
-.card-character.show-keyword {
   font-size: clamp(2rem, 5vw, 3.2rem);
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -397,13 +390,6 @@
   letter-spacing: 0.1em;
   font-size: 0.85rem;
   text-transform: uppercase;
-}
-
-.meaning {
-  margin: 0.5rem 0 0;
-  color: #0f172a;
-  font-size: 1.4rem;
-  font-weight: 600;
 }
 
 .keyword-hint {
@@ -478,23 +464,6 @@
 
 .card-actions {
   margin-top: auto;
-}
-
-.reveal {
-  width: 100%;
-  padding: 0.9rem;
-  background: #0f172a;
-  color: #f8fafc;
-  border: none;
-  border-radius: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-}
-
-.reveal:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.25);
 }
 
 .grading-buttons {

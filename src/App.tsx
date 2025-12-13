@@ -39,7 +39,6 @@ function App() {
   }, [orderedDeck, selectedIds])
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
-  const [showAnswer, setShowAnswer] = useState(false)
   const [strokeSession, setStrokeSession] = useState(0)
   const [customTts, setCustomTts] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -234,11 +233,8 @@ function App() {
     playPronunciation(currentCard.character, { rate: voiceRate })
   }
 
-  const handleReveal = () => setShowAnswer(true)
-
   const handleRating = (rating: ReviewRating) => {
     reviewCard(currentCard.id, rating)
-    setShowAnswer(false)
   }
 
   const handleStrokeReset = () => {
@@ -284,11 +280,8 @@ function App() {
 
       <section className="card-stage">
         <div className="card-panel">
-          <div
-            className={`card-character ${showAnswer ? 'show-char' : 'show-keyword'}`}
-            aria-label={showAnswer ? 'Character' : 'Keyword'}
-          >
-            {showAnswer ? currentCard.character : currentCard.meaning}
+          <div className="card-character" aria-label="Keyword meaning">
+            {currentCard.meaning}
           </div>
           <div className="card-meta">
             <p className="card-order">
@@ -326,31 +319,21 @@ function App() {
                 />
               </svg>
             </button>
-            {showAnswer ? (
-              <p className="meaning">{currentCard.meaning}</p>
-            ) : (
-              <p className="keyword-hint">Tap reveal to view the character</p>
-            )}
+            <p className="keyword-hint">Listen to the audio, visualize the strokes, then write it from memory.</p>
           </div>
 
           <div className="card-actions">
-            {!showAnswer ? (
-              <button className="reveal" onClick={handleReveal}>
-                Show answer
-              </button>
-            ) : (
-              <div className="grading-buttons">
-                {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
-                  <button
-                    key={rating}
-                    className={`grade-button grade-${rating}`}
-                    onClick={() => handleRating(rating)}
-                  >
-                    {ratingLabels[rating]}
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="grading-buttons">
+              {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
+                <button
+                  key={rating}
+                  className={`grade-button grade-${rating}`}
+                  onClick={() => handleRating(rating)}
+                >
+                  {ratingLabels[rating]}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
