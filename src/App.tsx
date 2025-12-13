@@ -122,11 +122,11 @@ function App() {
         <main className="app-shell">
           <header className="app-header">
             <div className="brand-mark">
-              <LogoMark size={56} />
-              <div>
-                <p className="eyebrow">Canto Writer</p>
-                <h1>Try the voice</h1>
-              </div>
+          <LogoMark size={20} />
+          <div>
+            <p className="eyebrow">Canto Writer</p>
+            <h1>Try the voice</h1>
+          </div>
             </div>
             <div className="nav-tabs">
               <button type="button" className={navClass('learn')} onClick={() => setView('learn')}>
@@ -189,7 +189,7 @@ function App() {
         <main className="app-shell">
           <header className="app-header">
             <div className="brand-mark">
-              <LogoMark size={56} />
+              <LogoMark size={20} />
               <div>
                 <p className="eyebrow">Canto Writer</p>
                 <h1>Daily character flow</h1>
@@ -257,10 +257,9 @@ function App() {
       <main className="app-shell">
       <header className="app-header">
         <div className="brand-mark">
-          <LogoMark size={56} />
+          <LogoMark size={20} />
           <div>
             <p className="eyebrow">Canto Writer</p>
-            <h1>Daily character flow</h1>
           </div>
         </div>
         <div className="nav-tabs">
