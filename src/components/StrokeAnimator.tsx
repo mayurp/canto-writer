@@ -6,6 +6,7 @@ type StrokeAnimatorProps = {
   hanziWriterId: string
   size?: number
   sessionKey?: number
+  onComplete?: () => void
 }
 
 export function StrokeAnimator({
@@ -13,6 +14,7 @@ export function StrokeAnimator({
   hanziWriterId,
   size = 260,
   sessionKey = 0,
+  onComplete,
 }: StrokeAnimatorProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const style = useMemo(() => ({ width: `${size}px`, height: `${size}px` }), [size])
@@ -32,13 +34,18 @@ export function StrokeAnimator({
     })
 
     writer.hideCharacter()
-    writer.quiz()
+    writer.quiz({
+      onComplete: () => {
+        console.log(`Quiz complete: ${hanziWriterId}`)
+        onComplete?.()
+      },
+    })
 
     return () => {
       writer.showCharacter()
       containerRef.current?.replaceChildren()
     }
-  }, [hanziWriterId, size, sessionKey])
+  }, [hanziWriterId, size, sessionKey, onComplete])
 
   return (
     <div

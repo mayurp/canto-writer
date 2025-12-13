@@ -10,11 +10,15 @@ declare module 'hanzi-writer' {
     delayBetweenLoops?: number
   }
 
+  type QuizOptions = {
+    onComplete?: () => void
+  }
+
   class HanziWriter {
     static create(element: HTMLElement, character: string, options?: WriterOptions): HanziWriter
     loopCharacterAnimation(): void
     pauseAnimation(): void
-    quiz(): void
+    quiz(options?: QuizOptions): void
     hideCharacter(): void
     showCharacter(): void
   }
