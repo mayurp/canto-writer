@@ -41,37 +41,11 @@ function App() {
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
   const [strokeSession, setStrokeSession] = useState(0)
   const [showReveal, setShowReveal] = useState(false)
-  const strokeContainerRef = useRef<HTMLDivElement | null>(null)
-  const [strokeSize, setStrokeSize] = useState(0)
   const [customTts, setCustomTts] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
   const revealGrading = useCallback(() => setShowReveal(true), [])
-
-  useEffect(() => {
-    const node = strokeContainerRef.current
-    if (!node) return
-    const updateSize = () => {
-      const width = node.getBoundingClientRect().width
-      if (!width) return
-      setStrokeSize((prev) => {
-        const next = Math.round(width)
-        return prev === next ? prev : next
-      })
-    }
-
-    updateSize()
-
-    if (typeof ResizeObserver === 'undefined') {
-      window.addEventListener('resize', updateSize)
-      return () => window.removeEventListener('resize', updateSize)
-    }
-
-    const observer = new ResizeObserver(updateSize)
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [currentCard?.id, view])
 
   if (loading) {
     return (
@@ -347,7 +321,7 @@ function App() {
             </button>
           </div>
 
-          <div className="stroke-wrapper" ref={strokeContainerRef}>
+          <div className="stroke-wrapper">
             <div className="stroke-header">
               <button type="button" className="clear-button" onClick={handleStrokeReset} aria-label="Clear strokes">
                 Clear
@@ -357,7 +331,6 @@ function App() {
               character={currentCard.character}
               hanziWriterId={currentCard.hanziWriterId}
               sessionKey={strokeSession}
-              size={strokeSize || undefined}
               onComplete={revealGrading}
             />
           </div>
