@@ -40,6 +40,7 @@ function App() {
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
   const [strokeSession, setStrokeSession] = useState(0)
+  const [showReveal, setShowReveal] = useState(false)
   const [customTts, setCustomTts] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
@@ -235,6 +236,7 @@ function App() {
 
   const handleRating = (rating: ReviewRating) => {
     reviewCard(currentCard.id, rating)
+    setShowReveal(false)
   }
 
   const handleStrokeReset = () => {
@@ -323,17 +325,23 @@ function App() {
           </div>
 
           <div className="card-actions">
-            <div className="grading-buttons">
-              {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
-                <button
-                  key={rating}
-                  className={`grade-button grade-${rating}`}
-                  onClick={() => handleRating(rating)}
-                >
-                  {ratingLabels[rating]}
-                </button>
-              ))}
-            </div>
+            {!showReveal ? (
+              <button className="reveal" onClick={() => setShowReveal(true)}>
+                Reveal grading
+              </button>
+            ) : (
+              <div className="grading-buttons">
+                {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
+                  <button
+                    key={rating}
+                    className={`grade-button grade-${rating}`}
+                    onClick={() => handleRating(rating)}
+                  >
+                    {ratingLabels[rating]}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
