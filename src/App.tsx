@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
-import { StrokeAnimator } from './components/StrokeAnimator'
 import { LogoMark } from './components/LogoMark'
+import { StrokeAnimator } from './components/StrokeAnimator'
 import { SettingsPanel } from './components/SettingsPanel'
 import { DeckManager } from './components/DeckManager'
 import { useScheduler, type ReviewRating } from './hooks/useScheduler'
@@ -41,11 +41,37 @@ function App() {
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
   const [strokeSession, setStrokeSession] = useState(0)
   const [showReveal, setShowReveal] = useState(false)
+  const strokeContainerRef = useRef<HTMLDivElement | null>(null)
+  const [strokeSize, setStrokeSize] = useState(0)
   const [customTts, setCustomTts] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
   const revealGrading = useCallback(() => setShowReveal(true), [])
+
+  useEffect(() => {
+    const node = strokeContainerRef.current
+    if (!node) return
+    const updateSize = () => {
+      const width = node.getBoundingClientRect().width
+      if (!width) return
+      setStrokeSize((prev) => {
+        const next = Math.round(width)
+        return prev === next ? prev : next
+      })
+    }
+
+    updateSize()
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateSize)
+      return () => window.removeEventListener('resize', updateSize)
+    }
+
+    const observer = new ResizeObserver(updateSize)
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [currentCard?.id, view])
 
   if (loading) {
     return (
@@ -282,14 +308,16 @@ function App() {
       </header>
 
       <section className="card-stage">
-        <div className="card-panel">
-          <div className="card-character" aria-label="Keyword meaning">
-            {currentCard.meaning}
-          </div>
-          <div className="card-meta">
-            <p className="card-order">
-              {orderLabel} #{displayOrder}
-            </p>
+        <div className="study-card">
+          <div className="card-top">
+            <div className="card-info">
+              <div className="card-character" aria-label="Keyword meaning">
+                {currentCard.meaning}
+              </div>
+              <p className="card-order">
+                {orderLabel} #{displayOrder}
+              </p>
+            </div>
             <button
               type="button"
               className="audio-button"
@@ -297,12 +325,7 @@ function App() {
               disabled={!isSupported}
               aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
             >
-              <svg
-                className="audio-glyph"
-                viewBox="0 0 64 64"
-                role="presentation"
-                aria-hidden="true"
-              >
+              <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
                 <path
                   d="M16 28h10l12-10v28l-12-10H16z"
                   fill="none"
@@ -322,7 +345,21 @@ function App() {
                 />
               </svg>
             </button>
-            <p className="keyword-hint">Listen to the audio, visualize the strokes, then write it from memory.</p>
+          </div>
+
+          <div className="stroke-wrapper" ref={strokeContainerRef}>
+            <div className="stroke-header">
+              <button type="button" className="clear-button" onClick={handleStrokeReset} aria-label="Clear strokes">
+                Clear
+              </button>
+            </div>
+            <StrokeAnimator
+              character={currentCard.character}
+              hanziWriterId={currentCard.hanziWriterId}
+              sessionKey={strokeSession}
+              size={strokeSize || undefined}
+              onComplete={revealGrading}
+            />
           </div>
 
           <div className="card-actions">
@@ -344,28 +381,6 @@ function App() {
               </div>
             )}
           </div>
-        </div>
-
-        <div className="stroke-panel">
-          <div className="stroke-panel-header">
-            <p className="panel-label">Stroke practice</p>
-            <div className="stroke-controls">
-              <button
-                type="button"
-                className="clear-button"
-                onClick={handleStrokeReset}
-                aria-label="Clear stroke practice"
-              >
-                Clear
-              </button>
-            </div>
-          </div>
-          <StrokeAnimator
-            character={currentCard.character}
-            hanziWriterId={currentCard.hanziWriterId}
-            sessionKey={strokeSession}
-            onComplete={revealGrading}
-          />
         </div>
       </section>
     </main>
