@@ -127,10 +127,19 @@
 }
 
 .card-character {
-  font-size: clamp(4rem, 8vw, 6rem);
   font-weight: 600;
   color: #020617;
   text-align: center;
+}
+
+.card-character.show-char {
+  font-size: clamp(4rem, 8vw, 6rem);
+}
+
+.card-character.show-keyword {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 .card-meta {
@@ -156,9 +165,10 @@
   font-weight: 600;
 }
 
-.meaning-hidden {
-  color: #cbd5f5;
-  opacity: 0.7;
+.keyword-hint {
+  margin: 0.5rem 0 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
 }
 
 .audio-button {

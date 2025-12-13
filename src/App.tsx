@@ -106,8 +106,11 @@ function App() {
 
       <section className="card-stage">
         <div className="card-panel">
-          <div className="card-character" aria-label="Character">
-            {currentCard.character}
+          <div
+            className={`card-character ${showAnswer ? 'show-char' : 'show-keyword'}`}
+            aria-label={showAnswer ? 'Character' : 'Keyword'}
+          >
+            {showAnswer ? currentCard.character : currentCard.meaning}
           </div>
           <div className="card-meta">
             <p className="card-order">Frame #{currentCard.order}</p>
@@ -146,7 +149,7 @@ function App() {
             {showAnswer ? (
               <p className="meaning">{currentCard.meaning}</p>
             ) : (
-              <p className="meaning meaning-hidden">Reveal keyword</p>
+              <p className="keyword-hint">Tap reveal to view the character</p>
             )}
           </div>
 
