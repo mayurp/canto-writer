@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
 
-export type ReviewRating = 'again' | 'hard' | 'good' | 'easy'
+export type ReviewRating = 'again' | 'hard' | 'easy'
 
 type CardStats = {
   interval: number // minutes between reviews
@@ -52,7 +52,6 @@ const computeNextStats = (stats: CardStats, rating: ReviewRating): CardStats => 
   const easeAdjustments: Record<ReviewRating, number> = {
     again: -0.3,
     hard: -0.15,
-    good: 0,
     easy: 0.15,
   }
 
@@ -67,8 +66,6 @@ const computeNextStats = (stats: CardStats, rating: ReviewRating): CardStats => 
     nextInterval = rating === 'easy' ? 2 : 1
   } else if (rating === 'hard') {
     nextInterval = stats.interval * 0.8
-  } else if (rating === 'good') {
-    nextInterval = stats.interval * nextEase
   } else {
     nextInterval = stats.interval * (nextEase + 0.5)
   }

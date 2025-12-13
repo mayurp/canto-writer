@@ -13,7 +13,6 @@ import { useDeckSelection } from './hooks/useDeckSelection'
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
   hard: 'Hard',
-  good: 'Good',
   easy: 'Easy',
 }
 
