@@ -281,7 +281,6 @@ function App() {
             Test
           </button>
         </div>
-        <p className="tagline">Learn traditional characters with Jyutping and animated stroke order.</p>
         <div className="session-meta" aria-live="polite">
           <span>Due today</span>
           <strong>{dueCount}</strong>
