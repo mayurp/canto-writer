@@ -138,15 +138,18 @@ function App() {
             Play
           </button>
         </div>
-        <div className="header-actions">
-          <div className="session-meta" aria-live="polite">
-            <span>Due today</span>
-            <strong>{dueCount}</strong>
-            <span className="total">/ {totalCount}</span>
-          </div>
-          <button type="button" className="settings-trigger" onClick={() => setSettingsOpen(true)}>
-            Settings
-          </button>
+        <button
+          type="button"
+          className="settings-trigger"
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Open settings"
+        >
+          ⚙️
+        </button>
+        <div className="session-meta" aria-live="polite">
+          <span>Due today</span>
+          <strong>{dueCount}</strong>
+          <span className="total">/ {totalCount}</span>
         </div>
       </header>
 

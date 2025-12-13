@@ -160,16 +160,6 @@
   color: #0369a1;
 }
 
-.header-actions {
-  width: 100%;
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-}
-
 .session-meta strong {
   display: block;
   font-size: 2rem;
@@ -182,28 +172,23 @@
   color: #0f172a;
 }
 
-.header-actions {
-  display: flex;
-  gap: 0.75rem;
-  width: 100%;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-
 .settings-trigger {
-  align-self: flex-start;
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  background: rgba(15, 23, 42, 0.45);
   border: 1px solid rgba(248, 250, 252, 0.4);
-  background: transparent;
-  color: #f8fafc;
-  padding: 0.45rem 1rem;
   border-radius: 999px;
+  padding: 0.35rem 0.75rem;
   cursor: pointer;
-  font-weight: 600;
-  transition: background 120ms ease, color 120ms ease;
+  color: #f8fafc;
+  font-size: 1.2rem;
+  line-height: 1;
+  z-index: 25;
 }
 
 .settings-trigger:hover {
-  background: rgba(248, 250, 252, 0.15);
+  background: rgba(15, 23, 42, 0.65);
 }
 
 .card-stage {
