@@ -522,23 +522,6 @@
   z-index: 2;
 }
 
-.reveal {
-  width: 100%;
-  padding: 0.9rem;
-  background: #0f172a;
-  color: #f8fafc;
-  border: none;
-  border-radius: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 150ms ease, box-shadow 150ms ease;
-}
-
-.reveal:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.25);
-}
-
 .grading-buttons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));

@@ -336,11 +336,7 @@ function App() {
           </div>
 
           <div className="card-actions">
-            {!showReveal ? (
-              <button className="reveal" onClick={revealGrading}>
-                Reveal grading
-              </button>
-            ) : (
+            {showReveal && (
               <div className="grading-buttons">
                 {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
                   <button
