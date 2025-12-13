@@ -9,6 +9,7 @@ import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
 import { useDeckSelection } from './hooks/useDeckSelection'
+import { useVocabExamples } from './hooks/useVocabExamples'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -18,6 +19,7 @@ const ratingLabels: Record<ReviewRating, string> = {
 
 function App() {
   const { deck, loading, error } = useRememberingDeck()
+  const { examples } = useVocabExamples()
   const { settings, updateSetting } = useSettings()
   const orderedDeck = useMemo(() => {
     if (!deck.length) return deck
@@ -231,7 +233,11 @@ function App() {
       : currentCard.order
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
   const handleCardPronunciation = () => {
-    playPronunciation(currentCard.character, { rate: voiceRate })
+    const exampleClue = examples[currentCard.character]?.[0]
+    const utterance = exampleClue
+      ? `${currentCard.character}，${exampleClue}嘅${currentCard.character}`
+      : currentCard.character
+    playPronunciation(utterance, { rate: voiceRate })
   }
 
   const handleRating = (rating: ReviewRating) => {
