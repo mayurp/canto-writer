@@ -246,21 +246,21 @@ function App() {
 
   return (
     <>
-      <button
-        type="button"
-        className="settings-trigger"
-        onClick={() => setSettingsOpen(true)}
-        aria-label="Open settings"
-      >
-        ⚙️
-      </button>
       <main className="app-shell">
       <header className="app-header">
-        <div className="brand-mark">
-          <LogoMark size={20} />
-          <div>
+        <div className="header-row">
+          <div className="brand-mark">
+            <LogoMark size={20} />
             <p className="eyebrow">Canto Writer</p>
           </div>
+          <button
+            type="button"
+            className="settings-trigger inline"
+            onClick={() => setSettingsOpen(true)}
+            aria-label="Open settings"
+          >
+            ⚙️
+          </button>
         </div>
         <div className="nav-tabs">
           <button type="button" className={navClass('learn')}>
