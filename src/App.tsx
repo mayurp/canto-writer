@@ -3,10 +3,12 @@ import './App.css'
 import { StrokeAnimator } from './components/StrokeAnimator'
 import { LogoMark } from './components/LogoMark'
 import { SettingsPanel } from './components/SettingsPanel'
+import { DeckManager } from './components/DeckManager'
 import { useScheduler, type ReviewRating } from './hooks/useScheduler'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
+import { useDeckSelection } from './hooks/useDeckSelection'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -29,7 +31,14 @@ function App() {
     }
     return [...deck].sort((a, b) => a.order - b.order)
   }, [deck, settings.orderMode])
-  const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(orderedDeck)
+  const { selectedIds, addCards, removeCard, clearAll } = useDeckSelection(deck)
+  const playableDeck = useMemo(() => {
+    if (!selectedIds.length) return []
+    const allowed = new Set(selectedIds)
+    return orderedDeck.filter((card) => allowed.has(card.id))
+  }, [orderedDeck, selectedIds])
+  const [view, setView] = useState<'learn' | 'manage'>('learn')
+  const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
   const [showAnswer, setShowAnswer] = useState(false)
   const [practiceMode, setPracticeMode] = useState<'watch' | 'write'>('watch')
   const [strokeSession, setStrokeSession] = useState(0)
@@ -59,12 +68,73 @@ function App() {
     )
   }
 
-  if (!currentCard) {
+  if (view === 'manage') {
     return (
       <>
+        <button
+          type="button"
+          className="settings-trigger"
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Open settings"
+        >
+          ⚙️
+        </button>
         <main className="app-shell">
+          <DeckManager
+            deck={deck}
+            selectedIds={selectedIds}
+            addCards={addCards}
+            removeCard={removeCard}
+            clearAll={clearAll}
+            onBack={() => setView('learn')}
+          />
+        </main>
+        <SettingsPanel
+          open={settingsOpen}
+          onClose={() => setSettingsOpen(false)}
+          ttsSpeed={settings.ttsSpeed}
+          onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
+          orderMode={settings.orderMode}
+          onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+        />
+      </>
+    )
+  }
+
+  if (!currentCard || playableDeck.length === 0) {
+    return (
+      <>
+        <button
+          type="button"
+          className="settings-trigger"
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Open settings"
+        >
+          ⚙️
+        </button>
+        <main className="app-shell">
+          <header className="app-header">
+            <div className="brand-mark">
+              <LogoMark size={56} />
+              <div>
+                <p className="eyebrow">Canto Writer</p>
+                <h1>Daily character flow</h1>
+              </div>
+            </div>
+            <div className="nav-tabs">
+              <button type="button" className="nav-tab is-active">
+                Learn
+              </button>
+              <button type="button" className="nav-tab" onClick={() => setView('manage')}>
+                Build deck
+              </button>
+            </div>
+          </header>
           <div className="empty-state">
-            <p>Deck empty for now. Add a few cards to keep practicing!</p>
+            <p>Your study deck is empty. Add characters from the RTH list to begin.</p>
+            <button type="button" className="clear-link" onClick={() => setView('manage')}>
+              Open deck builder
+            </button>
           </div>
         </main>
         <SettingsPanel
@@ -111,6 +181,14 @@ function App() {
 
   return (
     <>
+      <button
+        type="button"
+        className="settings-trigger"
+        onClick={() => setSettingsOpen(true)}
+        aria-label="Open settings"
+      >
+        ⚙️
+      </button>
       <main className="app-shell">
       <header className="app-header">
         <div className="brand-mark">
@@ -119,6 +197,14 @@ function App() {
             <p className="eyebrow">Canto Writer</p>
             <h1>Daily character flow</h1>
           </div>
+        </div>
+        <div className="nav-tabs">
+          <button type="button" className="nav-tab is-active">
+            Learn
+          </button>
+          <button type="button" className="nav-tab" onClick={() => setView('manage')}>
+            Build deck
+          </button>
         </div>
         <p className="tagline">Learn traditional characters with Jyutping and animated stroke order.</p>
         <div className="custom-tts">
@@ -138,18 +224,15 @@ function App() {
             Play
           </button>
         </div>
-        <button
-          type="button"
-          className="settings-trigger"
-          onClick={() => setSettingsOpen(true)}
-          aria-label="Open settings"
-        >
-          ⚙️
-        </button>
-        <div className="session-meta" aria-live="polite">
-          <span>Due today</span>
-          <strong>{dueCount}</strong>
-          <span className="total">/ {totalCount}</span>
+        <div className="header-actions">
+          <button type="button" className="deck-link" onClick={() => setView('manage')}>
+            Build deck
+          </button>
+          <div className="session-meta" aria-live="polite">
+            <span>Due today</span>
+            <strong>{dueCount}</strong>
+            <span className="total">/ {totalCount}</span>
+          </div>
         </div>
       </header>
 
