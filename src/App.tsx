@@ -37,7 +37,7 @@ function App() {
     const allowed = new Set(selectedIds)
     return orderedDeck.filter((card) => allowed.has(card.id))
   }, [orderedDeck, selectedIds])
-  const [view, setView] = useState<'learn' | 'manage'>('learn')
+  const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
   const [showAnswer, setShowAnswer] = useState(false)
   const [practiceMode, setPracticeMode] = useState<'watch' | 'write'>('watch')
@@ -66,6 +66,13 @@ function App() {
         </div>
       </main>
     )
+  }
+
+  const navClass = (target: 'learn' | 'manage' | 'test') => `nav-tab${view === target ? ' is-active' : ''}`
+
+  const handleCustomPlayback = () => {
+    if (!customTts.trim()) return
+    playPronunciation(customTts, { rate: voiceRate })
   }
 
   if (view === 'manage') {
@@ -101,6 +108,73 @@ function App() {
     )
   }
 
+  if (view === 'test') {
+    return (
+      <>
+        <button
+          type="button"
+          className="settings-trigger"
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Open settings"
+        >
+          ⚙️
+        </button>
+        <main className="app-shell">
+          <header className="app-header">
+            <div className="brand-mark">
+              <LogoMark size={56} />
+              <div>
+                <p className="eyebrow">Canto Writer</p>
+                <h1>Try the voice</h1>
+              </div>
+            </div>
+            <div className="nav-tabs">
+              <button type="button" className={navClass('learn')} onClick={() => setView('learn')}>
+                Learn
+              </button>
+              <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
+                Build deck
+              </button>
+              <button type="button" className={navClass('test')}>
+                Test
+              </button>
+            </div>
+            <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
+          </header>
+
+          <section className="test-panel">
+            <div className="custom-tts">
+              <input
+                type="text"
+                className="custom-tts-input"
+                placeholder="Type Cantonese text"
+                value={customTts}
+                onChange={(event) => setCustomTts(event.target.value)}
+              />
+              <button
+                type="button"
+                className="custom-tts-button"
+                onClick={handleCustomPlayback}
+                disabled={!isSupported || customTts.trim().length === 0}
+              >
+                Play
+              </button>
+            </div>
+            {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
+          </section>
+        </main>
+        <SettingsPanel
+          open={settingsOpen}
+          onClose={() => setSettingsOpen(false)}
+          ttsSpeed={settings.ttsSpeed}
+          onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
+          orderMode={settings.orderMode}
+          onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+        />
+      </>
+    )
+  }
+
   if (!currentCard || playableDeck.length === 0) {
     return (
       <>
@@ -122,11 +196,14 @@ function App() {
               </div>
             </div>
             <div className="nav-tabs">
-              <button type="button" className="nav-tab is-active">
+              <button type="button" className={navClass('learn')}>
                 Learn
               </button>
-              <button type="button" className="nav-tab" onClick={() => setView('manage')}>
+              <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
                 Build deck
+              </button>
+              <button type="button" className={navClass('test')} onClick={() => setView('test')}>
+                Test
               </button>
             </div>
           </header>
@@ -156,11 +233,6 @@ function App() {
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
   const handleCardPronunciation = () => {
     playPronunciation(currentCard.character, { rate: voiceRate })
-  }
-
-  const handleCustomPlayback = () => {
-    if (!customTts.trim()) return
-    playPronunciation(customTts, { rate: voiceRate })
   }
 
   const handleReveal = () => setShowAnswer(true)
@@ -199,31 +271,17 @@ function App() {
           </div>
         </div>
         <div className="nav-tabs">
-          <button type="button" className="nav-tab is-active">
+          <button type="button" className={navClass('learn')}>
             Learn
           </button>
-          <button type="button" className="nav-tab" onClick={() => setView('manage')}>
+          <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
             Build deck
+          </button>
+          <button type="button" className={navClass('test')} onClick={() => setView('test')}>
+            Test
           </button>
         </div>
         <p className="tagline">Learn traditional characters with Jyutping and animated stroke order.</p>
-        <div className="custom-tts">
-          <input
-            type="text"
-            className="custom-tts-input"
-            placeholder="Type Cantonese text"
-            value={customTts}
-            onChange={(event) => setCustomTts(event.target.value)}
-          />
-          <button
-            type="button"
-            className="custom-tts-button"
-            onClick={handleCustomPlayback}
-            disabled={!isSupported || customTts.trim().length === 0}
-          >
-            Play
-          </button>
-        </div>
         <div className="session-meta" aria-live="polite">
           <span>Due today</span>
           <strong>{dueCount}</strong>
