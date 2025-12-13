@@ -332,6 +332,12 @@
   margin-right: 0.5rem;
 }
 
+.selected-card-meta {
+  display: flex;
+  gap: 0.4rem;
+  align-items: baseline;
+}
+
 .selected-list button {
   border: none;
   background: #fee2e2;

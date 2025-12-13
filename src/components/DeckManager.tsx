@@ -98,8 +98,8 @@ export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll,
               value={rangeEnd}
               onChange={(event) => setRangeEnd(event.target.value)}
             />
-            <button onClick={handleAddRange}>Add range</button>
           </div>
+          <button onClick={handleAddRange}>Add range</button>
         </div>
 
         <div className="manager-card">
@@ -131,7 +131,7 @@ export function DeckManager({ deck, selectedIds, addCards, removeCard, clearAll,
           <ul className="selected-list">
             {selectedCards.map((card) => (
               <li key={card.id}>
-                <div>
+                <div className="selected-card-meta">
                   <strong>{card.character}</strong>
                   <span>{card.meaning}</span>
                   {card.rthOrder && <small>RTH #{card.rthOrder}</small>}
