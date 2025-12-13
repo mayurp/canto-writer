@@ -262,21 +262,25 @@ function App() {
             ⚙️
           </button>
         </div>
-        <div className="nav-tabs">
-          <button type="button" className={navClass('learn')}>
-            Learn
-          </button>
-          <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
-            Build deck
-          </button>
-          <button type="button" className={navClass('test')} onClick={() => setView('test')}>
-            Test
-          </button>
-        </div>
-        <div className="session-meta" aria-live="polite">
-          <span>Due today</span>
-          <strong>{dueCount}</strong>
-          <span className="total">/ {totalCount}</span>
+        <div className="nav-row">
+          <div className="nav-tabs">
+            <button type="button" className={navClass('learn')}>
+              Learn
+            </button>
+            <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
+              Build deck
+            </button>
+            <button type="button" className={navClass('test')} onClick={() => setView('test')}>
+              Test
+            </button>
+          </div>
+          <div className="session-meta" aria-live="polite">
+            <span>Due</span>
+            <strong>
+              {dueCount}
+              <span className="total"> / {totalCount}</span>
+            </strong>
+          </div>
         </div>
       </header>
 
