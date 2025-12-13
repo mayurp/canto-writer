@@ -40,7 +40,6 @@ function App() {
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
   const [showAnswer, setShowAnswer] = useState(false)
-  const [practiceMode, setPracticeMode] = useState<'watch' | 'write'>('watch')
   const [strokeSession, setStrokeSession] = useState(0)
   const [customTts, setCustomTts] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -242,11 +241,6 @@ function App() {
     setShowAnswer(false)
   }
 
-  const handleModeChange = (mode: 'watch' | 'write') => {
-    setPracticeMode(mode)
-    setStrokeSession((prev) => prev + 1)
-  }
-
   const handleStrokeReset = () => {
     setStrokeSession((prev) => prev + 1)
   }
@@ -364,22 +358,6 @@ function App() {
           <div className="stroke-panel-header">
             <p className="panel-label">Stroke practice</p>
             <div className="stroke-controls">
-              <div className="mode-toggle" role="group" aria-label="Stroke practice mode">
-                <button
-                  type="button"
-                  className={`toggle-button ${practiceMode === 'watch' ? 'is-active' : ''}`}
-                  onClick={() => handleModeChange('watch')}
-                >
-                  Watch
-                </button>
-                <button
-                  type="button"
-                  className={`toggle-button ${practiceMode === 'write' ? 'is-active' : ''}`}
-                  onClick={() => handleModeChange('write')}
-                >
-                  Write
-                </button>
-              </div>
               <button
                 type="button"
                 className="clear-button"
@@ -393,7 +371,6 @@ function App() {
           <StrokeAnimator
             character={currentCard.character}
             hanziWriterId={currentCard.hanziWriterId}
-            mode={practiceMode}
             sessionKey={strokeSession}
           />
         </div>
