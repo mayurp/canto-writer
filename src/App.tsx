@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import './App.css'
 import { StrokeAnimator } from './components/StrokeAnimator'
 import { LogoMark } from './components/LogoMark'
@@ -45,6 +45,7 @@ function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
+  const revealGrading = useCallback(() => setShowReveal(true), [])
 
   if (loading) {
     return (
@@ -326,7 +327,7 @@ function App() {
 
           <div className="card-actions">
             {!showReveal ? (
-              <button className="reveal" onClick={() => setShowReveal(true)}>
+              <button className="reveal" onClick={revealGrading}>
                 Reveal grading
               </button>
             ) : (
@@ -363,6 +364,7 @@ function App() {
             character={currentCard.character}
             hanziWriterId={currentCard.hanziWriterId}
             sessionKey={strokeSession}
+            onComplete={revealGrading}
           />
         </div>
       </section>
