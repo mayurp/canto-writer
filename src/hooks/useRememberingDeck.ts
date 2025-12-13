@@ -61,6 +61,7 @@ const buildDeck = (rows: Record<string, string>[]): FlashcardDefinition[] => {
       const order = Number(row['Opt RTH'])
       const character = row['TH']?.trim()
       const meaning = row['RTH Keyword']?.trim()
+      const rthOrder = Number(row['RTH #'])
 
       if (!order || !character || !meaning) {
         return null
@@ -68,15 +69,21 @@ const buildDeck = (rows: Record<string, string>[]): FlashcardDefinition[] => {
 
       const id = `${order}-${character}`
 
-      return {
+      const card: FlashcardDefinition = {
         id,
         order,
         character,
         meaning,
         hanziWriterId: character,
       }
+
+      if (Number.isFinite(rthOrder)) {
+        card.rthOrder = rthOrder
+      }
+
+      return card
     })
-    .filter((card): card is FlashcardDefinition => Boolean(card))
+    .filter((card): card is FlashcardDefinition => card !== null)
     .sort((a, b) => a.order - b.order)
 }
 

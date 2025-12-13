@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import './App.css'
 import { StrokeAnimator } from './components/StrokeAnimator'
 import { LogoMark } from './components/LogoMark'
+import { SettingsPanel } from './components/SettingsPanel'
 import { useScheduler, type ReviewRating } from './hooks/useScheduler'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
+import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -15,12 +17,26 @@ const ratingLabels: Record<ReviewRating, string> = {
 
 function App() {
   const { deck, loading, error } = useRememberingDeck()
-  const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(deck)
+  const { settings, updateSetting } = useSettings()
+  const orderedDeck = useMemo(() => {
+    if (!deck.length) return deck
+    if (settings.orderMode === 'rth') {
+      return [...deck].sort((a, b) => {
+        const aOrder = a.rthOrder ?? Number.MAX_SAFE_INTEGER
+        const bOrder = b.rthOrder ?? Number.MAX_SAFE_INTEGER
+        return aOrder - bOrder
+      })
+    }
+    return [...deck].sort((a, b) => a.order - b.order)
+  }, [deck, settings.orderMode])
+  const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(orderedDeck)
   const [showAnswer, setShowAnswer] = useState(false)
   const [practiceMode, setPracticeMode] = useState<'watch' | 'write'>('watch')
   const [strokeSession, setStrokeSession] = useState(0)
   const [customTts, setCustomTts] = useState('')
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
+  const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
 
   if (loading) {
     return (
@@ -45,12 +61,36 @@ function App() {
 
   if (!currentCard) {
     return (
-      <main className="app-shell">
-        <div className="empty-state">
-          <p>Deck empty for now. Add a few cards to keep practicing!</p>
-        </div>
-      </main>
+      <>
+        <main className="app-shell">
+          <div className="empty-state">
+            <p>Deck empty for now. Add a few cards to keep practicing!</p>
+          </div>
+        </main>
+        <SettingsPanel
+          open={settingsOpen}
+          onClose={() => setSettingsOpen(false)}
+          ttsSpeed={settings.ttsSpeed}
+          onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
+          orderMode={settings.orderMode}
+          onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+        />
+      </>
     )
+  }
+
+  const displayOrder =
+    settings.orderMode === 'rth'
+      ? currentCard.rthOrder ?? currentCard.order
+      : currentCard.order
+  const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
+  const handleCardPronunciation = () => {
+    playPronunciation(currentCard.character, { rate: voiceRate })
+  }
+
+  const handleCustomPlayback = () => {
+    if (!customTts.trim()) return
+    playPronunciation(customTts, { rate: voiceRate })
   }
 
   const handleReveal = () => setShowAnswer(true)
@@ -70,7 +110,8 @@ function App() {
   }
 
   return (
-    <main className="app-shell">
+    <>
+      <main className="app-shell">
       <header className="app-header">
         <div className="brand-mark">
           <LogoMark size={56} />
@@ -91,16 +132,21 @@ function App() {
           <button
             type="button"
             className="custom-tts-button"
-            onClick={() => playPronunciation(customTts, { rate: 0.1 })}
+            onClick={handleCustomPlayback}
             disabled={!isSupported || customTts.trim().length === 0}
           >
             Play
           </button>
         </div>
-        <div className="session-meta" aria-live="polite">
-          <span>Due today</span>
-          <strong>{dueCount}</strong>
-          <span className="total">/ {totalCount}</span>
+        <div className="header-actions">
+          <div className="session-meta" aria-live="polite">
+            <span>Due today</span>
+            <strong>{dueCount}</strong>
+            <span className="total">/ {totalCount}</span>
+          </div>
+          <button type="button" className="settings-trigger" onClick={() => setSettingsOpen(true)}>
+            Settings
+          </button>
         </div>
       </header>
 
@@ -113,11 +159,13 @@ function App() {
             {showAnswer ? currentCard.character : currentCard.meaning}
           </div>
           <div className="card-meta">
-            <p className="card-order">Frame #{currentCard.order}</p>
+            <p className="card-order">
+              {orderLabel} #{displayOrder}
+            </p>
             <button
               type="button"
               className="audio-button"
-              onClick={() => playPronunciation(currentCard.character)}
+              onClick={handleCardPronunciation}
               disabled={!isSupported}
               aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
             >
@@ -213,6 +261,15 @@ function App() {
         </div>
       </section>
     </main>
+      <SettingsPanel
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+        ttsSpeed={settings.ttsSpeed}
+        onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
+        orderMode={settings.orderMode}
+        onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+      />
+    </>
   )
 }
 
