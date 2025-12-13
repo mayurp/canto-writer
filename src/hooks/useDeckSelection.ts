@@ -26,6 +26,17 @@ export const useDeckSelection = (deck: FlashcardDefinition[]) => {
     setSelectedIds((prev) => prev.filter((id) => validSet.has(id)))
   }, [deck])
 
+  // TODO: remove this automatic selection once debugging is done.
+  useEffect(() => {
+    if (!deck.length) return
+    setSelectedIds((prev) => {
+      if (prev.length) return prev
+      const initial = deck.slice(0, 10).map((card) => card.id)
+      return initial
+    })
+  }, [deck])
+  //
+
   const addCards = useCallback((ids: string[]) => {
     setSelectedIds((prev) => {
       const next = new Set(prev)
