@@ -10,7 +10,26 @@ declare module 'hanzi-writer' {
     delayBetweenLoops?: number
   }
 
+  type StrokePoint = {
+    x: number
+    y: number
+  }
+
+  type StrokeData = {
+    character: string
+    drawnPath: {
+      pathString: string
+      points: StrokePoint[]
+    }
+    isBackwards: boolean
+    strokeNum: number
+    mistakesOnStroke: number
+    totalMistakes: number
+    strokesRemaining: number
+  }
+
   type QuizOptions = {
+    onCorrectStroke?: (stroke: StrokeData) => void
     onComplete?: () => void
   }
 
@@ -24,4 +43,5 @@ declare module 'hanzi-writer' {
   }
 
   export default HanziWriter
+  export type { StrokeData }
 }
