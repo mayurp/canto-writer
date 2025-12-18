@@ -33,6 +33,15 @@ declare module 'hanzi-writer' {
     onComplete?: () => void
   }
 
+  type CharacterStrokeData = {
+    path: string
+    points: [number, number][]
+  }
+
+  type CharacterData = {
+    strokes: CharacterStrokeData[]
+  }
+
   class HanziWriter {
     static create(element: HTMLElement, character: string, options?: WriterOptions): HanziWriter
     loopCharacterAnimation(): void
@@ -40,6 +49,7 @@ declare module 'hanzi-writer' {
     quiz(options?: QuizOptions): void
     hideCharacter(): void
     showCharacter(): void
+    getCharacterData(): Promise<CharacterData>
   }
 
   export default HanziWriter

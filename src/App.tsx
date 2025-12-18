@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { StrokeAnimator } from './components/StrokeAnimator'
