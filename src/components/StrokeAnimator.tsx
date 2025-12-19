@@ -71,7 +71,6 @@ const MORPH_FADE_DURATION = 220
 const MORPH_OVERSHOOT = 0.1
 const MORPH_OVERSHOOT_DURATION = 50
 
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
 
 const formatPathValue = (value: number) => {
   if (Number.isInteger(value)) return value.toString()
@@ -207,14 +206,9 @@ export function StrokeAnimator({
   useMotionValueEvent(progress, 'change', (value) => {
     const state = morphStateRef.current
     if (!state) return
-    const clamped = clamp(value, 0, MORPH_OVERSHOOT > 0 ? 1 + MORPH_OVERSHOOT : 1)
-    if (state.targetPath && clamped >= 1) {
-      setPathData(state.targetPath)
-      return
-    }
     const interpolator = morphInterpolatorRef.current
     if (interpolator) {
-      setPathData(interpolator(clamp(clamped, 0, 1)))
+      setPathData(interpolator(value))
     }
   })
 
