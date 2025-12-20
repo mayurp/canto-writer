@@ -68,8 +68,10 @@ const WRITER_PADDING = 0
 const DEBUG_SHOW_ACTUAL_STROKES = false
 const MORPH_DURATION = 200
 const MORPH_FADE_DURATION = 100
-const MORPH_OVERSHOOT = 0.5
-const MORPH_OVERSHOOT_DURATION = 50
+const SCALE_OVERSHOOT = 0.08
+const SCALE_OVERSHOOT_DURATION = 80
+const SCALE_SPRING_STIFFNESS = 260
+const SCALE_SPRING_DAMPING = 28
 
 
 const formatPathValue = (value: number) => {
@@ -109,11 +111,13 @@ export function StrokeAnimator({
   const visibilityRestoreRef = useRef<(() => void) | null>(null)
   const progressControlsRef = useRef<AnimationPlaybackControls | null>(null)
   const opacityControlsRef = useRef<AnimationPlaybackControls | null>(null)
+  const scaleControlsRef = useRef<AnimationPlaybackControls | null>(null)
   const [morphState, setMorphState] = useState<MorphState | null>(null)
   const [pathData, setPathData] = useState('')
   const morphInterpolatorRef = useRef<((t: number) => string) | null>(null)
   const progress = useMotionValue(0)
   const overlayOpacity = useMotionValue(0)
+  const overlayScale = useMotionValue(1)
   const style = useMemo(() => ({ width: `${size}px`, height: `${size}px` }), [size])
   const overlayTransformStyle = useMemo(
     () => ({ transform: 'scale(1, -1)', transformOrigin: '50% 50%' }),
@@ -127,8 +131,10 @@ export function StrokeAnimator({
   const stopAllAnimations = useCallback(() => {
     progressControlsRef.current?.stop()
     opacityControlsRef.current?.stop()
+    scaleControlsRef.current?.stop()
     progressControlsRef.current = null
     opacityControlsRef.current = null
+    scaleControlsRef.current = null
   }, [])
 
   const restoreHiddenStroke = useCallback(() => {
@@ -150,7 +156,8 @@ export function StrokeAnimator({
     setMorphState(null)
     setPathData('')
     overlayOpacity.set(0)
-  }, [overlayOpacity, restoreHiddenStroke, stopAllAnimations])
+    overlayScale.set(1)
+  }, [overlayOpacity, overlayScale, restoreHiddenStroke, stopAllAnimations])
 
   const startMorphAnimation = useCallback(
     (state: MorphState) => {
@@ -160,6 +167,7 @@ export function StrokeAnimator({
       morphInterpolatorRef.current = interpolate(state.sourcePath, state.targetPath, { maxSegmentLength: 30 })
       progress.set(0)
       overlayOpacity.set(1)
+      overlayScale.set(1)
       const runFadeOut = () => {
         restoreHiddenStroke()
         if (DEBUG_SHOW_ACTUAL_STROKES) {
@@ -170,18 +178,18 @@ export function StrokeAnimator({
           onComplete: cleanupOverlay,
         })
       }
-      const runOvershoot = () => {
+      const runScaleOvershoot = () => {
         const settle = () => {
-          progressControlsRef.current = animate(progress, 1, {
+          scaleControlsRef.current = animate(overlayScale, 1, {
             type: 'spring',
             bounce: 0,
-            stiffness: 260,
-            damping: 28,
+            stiffness: SCALE_SPRING_STIFFNESS,
+            damping: SCALE_SPRING_DAMPING,
             onComplete: runFadeOut,
           })
         }
-        progressControlsRef.current = animate(progress, 1 + MORPH_OVERSHOOT, {
-          duration: MORPH_OVERSHOOT_DURATION / 1000,
+        scaleControlsRef.current = animate(overlayScale, 1 + SCALE_OVERSHOOT, {
+          duration: SCALE_OVERSHOOT_DURATION / 1000,
           ease: 'easeOut',
           onComplete: settle,
         })
@@ -189,10 +197,10 @@ export function StrokeAnimator({
       progressControlsRef.current = animate(progress, 1, {
         duration: MORPH_DURATION / 1000,
         ease: 'easeOut',
-        onComplete: runOvershoot,
+        onComplete: runScaleOvershoot,
       })
     },
-    [cleanupOverlay, overlayOpacity, progress, stopAllAnimations],
+    [cleanupOverlay, overlayOpacity, overlayScale, progress, stopAllAnimations, restoreHiddenStroke],
   )
 
   const clearMorphs = useCallback(() => {
@@ -316,7 +324,7 @@ export function StrokeAnimator({
             strokeWidth={OVERLAY_OUTLINE_WIDTH}
             strokeLinecap="round"
             strokeLinejoin="round"
-            style={{ opacity: overlayOpacity }}
+            style={{ opacity: overlayOpacity, scale: overlayScale, transformOrigin: '50% 50%' }}
           />
         )}
       </svg>
