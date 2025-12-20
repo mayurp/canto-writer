@@ -89,6 +89,15 @@ const pointsToPath = (points: StrokePoint[]) => {
   return commands.join(' ')
 }
 
+const closePolyline = (points: StrokePoint[]): StrokePoint[] => {
+  if (points.length <= 1) return points.slice()
+  const closed: StrokePoint[] = [...points]
+  for (let i = points.length - 2; i >= 0; i -= 1) {
+    closed.push({ ...points[i] })
+  }
+  return closed
+}
+
 type StrokeAnimatorProps = {
   character: string
   hanziWriterId: string
@@ -259,7 +268,10 @@ export function StrokeAnimator({
         visibilityRestoreRef.current = null
       }
 
-      const sourcePath = pointsToPath(drawnPath.points.map((point) => ({ x: point.x, y: point.y })))
+      // Flubber dones't support unclosed lines, so we need to close the drawn path
+      // ourselves by mirroring the points back to the start
+      const closedPoints = closePolyline(drawnPath.points.map((point) => ({ x: point.x, y: point.y })))
+      const sourcePath = pointsToPath(closedPoints)
 
       const morph: MorphState = {
         id: `${strokeData.character}-${strokeData.strokeNum}-${Date.now()}`,
