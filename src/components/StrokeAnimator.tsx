@@ -60,15 +60,15 @@ const hideStrokeElement = (group: SVGGElement | null, strokeIndex: number): (() 
 }
 
 const CHARACTER_VIEWBOX = '0 -124 1024 1024'
-const STROKE_COLOR = '#ff0000'
-const OVERLAY_FILL_COLOR = 'rgba(37, 99, 235, 0.18)'
-const OVERLAY_STROKE_COLOR = 'rgba(37, 99, 235, 0.6)'
-const OVERLAY_OUTLINE_WIDTH = 4
+const STROKE_COLOR = '#000'
+const OVERLAY_FILL_COLOR = STROKE_COLOR
+const OVERLAY_STROKE_COLOR = STROKE_COLOR
+const OVERLAY_OUTLINE_WIDTH = 0
 const WRITER_PADDING = 0
-const DEBUG_SHOW_ACTUAL_STROKES = true
-const MORPH_DURATION = 150
-const MORPH_FADE_DURATION = 220
-const MORPH_OVERSHOOT = 0.1
+const DEBUG_SHOW_ACTUAL_STROKES = false
+const MORPH_DURATION = 200
+const MORPH_FADE_DURATION = 100
+const MORPH_OVERSHOOT = 0.5
 const MORPH_OVERSHOOT_DURATION = 50
 
 
@@ -171,10 +171,6 @@ export function StrokeAnimator({
         })
       }
       const runOvershoot = () => {
-        if (MORPH_OVERSHOOT <= 0) {
-          runFadeOut()
-          return
-        }
         const settle = () => {
           progressControlsRef.current = animate(progress, 1, {
             type: 'spring',
