@@ -1,90 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
-
-export type ReviewRating = 'again' | 'hard' | 'easy'
-
-type CardStats = {
-  interval: number // minutes between reviews
-  ease: number
-  nextReview: number
-}
-
-export type ScheduledCard = FlashcardDefinition & {
-  stats: CardStats
-}
-
-const STORAGE_KEY = 'canto-writer.deck-state'
-
-const defaultStats = (): CardStats => ({
-  interval: 0,
-  ease: 2.5,
-  nextReview: Date.now(),
-})
-
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
-
-const hydrateDeck = (definitions: FlashcardDefinition[]): ScheduledCard[] => {
-  if (typeof window === 'undefined') {
-    return definitions.map((card) => ({ ...card, stats: defaultStats() }))
-  }
-
-  try {
-    const stored = window.localStorage.getItem(STORAGE_KEY)
-    if (!stored) {
-      return definitions.map((card) => ({ ...card, stats: defaultStats() }))
-    }
-
-    const parsed: ScheduledCard[] = JSON.parse(stored)
-
-    return definitions.map((card) => {
-      const saved = parsed.find((entry) => entry.id === card.id)
-      return {
-        ...card,
-        stats: saved?.stats ?? defaultStats(),
-      }
-    })
-  } catch {
-    return definitions.map((card) => ({ ...card, stats: defaultStats() }))
-  }
-}
-
-const computeNextStats = (stats: CardStats, rating: ReviewRating): CardStats => {
-  const easeAdjustments: Record<ReviewRating, number> = {
-    again: -0.3,
-    hard: -0.15,
-    easy: 0.15,
-  }
-
-  const now = Date.now()
-  const nextEase = clamp(stats.ease + easeAdjustments[rating], 1.3, 3.0)
-
-  let nextInterval: number
-
-  if (rating === 'again') {
-    nextInterval = 0.5
-  } else if (stats.interval === 0) {
-    nextInterval = rating === 'easy' ? 2 : 1
-  } else if (rating === 'hard') {
-    nextInterval = stats.interval * 0.8
-  } else {
-    nextInterval = stats.interval * (nextEase + 0.5)
-  }
-
-  const minutes = Math.max(0.5, nextInterval)
-
-  return {
-    interval: minutes,
-    ease: nextEase,
-    nextReview: now + minutes * 60 * 1000,
-  }
-}
+import type { ReviewRating } from '../srs/types'
+import { createSrsManager } from '../srs/createManager'
+import { writeStoredState } from '../srs/storage'
+import type { SrsDeckManager, ScheduledCard } from '../srs/SrsDeckManager'
+import type { CardStats } from '../srs/fsrsAlgorithm'
 
 export const useScheduler = (definitions: FlashcardDefinition[]) => {
-  const [cards, setCards] = useState<ScheduledCard[]>(() => hydrateDeck(definitions))
+  const managerRef = useRef<SrsDeckManager<CardStats>>(createSrsManager(definitions))
+  const [cards, setCards] = useState<ScheduledCard<CardStats>[]>(() => managerRef.current.getCards())
   const [heartbeat, setHeartbeat] = useState(() => Date.now())
 
   useEffect(() => {
-    setCards(hydrateDeck(definitions))
+    const manager = createSrsManager(definitions)
+    managerRef.current = manager
+    setCards(manager.getCards())
   }, [definitions])
 
   useEffect(() => {
@@ -98,33 +28,36 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   }, [])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cards))
+    const manager = managerRef.current
+    if (!manager) return
+    writeStoredState(manager.getCards())
   }, [cards])
 
   const sorted = useMemo(
-    () => [...cards].sort((a, b) => a.stats.nextReview - b.stats.nextReview),
+    () => [...cards].sort((a, b) => a.stats.due.getTime() - b.stats.due.getTime()),
     [cards],
   )
 
   const now = heartbeat
-  const dueCount = cards.filter((card) => card.stats.nextReview <= now).length
+  const dueCount = cards.filter((card) => card.stats.due.getTime() <= now).length
   const currentCard =
-    sorted.find((card) => card.stats.nextReview <= now) ?? sorted[0] ?? null
+    sorted.find((card) => card.stats.due.getTime() <= now) ?? sorted[0] ?? null
 
-  const reviewCard = (cardId: string, rating: ReviewRating) => {
-    setCards((prev) =>
-      prev.map((card) =>
-        card.id === cardId
-          ? {
-              ...card,
-              stats: computeNextStats(card.stats, rating),
-            }
-          : card,
-      ),
-    )
-    setHeartbeat(Date.now())
-  }
+  const reviewCard = useCallback(
+    (cardId: string, rating: ReviewRating) => {
+      const manager = managerRef.current
+      if (!manager) return
+      const updated = manager.reviewCard(cardId, rating)
+      setCards(updated)
+      setHeartbeat(Date.now())
+    },
+    [],
+  )
+
+  const shouldShowOutline = useCallback(
+    (cardId: string) => managerRef.current?.shouldShowOutline(cardId) ?? false,
+    [],
+  )
 
   return {
     cards,
@@ -132,5 +65,6 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     totalCount: cards.length,
     dueCount,
     reviewCard,
+    shouldShowOutline,
   }
 }

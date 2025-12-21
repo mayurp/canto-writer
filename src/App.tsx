@@ -4,7 +4,8 @@ import { LogoMark } from './components/LogoMark'
 import { StrokeAnimator } from './components/StrokeAnimator'
 import { SettingsPanel } from './components/SettingsPanel'
 import { DeckManager } from './components/DeckManager'
-import { useScheduler, type ReviewRating } from './hooks/useScheduler'
+import { useScheduler } from './hooks/useScheduler'
+import type { ReviewRating } from './srs/types'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
@@ -39,7 +40,7 @@ function App() {
     return orderedDeck.filter((card) => allowed.has(card.id))
   }, [orderedDeck, selectedIds])
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
-  const { currentCard, dueCount, totalCount, reviewCard } = useScheduler(playableDeck)
+  const { currentCard, dueCount, totalCount, reviewCard, shouldShowOutline } = useScheduler(playableDeck)
   const [strokeSession, setStrokeSession] = useState(0)
   const [showReveal, setShowReveal] = useState(false)
   const [customTts, setCustomTts] = useState('')
@@ -231,6 +232,7 @@ function App() {
     settings.orderMode === 'rth'
       ? currentCard.rthOrder ?? currentCard.order
       : currentCard.order
+  const showStrokeOutline = shouldShowOutline(currentCard.id)
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
   const handleCardPronunciation = () => {
     const exampleClue = examples[currentCard.character]?.[0]
@@ -340,6 +342,7 @@ function App() {
               hanziWriterId={currentCard.hanziWriterId}
               sessionKey={strokeSession}
               onComplete={revealGrading}
+              showOutline={showStrokeOutline}
             />
           </div>
 

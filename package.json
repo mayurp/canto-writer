@@ -14,7 +14,8 @@
     "framer-motion": "^11.18.2",
     "hanzi-writer": "^3.7.3",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "ts-fsrs": "^5.2.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

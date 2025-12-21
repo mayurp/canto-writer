@@ -104,6 +104,7 @@ type StrokeAnimatorProps = {
   size?: number
   sessionKey?: number
   onComplete?: () => void
+  showOutline?: boolean
 }
 
 export function StrokeAnimator({
@@ -112,6 +113,7 @@ export function StrokeAnimator({
   size = 260,
   sessionKey = 0,
   onComplete,
+  showOutline = false,
 }: StrokeAnimatorProps) {
   const writerContainerRef = useRef<HTMLDivElement | null>(null)
   const strokeShapesRef = useRef<StrokeShape[]>([])
@@ -238,7 +240,7 @@ export function StrokeAnimator({
     const writer = HanziWriter.create(container, hanziWriterId, {
       width: size,
       height: size,
-      showOutline: false,
+      showOutline,
       padding: WRITER_PADDING,
       strokeColor: STROKE_COLOR,
       delayBetweenLoops: 1200,
@@ -310,7 +312,7 @@ export function StrokeAnimator({
       strokeShapesRef.current = []
       mainCharacterGroupRef.current = null
     }
-  }, [hanziWriterId, size, sessionKey, onComplete, clearMorphs, cleanupOverlay, startMorphAnimation])
+  }, [hanziWriterId, size, sessionKey, onComplete, clearMorphs, cleanupOverlay, startMorphAnimation, showOutline])
 
   return (
     <div
