@@ -28,9 +28,16 @@ declare module 'hanzi-writer' {
     strokesRemaining: number
   }
 
+  type QuizSummary = {
+    character: string
+    totalMistakes: number
+    totalStrokes: number
+    totalCorrectStrokes: number
+  }
+
   type QuizOptions = {
     onCorrectStroke?: (stroke: StrokeData) => void
-    onComplete?: () => void
+    onComplete?: (summary: QuizSummary) => void
   }
 
   type CharacterStrokeData = {
@@ -53,5 +60,5 @@ declare module 'hanzi-writer' {
   }
 
   export default HanziWriter
-  export type { StrokeData }
+  export type { StrokeData, QuizSummary }
 }

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { StrokeAnimator } from './components/StrokeAnimator'
@@ -6,6 +6,7 @@ import { SettingsPanel } from './components/SettingsPanel'
 import { DeckManager } from './components/DeckManager'
 import { useScheduler } from './hooks/useScheduler'
 import type { ReviewRating } from './srs/types'
+import type { QuizSummary } from 'hanzi-writer'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
@@ -17,6 +18,13 @@ const ratingLabels: Record<ReviewRating, string> = {
   hard: 'Hard',
   good: 'Good',
   easy: 'Easy',
+}
+
+const ratingFromMistakes = (count: number): ReviewRating => {
+  if (count === 0) return 'easy'
+  if (count <= 2) return 'good'
+  if (count <= 4) return 'hard'
+  return 'again'
 }
 
 function App() {
@@ -47,6 +55,24 @@ function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
+  const currentCardId = currentCard?.id
+  const [cardCompleted, setCardCompleted] = useState(false)
+  const [pendingRating, setPendingRating] = useState<ReviewRating | null>(null)
+
+  useEffect(() => {
+    setCardCompleted(false)
+    setPendingRating(null)
+  }, [currentCardId])
+
+  const handleQuizComplete = useCallback(
+    (summary: QuizSummary) => {
+      if (!currentCardId) return
+      const rating = ratingFromMistakes(summary.totalMistakes ?? 0)
+      setCardCompleted(true)
+      setPendingRating(rating)
+    },
+    [currentCardId],
+  )
 
   if (loading) {
     return (
@@ -248,11 +274,21 @@ function App() {
   }
 
   const handleRating = (rating: ReviewRating) => {
-    reviewCard(currentCard.id, rating)
+    setPendingRating(rating)
+    setCardCompleted(true)
   }
 
   const handleStrokeReset = () => {
     setStrokeSession((prev) => prev + 1)
+    setCardCompleted(false)
+    setPendingRating(null)
+  }
+
+  const handleNextCard = () => {
+    if (!pendingRating || !currentCard) return
+    reviewCard(currentCard.id, pendingRating)
+    setPendingRating(null)
+    setCardCompleted(false)
   }
 
   return (
@@ -346,11 +382,22 @@ function App() {
               hanziWriterId={currentCard.hanziWriterId}
               sessionKey={strokeSession}
               showOutline={showStrokeOutline}
+              onQuizComplete={handleQuizComplete}
             />
           </div>
 
-          {settings.debug && (
-            <div className="card-actions">
+          <div className="card-actions">
+            <div className="next-button-container">
+              <button
+                type="button"
+                className="next-button"
+                disabled={!cardCompleted || !pendingRating}
+                onClick={handleNextCard}
+              >
+                Next
+              </button>
+            </div>
+            {settings.debug && (
               <div className="grading-buttons">
                 {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
                   <button
@@ -362,8 +409,8 @@ function App() {
                   </button>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
     </main>

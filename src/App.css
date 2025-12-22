@@ -482,6 +482,17 @@
 
 .card-actions {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.next-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .stroke-wrapper {
@@ -598,6 +609,29 @@
 .grade-easy {
   background: #dcfce7;
   color: #15803d;
+}
+
+.next-button {
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.7rem;
+  font-weight: 600;
+  background: #2563eb;
+  color: #f8fafc;
+  cursor: pointer;
+  min-width: 120px;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+
+.next-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #94a3b8;
+}
+
+.next-button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
 }
 
 .empty-state {

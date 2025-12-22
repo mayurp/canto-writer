@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion'
 import { interpolate } from 'flubber'
-import HanziWriter, { type StrokeData } from 'hanzi-writer'
+import HanziWriter, { type StrokeData, type QuizSummary } from 'hanzi-writer'
 import type { AnimationPlaybackControls } from 'framer-motion'
 
 type StrokePoint = {
@@ -103,7 +103,7 @@ type StrokeAnimatorProps = {
   hanziWriterId: string
   size?: number
   sessionKey?: number
-  onComplete?: () => void
+  onQuizComplete?: (summary: QuizSummary) => void
   showOutline?: boolean
 }
 
@@ -112,7 +112,7 @@ export function StrokeAnimator({
   hanziWriterId,
   size = 260,
   sessionKey = 0,
-  onComplete,
+  onQuizComplete,
   showOutline = false,
 }: StrokeAnimatorProps) {
   const writerContainerRef = useRef<HTMLDivElement | null>(null)
@@ -286,8 +286,10 @@ export function StrokeAnimator({
     writer.hideCharacter()
     writer.quiz({
       onCorrectStroke: handleCorrectStroke,
-      onComplete: () => {
-        onComplete?.()
+      onComplete: (summary) => {
+        if (summary) {
+          onQuizComplete?.(summary)
+        }
       },
     })
 
@@ -312,7 +314,7 @@ export function StrokeAnimator({
       strokeShapesRef.current = []
       mainCharacterGroupRef.current = null
     }
-  }, [hanziWriterId, size, sessionKey, onComplete, clearMorphs, cleanupOverlay, startMorphAnimation, showOutline])
+  }, [hanziWriterId, size, sessionKey, onQuizComplete, clearMorphs, cleanupOverlay, startMorphAnimation, showOutline])
 
   return (
     <div
