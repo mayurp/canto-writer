@@ -7,6 +7,7 @@ export type CardStats = Card
 const ratingMap: Record<ReviewRating, Grade> = {
   again: Rating.Again,
   hard: Rating.Hard,
+  good: Rating.Good,
   easy: Rating.Easy,
 }
 

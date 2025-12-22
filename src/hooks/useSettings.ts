@@ -5,6 +5,7 @@ export type OrderMode = 'opt' | 'rth'
 type Settings = {
   ttsSpeed: number // index
   orderMode: OrderMode
+  debug: boolean
 }
 
 const SETTINGS_KEY = 'canto-writer.settings'
@@ -12,6 +13,7 @@ const SETTINGS_KEY = 'canto-writer.settings'
 const defaultSettings: Settings = {
   ttsSpeed: 2,
   orderMode: 'opt',
+  debug: false,
 }
 
 export const ttsSpeedSteps = [0.65, 0.8, 0.95, 1.1, 1.25]
@@ -26,6 +28,7 @@ export const useSettings = () => {
       return {
         ttsSpeed: parsed.ttsSpeed ?? defaultSettings.ttsSpeed,
         orderMode: parsed.orderMode ?? defaultSettings.orderMode,
+        debug: parsed.debug ?? defaultSettings.debug,
       }
     } catch {
       return defaultSettings

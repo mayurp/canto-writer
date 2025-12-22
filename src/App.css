@@ -590,6 +590,11 @@
   color: #b45309;
 }
 
+.grade-good {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
 .grade-easy {
   background: #dcfce7;
   color: #15803d;
@@ -651,5 +656,13 @@
 
 .sort-indicator {
   font-size: 0.65rem;
+  color: #0f172a;
+}
+
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
   color: #0f172a;
 }

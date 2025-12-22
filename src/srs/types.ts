@@ -1,1 +1,1 @@
-export type ReviewRating = 'again' | 'hard' | 'easy'
+export type ReviewRating = 'again' | 'hard' | 'good' | 'easy'

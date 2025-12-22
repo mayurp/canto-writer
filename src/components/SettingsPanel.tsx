@@ -7,6 +7,8 @@ type SettingsPanelProps = {
   onTtsSpeedChange: (index: number) => void
   orderMode: OrderMode
   onOrderModeChange: (mode: OrderMode) => void
+  debug: boolean
+  onDebugChange: (value: boolean) => void
 }
 
 const speedLabels = ['0.65x', '0.8x', '0.95x', '1.1x', '1.25x']
@@ -18,6 +20,8 @@ export function SettingsPanel({
   onTtsSpeedChange,
   orderMode,
   onOrderModeChange,
+  debug,
+  onDebugChange,
 }: SettingsPanelProps) {
   if (!open) return null
 
@@ -70,6 +74,17 @@ export function SettingsPanel({
               Original RTH
             </label>
           </div>
+        </div>
+
+        <div className="settings-section">
+          <label className="settings-toggle">
+            <input
+              type="checkbox"
+              checked={debug}
+              onChange={(event) => onDebugChange(event.target.checked)}
+            />
+            Debug mode (show grading buttons)
+          </label>
         </div>
       </div>
     </div>

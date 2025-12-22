@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { StrokeAnimator } from './components/StrokeAnimator'
@@ -15,6 +15,7 @@ import { useVocabExamples } from './hooks/useVocabExamples'
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
   hard: 'Hard',
+  good: 'Good',
   easy: 'Easy',
 }
 
@@ -42,12 +43,10 @@ function App() {
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const { currentCard, dueCount, totalCount, reviewCard, shouldShowOutline } = useScheduler(playableDeck)
   const [strokeSession, setStrokeSession] = useState(0)
-  const [showReveal, setShowReveal] = useState(false)
   const [customTts, setCustomTts] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
-  const revealGrading = useCallback(() => setShowReveal(true), [])
 
   if (loading) {
     return (
@@ -106,6 +105,8 @@ function App() {
           onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
           orderMode={settings.orderMode}
           onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+          debug={settings.debug}
+          onDebugChange={(value) => updateSetting('debug', value)}
         />
       </>
     )
@@ -173,6 +174,8 @@ function App() {
           onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
           orderMode={settings.orderMode}
           onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+          debug={settings.debug}
+          onDebugChange={(value) => updateSetting('debug', value)}
         />
       </>
     )
@@ -223,6 +226,8 @@ function App() {
           onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
           orderMode={settings.orderMode}
           onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+          debug={settings.debug}
+          onDebugChange={(value) => updateSetting('debug', value)}
         />
       </>
     )
@@ -244,7 +249,6 @@ function App() {
 
   const handleRating = (rating: ReviewRating) => {
     reviewCard(currentCard.id, rating)
-    setShowReveal(false)
   }
 
   const handleStrokeReset = () => {
@@ -341,13 +345,12 @@ function App() {
               character={currentCard.character}
               hanziWriterId={currentCard.hanziWriterId}
               sessionKey={strokeSession}
-              onComplete={revealGrading}
               showOutline={showStrokeOutline}
             />
           </div>
 
-          <div className="card-actions">
-            {showReveal && (
+          {settings.debug && (
+            <div className="card-actions">
               <div className="grading-buttons">
                 {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
                   <button
@@ -359,8 +362,8 @@ function App() {
                   </button>
                 ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </section>
     </main>
@@ -371,6 +374,8 @@ function App() {
         onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
         orderMode={settings.orderMode}
         onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
+        debug={settings.debug}
+        onDebugChange={(value) => updateSetting('debug', value)}
       />
     </>
   )
