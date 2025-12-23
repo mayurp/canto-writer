@@ -31,6 +31,7 @@ const ratingFromMistakes = (count: number, guidedRun: boolean): ReviewRating => 
 const MIN_WRITER_SIZE = 220
 const MAX_WRITER_SIZE = 520
 const VERTICAL_RESERVE = 360
+const PRONUNCIATION_DELAY_MS = 500
 
 const getResponsiveWriterSize = () => {
   if (typeof window === 'undefined') return MIN_WRITER_SIZE
@@ -108,6 +109,22 @@ function App() {
     },
     [currentCardId, setOutlineLearned, showStrokeOutline],
   )
+
+  const currentCharacter = currentCard?.character
+
+  useEffect(() => {
+    if (!currentCharacter || !isSupported) return
+    const timer = window.setTimeout(() => {
+      const exampleClue = examples[currentCharacter]?.[0]
+      const utterance = exampleClue
+        ? `${currentCharacter}，${exampleClue}嘅${currentCharacter}`
+        : currentCharacter
+      playPronunciation(utterance, { rate: voiceRate })
+    }, PRONUNCIATION_DELAY_MS)
+    return () => {
+      window.clearTimeout(timer)
+    }
+  }, [currentCharacter, examples, isSupported, playPronunciation, voiceRate])
 
   if (loading) {
     return (
