@@ -28,7 +28,20 @@ const ratingFromMistakes = (count: number, guidedRun: boolean): ReviewRating => 
   return 'again'
 }
 
+const MIN_STROKE_SIZE = 220
+const MAX_STROKE_SIZE = 520
+const VERTICAL_RESERVE = 360
+
+const getResponsiveStrokeSize = () => {
+  if (typeof window === 'undefined') return MIN_STROKE_SIZE
+  const widthLimit = window.innerWidth * 0.65
+  const heightLimit = Math.max(MIN_STROKE_SIZE, window.innerHeight - VERTICAL_RESERVE)
+  const target = Math.min(widthLimit, heightLimit, MAX_STROKE_SIZE)
+  return Math.max(MIN_STROKE_SIZE, target)
+}
+
 function App() {
+  const [strokeSize, setStrokeSize] = useState(() => getResponsiveStrokeSize())
   const { deck, loading, error } = useRememberingDeck()
   const { examples } = useVocabExamples()
   const { settings, updateSetting } = useSettings()
@@ -61,6 +74,15 @@ function App() {
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingRating, setPendingRating] = useState<ReviewRating | null>(null)
   const [showStrokeOutline, setShowStrokeOutline] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setStrokeSize(getResponsiveStrokeSize())
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     setCardCompleted(false)
@@ -392,6 +414,7 @@ function App() {
             <StrokeAnimator
               character={currentCard.character}
               hanziWriterId={currentCard.hanziWriterId}
+              size={strokeSize}
               sessionKey={strokeSession}
               showOutline={showStrokeOutline}
               onQuizComplete={handleQuizComplete}

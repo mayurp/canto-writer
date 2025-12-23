@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .header-row {
@@ -647,6 +647,33 @@
 .empty-state .error-detail {
   margin-top: 0.5rem;
   color: #b91c1c;
+}
+
+@media (min-width: 900px) {
+  .study-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    grid-template-areas:
+      'strokes card-info'
+      'strokes card-actions';
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .stroke-wrapper {
+    grid-area: strokes;
+    min-height: 0;
+  }
+
+  .card-top {
+    grid-area: card-info;
+  }
+
+  .card-actions {
+    grid-area: card-actions;
+    align-self: end;
+    width: 100%;
+  }
 }
 
 @media (max-width: 640px) {
