@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dexie": "^4.2.1",
+    "dexie-cloud-addon": "^4.2.4",
+    "dexie-react-hooks": "^4.2.0",
     "flubber": "^0.4.2",
     "framer-motion": "^11.18.2",
     "hanzi-writer": "^3.7.3",

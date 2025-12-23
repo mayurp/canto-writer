@@ -8,6 +8,15 @@ importers:
 
   .:
     dependencies:
+      dexie:
+        specifier: ^4.2.1
+        version: 4.2.1
+      dexie-cloud-addon:
+        specifier: ^4.2.4
+        version: 4.2.4(dexie@4.2.1)
+      dexie-react-hooks:
+        specifier: ^4.2.0
+        version: 4.2.0(@types/react@19.2.7)(dexie@4.2.1)(react@19.2.1)
       flubber:
         specifier: ^0.4.2
         version: 0.4.2
@@ -719,6 +728,25 @@ packages:
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
+  dexie-cloud-addon@4.2.4:
+    resolution: {integrity: sha512-VhrhhZB/P83aTQS9zXhYJQ9scaxSkyYlqvQRkH/tYlEFXVjQCeh9Nz5PE+9gunsbworQnIdU727zJ9SPxWfwUA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      dexie: ^4.2.1
+
+  dexie-cloud-common@1.0.53:
+    resolution: {integrity: sha512-tg93y/dfNxxBHLUYVW+yHfqEoKo8Uweh1tjkhuYf/Eg+yYO3MlEW9EV0tBKWDvicJ5JIqCXWmIVp1Jhs7mzu3g==}
+
+  dexie-react-hooks@4.2.0:
+    resolution: {integrity: sha512-u7KqTX9JpBQK8+tEyA9X0yMGXlSCsbm5AU64N6gjvGk/IutYDpLBInMYEAEC83s3qhIvryFS+W+sqLZUBEvePQ==}
+    peerDependencies:
+      '@types/react': '>=16'
+      dexie: '>=4.2.0-alpha.1 <5.0.0'
+      react: '>=16'
+
+  dexie@4.2.1:
+    resolution: {integrity: sha512-Ckej0NS6jxQ4Po3OrSQBFddayRhTCic2DoCAG5zacOfOVB9P2Q5Xc5uL/nVa7ZVs+HdMnvUPzLFCB/JwpB6Csg==}
+
   earcut@2.2.4:
     resolution: {integrity: sha512-/pjZsA1b4RPHbeWZQn66SWS8nZZWLQQ23oE3Eam7aroEFGEvwKAsJfZ9ytiEMycfzXWpca4FA9QIOehf7PocBQ==}
 
@@ -902,6 +930,9 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  isomorphic.js@0.2.5:
+    resolution: {integrity: sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -934,6 +965,11 @@ packages:
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
+
+  lib0@0.2.116:
+    resolution: {integrity: sha512-4zsosjzmt33rx5XjmFVYUAeLNh+BTeDTiwGdLt4muxiir2btsc60Nal0EvkvDRizg+pnlK1q+BtYi7M+d4eStw==}
+    engines: {node: '>=16'}
+    hasBin: true
 
   locate-path@6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
@@ -1032,6 +1068,9 @@ packages:
     resolution: {integrity: sha512-w8GmOxZfBmKknvdXU1sdM9NHcoQejwF/4mNgj2JuEEdRaHwwF12K7e9eXn1nLZ07ad+du76mkVsyeb2rKGllsA==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
+
+  rxjs@7.8.2:
+    resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
 
   scheduler@0.27.0:
     resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
@@ -1169,8 +1208,25 @@ packages:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
 
+  y-dexie@4.2.2:
+    resolution: {integrity: sha512-nbUbIc8iL3Fpyyu13HkzU0djU4dUxI/SyySvTKQYd6wfSaodoiVKbf5ZqW7RAlXHg5nrtVLhjR7E7RZohrZ7lg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      dexie: '>=4.2.0-alpha.1 <5.0.0'
+      yjs: ^13.6.27
+
+  y-protocols@1.0.7:
+    resolution: {integrity: sha512-YSVsLoXxO67J6eE/nV4AtFtT3QEotZf5sK5BHxFBXso7VDUT3Tx07IfA6hsu5Q5OmBdMkQVmFZ9QOA7fikWvnw==}
+    engines: {node: '>=16.0.0', npm: '>=8.0.0'}
+    peerDependencies:
+      yjs: ^13.0.0
+
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
+
+  yjs@13.6.28:
+    resolution: {integrity: sha512-EgnDOXs8+hBVm6mq3/S89Kiwzh5JRbn7w2wXwbrMRyKy/8dOFsLvuIfC+x19ZdtaDc0tA9rQmdZzbqqNHG44wA==}
+    engines: {node: '>=16.0.0', npm: '>=8.0.0'}
 
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
@@ -1755,6 +1811,27 @@ snapshots:
 
   deep-is@0.1.4: {}
 
+  dexie-cloud-addon@4.2.4(dexie@4.2.1):
+    dependencies:
+      dexie: 4.2.1
+      dexie-cloud-common: 1.0.53
+      rxjs: 7.8.2
+      y-dexie: 4.2.2(dexie@4.2.1)(yjs@13.6.28)
+      y-protocols: 1.0.7(yjs@13.6.28)
+      yjs: 13.6.28
+
+  dexie-cloud-common@1.0.53:
+    dependencies:
+      lib0: 0.2.116
+
+  dexie-react-hooks@4.2.0(@types/react@19.2.7)(dexie@4.2.1)(react@19.2.1):
+    dependencies:
+      '@types/react': 19.2.7
+      dexie: 4.2.1
+      react: 19.2.1
+
+  dexie@4.2.1: {}
+
   earcut@2.2.4: {}
 
   electron-to-chromium@1.5.267: {}
@@ -1959,6 +2036,8 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  isomorphic.js@0.2.5: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@4.1.1:
@@ -1983,6 +2062,10 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  lib0@0.2.116:
+    dependencies:
+      isomorphic.js: 0.2.5
 
   locate-path@6.0.0:
     dependencies:
@@ -2092,6 +2175,10 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.53.3
       fsevents: 2.3.3
 
+  rxjs@7.8.2:
+    dependencies:
+      tslib: 2.8.1
+
   scheduler@0.27.0: {}
 
   semver@6.3.1: {}
@@ -2180,7 +2267,21 @@ snapshots:
 
   word-wrap@1.2.5: {}
 
+  y-dexie@4.2.2(dexie@4.2.1)(yjs@13.6.28):
+    dependencies:
+      dexie: 4.2.1
+      yjs: 13.6.28
+
+  y-protocols@1.0.7(yjs@13.6.28):
+    dependencies:
+      lib0: 0.2.116
+      yjs: 13.6.28
+
   yallist@3.1.1: {}
+
+  yjs@13.6.28:
+    dependencies:
+      lib0: 0.2.116
 
   yocto-queue@0.1.0: {}
 
