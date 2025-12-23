@@ -59,6 +59,16 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     [],
   )
 
+  const setOutlineLearned = useCallback(
+    (cardId: string, learned: boolean) => {
+      const manager = managerRef.current
+      if (!manager) return
+      manager.setOutlineLearned(cardId, learned)
+      setCards(manager.getCards())
+    },
+    [],
+  )
+
   return {
     cards,
     currentCard,
@@ -66,5 +76,6 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     dueCount,
     reviewCard,
     shouldShowOutline,
+    setOutlineLearned,
   }
 }

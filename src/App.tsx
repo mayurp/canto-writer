@@ -20,7 +20,8 @@ const ratingLabels: Record<ReviewRating, string> = {
   easy: 'Easy',
 }
 
-const ratingFromMistakes = (count: number): ReviewRating => {
+const ratingFromMistakes = (count: number, guidedRun: boolean): ReviewRating => {
+  if (guidedRun) return 'again'
   if (count === 0) return 'easy'
   if (count <= 2) return 'good'
   if (count <= 4) return 'hard'
@@ -49,7 +50,8 @@ function App() {
     return orderedDeck.filter((card) => allowed.has(card.id))
   }, [orderedDeck, selectedIds])
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
-  const { currentCard, dueCount, totalCount, reviewCard, shouldShowOutline } = useScheduler(playableDeck)
+  const { currentCard, dueCount, totalCount, reviewCard, shouldShowOutline, setOutlineLearned } =
+    useScheduler(playableDeck)
   const [strokeSession, setStrokeSession] = useState(0)
   const [customTts, setCustomTts] = useState('')
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -58,20 +60,31 @@ function App() {
   const currentCardId = currentCard?.id
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingRating, setPendingRating] = useState<ReviewRating | null>(null)
+  const [showStrokeOutline, setShowStrokeOutline] = useState(false)
 
   useEffect(() => {
     setCardCompleted(false)
     setPendingRating(null)
-  }, [currentCardId])
+    if (currentCardId) {
+      setShowStrokeOutline(shouldShowOutline(currentCardId))
+    } else {
+      setShowStrokeOutline(false)
+    }
+  }, [currentCardId, shouldShowOutline])
 
   const handleQuizComplete = useCallback(
     (summary: QuizSummary) => {
       if (!currentCardId) return
-      const rating = ratingFromMistakes(summary.totalMistakes ?? 0)
+      const guidedRun = showStrokeOutline
+      const totalMistakes = summary.totalMistakes ?? 0
+      const rating = ratingFromMistakes(totalMistakes, guidedRun)
+      const outlineLearned = guidedRun ? totalMistakes === 0 : rating === 'easy' || rating === 'good'
+
+      setOutlineLearned(currentCardId, outlineLearned)
       setCardCompleted(true)
       setPendingRating(rating)
     },
-    [currentCardId],
+    [currentCardId, setOutlineLearned, showStrokeOutline],
   )
 
   if (loading) {
@@ -263,7 +276,6 @@ function App() {
     settings.orderMode === 'rth'
       ? currentCard.rthOrder ?? currentCard.order
       : currentCard.order
-  const showStrokeOutline = shouldShowOutline(currentCard.id)
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
   const handleCardPronunciation = () => {
     const exampleClue = examples[currentCard.character]?.[0]

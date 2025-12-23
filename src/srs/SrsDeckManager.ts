@@ -57,6 +57,19 @@ export class SrsDeckManager<Stats> {
     return this.cards
   }
 
+  setOutlineLearned(cardId: string, learned: boolean) {
+    this.cards = this.cards.map((card) => {
+      if (card.id !== cardId) return card
+      return {
+        ...card,
+        stats: {
+          ...card.stats,
+          learnedOutline: learned,
+        },
+      }
+    })
+  }
+
   shouldShowOutline(cardId: string): boolean {
     const card = this.cards.find((entry) => entry.id === cardId)
     if (!card) {
