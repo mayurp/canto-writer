@@ -28,20 +28,20 @@ const ratingFromMistakes = (count: number, guidedRun: boolean): ReviewRating => 
   return 'again'
 }
 
-const MIN_STROKE_SIZE = 220
-const MAX_STROKE_SIZE = 520
+const MIN_WRITER_SIZE = 220
+const MAX_WRITER_SIZE = 520
 const VERTICAL_RESERVE = 360
 
-const getResponsiveStrokeSize = () => {
-  if (typeof window === 'undefined') return MIN_STROKE_SIZE
+const getResponsiveWriterSize = () => {
+  if (typeof window === 'undefined') return MIN_WRITER_SIZE
   const widthLimit = window.innerWidth * 0.65
-  const heightLimit = Math.max(MIN_STROKE_SIZE, window.innerHeight - VERTICAL_RESERVE)
-  const target = Math.min(widthLimit, heightLimit, MAX_STROKE_SIZE)
-  return Math.max(MIN_STROKE_SIZE, target)
+  const heightLimit = Math.max(MIN_WRITER_SIZE, window.innerHeight - VERTICAL_RESERVE)
+  const target = Math.min(widthLimit, heightLimit, MAX_WRITER_SIZE)
+  return Math.max(MIN_WRITER_SIZE, target)
 }
 
 function App() {
-  const [strokeSize, setStrokeSize] = useState(() => getResponsiveStrokeSize())
+  const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const { deck, loading, error } = useRememberingDeck()
   const { examples } = useVocabExamples()
   const { settings, updateSetting } = useSettings()
@@ -77,7 +77,7 @@ function App() {
 
   useEffect(() => {
     const handleResize = () => {
-      setStrokeSize(getResponsiveStrokeSize())
+      setWriterSize(getResponsiveWriterSize())
     }
     handleResize()
     window.addEventListener('resize', handleResize)
@@ -414,7 +414,7 @@ function App() {
             <StrokeAnimator
               character={currentCard.character}
               hanziWriterId={currentCard.hanziWriterId}
-              size={strokeSize}
+              size={writerSize}
               sessionKey={strokeSession}
               showOutline={showStrokeOutline}
               onQuizComplete={handleQuizComplete}
