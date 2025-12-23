@@ -111,15 +111,15 @@ function App() {
   )
 
   const currentCharacter = currentCard?.character
+  const buildPronunciationUtterance = (character: string) => {
+    const exampleClue = examples[character]?.[0]
+    return exampleClue ? `${character}，${exampleClue}嘅${character}` : character
+  }
 
   useEffect(() => {
     if (!currentCharacter || !isSupported) return
     const timer = window.setTimeout(() => {
-      const exampleClue = examples[currentCharacter]?.[0]
-      const utterance = exampleClue
-        ? `${currentCharacter}，${exampleClue}嘅${currentCharacter}`
-        : currentCharacter
-      playPronunciation(utterance, { rate: voiceRate })
+      playPronunciation(buildPronunciationUtterance(currentCharacter), { rate: voiceRate })
     }, PRONUNCIATION_DELAY_MS)
     return () => {
       window.clearTimeout(timer)
@@ -317,11 +317,8 @@ function App() {
       : currentCard.order
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
   const handleCardPronunciation = () => {
-    const exampleClue = examples[currentCard.character]?.[0]
-    const utterance = exampleClue
-      ? `${currentCard.character}，${exampleClue}嘅${currentCard.character}`
-      : currentCard.character
-    playPronunciation(utterance, { rate: voiceRate })
+    const character = currentCard.character
+    playPronunciation(buildPronunciationUtterance(character), { rate: voiceRate })
   }
 
   const handleRating = (rating: ReviewRating) => {
