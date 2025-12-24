@@ -1,28 +1,18 @@
-import type { OrderMode } from '../hooks/useSettings'
+import { useSettings } from '../hooks/useSettings'
+
+const speedLabels = ['0.65x', '0.8x', '0.95x', '1.1x', '1.25x']
 
 type SettingsPanelProps = {
   open: boolean
   onClose: () => void
-  ttsSpeed: number
-  onTtsSpeedChange: (index: number) => void
-  orderMode: OrderMode
-  onOrderModeChange: (mode: OrderMode) => void
-  debug: boolean
-  onDebugChange: (value: boolean) => void
 }
 
-const speedLabels = ['0.65x', '0.8x', '0.95x', '1.1x', '1.25x']
+export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
+  const { settings, updateSetting } = useSettings()
+  const ttsSpeed = settings.ttsSpeed
+  const orderMode = settings.orderMode
+  const debug = settings.debug
 
-export function SettingsPanel({
-  open,
-  onClose,
-  ttsSpeed,
-  onTtsSpeedChange,
-  orderMode,
-  onOrderModeChange,
-  debug,
-  onDebugChange,
-}: SettingsPanelProps) {
   if (!open) return null
 
   return (
@@ -44,7 +34,7 @@ export function SettingsPanel({
               max={speedLabels.length - 1}
               step={1}
               value={ttsSpeed}
-              onChange={(event) => onTtsSpeedChange(Number(event.target.value))}
+              onChange={(event) => updateSetting('ttsSpeed', Number(event.target.value))}
             />
             <div className="speed-label">{speedLabels[ttsSpeed]}</div>
           </div>
@@ -59,7 +49,7 @@ export function SettingsPanel({
                 name="order-mode"
                 value="opt"
                 checked={orderMode === 'opt'}
-                onChange={() => onOrderModeChange('opt')}
+                onChange={() => updateSetting('orderMode', 'opt')}
               />
               Optimized RTH
             </label>
@@ -69,7 +59,7 @@ export function SettingsPanel({
                 name="order-mode"
                 value="rth"
                 checked={orderMode === 'rth'}
-                onChange={() => onOrderModeChange('rth')}
+                onChange={() => updateSetting('orderMode', 'rth')}
               />
               Original RTH
             </label>
@@ -81,7 +71,7 @@ export function SettingsPanel({
             <input
               type="checkbox"
               checked={debug}
-              onChange={(event) => onDebugChange(event.target.checked)}
+              onChange={(event) => updateSetting('debug', event.target.checked)}
             />
             Debug mode (show grading buttons)
           </label>

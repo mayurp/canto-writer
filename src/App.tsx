@@ -46,7 +46,7 @@ function App() {
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const { deck, loading, error } = useRememberingDeck()
   const { examples } = useVocabExamples()
-  const { settings, updateSetting } = useSettings()
+  const { settings } = useSettings()
   const orderedDeck = useMemo(() => {
     if (!deck.length) return deck
     if (settings.orderMode === 'rth') {
@@ -177,16 +177,7 @@ function App() {
             orderMode={settings.orderMode}
           />
         </main>
-        <SettingsPanel
-          open={settingsOpen}
-          onClose={() => setSettingsOpen(false)}
-          ttsSpeed={settings.ttsSpeed}
-          onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
-          orderMode={settings.orderMode}
-          onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
-          debug={settings.debug}
-          onDebugChange={(value) => updateSetting('debug', value)}
-        />
+        <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </>
     )
   }
@@ -249,16 +240,7 @@ function App() {
             {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
           </section>
         </main>
-        <SettingsPanel
-          open={settingsOpen}
-          onClose={() => setSettingsOpen(false)}
-          ttsSpeed={settings.ttsSpeed}
-          onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
-          orderMode={settings.orderMode}
-          onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
-          debug={settings.debug}
-          onDebugChange={(value) => updateSetting('debug', value)}
-        />
+        <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </>
     )
   }
@@ -301,16 +283,7 @@ function App() {
             </button>
           </div>
         </main>
-        <SettingsPanel
-          open={settingsOpen}
-          onClose={() => setSettingsOpen(false)}
-          ttsSpeed={settings.ttsSpeed}
-          onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
-          orderMode={settings.orderMode}
-          onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
-          debug={settings.debug}
-          onDebugChange={(value) => updateSetting('debug', value)}
-        />
+        <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </>
     )
   }
@@ -467,16 +440,7 @@ function App() {
         </div>
       </section>
     </main>
-      <SettingsPanel
-        open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-        ttsSpeed={settings.ttsSpeed}
-        onTtsSpeedChange={(value) => updateSetting('ttsSpeed', value)}
-        orderMode={settings.orderMode}
-        onOrderModeChange={(mode) => updateSetting('orderMode', mode)}
-        debug={settings.debug}
-        onDebugChange={(value) => updateSetting('debug', value)}
-      />
+      <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </>
   )
 }
