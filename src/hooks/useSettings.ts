@@ -1,47 +1,55 @@
 import { useCallback, useEffect, useState } from 'react'
+import { db } from '../models/db'
+import {
+  DEFAULT_SETTINGS_KEY,
+  defaultSettings,
+  type OrderMode,
+  type Settings,
+  ttsSpeedSteps,
+} from '../models/settings'
 
-export type OrderMode = 'opt' | 'rth'
+export { ttsSpeedSteps }
+export type { OrderMode }
 
-type Settings = {
-  ttsSpeed: number // index
-  orderMode: OrderMode
-  debug: boolean
+const loadSettings = async (): Promise<Settings> => {
+  try {
+    const stored = await db.settings.get(DEFAULT_SETTINGS_KEY)
+    if (stored) {
+      return { ...defaultSettings, ...stored }
+    }
+  } catch (error) {
+    console.error('Failed to load settings', error)
+  }
+  return defaultSettings
 }
 
-const SETTINGS_KEY = 'canto-writer.settings'
-
-const defaultSettings: Settings = {
-  ttsSpeed: 2,
-  orderMode: 'opt',
-  debug: false,
+const saveSettings = (settings: Settings) => {
+  return db.settings.put({ ...settings, key: DEFAULT_SETTINGS_KEY }).catch((error) => {
+    console.error('Failed to save settings', error)
+  })
 }
-
-export const ttsSpeedSteps = [0.65, 0.8, 0.95, 1.1, 1.25]
 
 export const useSettings = () => {
-  const [settings, setSettings] = useState<Settings>(() => {
-    if (typeof window === 'undefined') return defaultSettings
-    try {
-      const stored = window.localStorage.getItem(SETTINGS_KEY)
-      if (!stored) return defaultSettings
-      const parsed = JSON.parse(stored) as Partial<Settings>
-      return {
-        ttsSpeed: parsed.ttsSpeed ?? defaultSettings.ttsSpeed,
-        orderMode: parsed.orderMode ?? defaultSettings.orderMode,
-        debug: parsed.debug ?? defaultSettings.debug,
-      }
-    } catch {
-      return defaultSettings
-    }
-  })
+  const [settings, setSettings] = useState<Settings>(defaultSettings)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
-  }, [settings])
+    let cancelled = false
+    loadSettings().then((loaded) => {
+      if (!cancelled) {
+        setSettings(loaded)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const updateSetting = useCallback(<K extends keyof Settings>(key: K, value: Settings[K]) => {
-    setSettings((prev) => ({ ...prev, [key]: value }))
+    setSettings((prev) => {
+      const next = { ...prev, [key]: value }
+      void saveSettings(next)
+      return next
+    })
   }, [])
 
   return { settings, updateSetting }

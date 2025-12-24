@@ -12,6 +12,7 @@ import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { useVocabExamples } from './hooks/useVocabExamples'
+import { db } from './models/db'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -242,6 +243,9 @@ function App() {
                 Play
               </button>
             </div>
+            <button type="button" className="custom-tts-button" onClick={() => db.cloud.login()}>
+              Login
+            </button>
             {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
           </section>
         </main>
