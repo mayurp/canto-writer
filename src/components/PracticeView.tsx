@@ -3,8 +3,8 @@ import type { QuizSummary } from 'hanzi-writer'
 import type { ReviewRating } from '../srs/types'
 import type { ScheduledCard } from '../srs/SrsDeckManager'
 import type { CardStats } from '../srs/fsrsAlgorithm'
-import type { Settings } from '../models/settings'
 import { StrokeAnimator } from './StrokeAnimator'
+import { useSettings } from '../hooks/useSettings'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -45,7 +45,6 @@ type PracticeViewProps = {
   reviewCard: (cardId: string, rating: ReviewRating) => void
   shouldShowOutline: (cardId: string) => boolean
   setOutlineLearned: (cardId: string, learned: boolean) => void
-  settings: Settings
   examples: Record<string, string[]>
   playPronunciation: (text: string, options?: { rate?: number }) => void
   speaking: boolean
@@ -58,13 +57,13 @@ export function PracticeView({
   reviewCard,
   shouldShowOutline,
   setOutlineLearned,
-  settings,
   examples,
   playPronunciation,
   speaking,
   isSupported,
   voiceRate,
 }: PracticeViewProps) {
+  const { settings } = useSettings()
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
-import type { OrderMode } from '../hooks/useSettings'
+import { useSettings } from '../hooks/useSettings'
 import { createSrsManager } from '../srs/createManager'
 import type { CardStats } from '../srs/fsrsAlgorithm'
 import { State } from 'ts-fsrs'
@@ -11,8 +11,6 @@ type DeckManagerProps = {
   addCards: (ids: string[]) => void
   removeCard: (id: string) => void
   clearAll: () => void
-  onBack: () => void
-  orderMode: OrderMode
 }
 
 const byId = (deck: FlashcardDefinition[]) =>
@@ -27,9 +25,9 @@ export function DeckManager({
   addCards,
   removeCard,
   clearAll,
-  onBack,
-  orderMode,
 }: DeckManagerProps) {
+  const { settings } = useSettings()
+  const orderMode = settings.orderMode
   const [rangeStart, setRangeStart] = useState('')
   const [rangeEnd, setRangeEnd] = useState('')
   const [charInput, setCharInput] = useState('')

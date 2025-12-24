@@ -110,8 +110,6 @@ function App() {
         addCards={addCards}
         removeCard={removeCard}
         clearAll={clearAll}
-        onBack={() => setView('learn')}
-        orderMode={settings.orderMode}
       />
     )
   } else if (view === 'test') {
@@ -140,7 +138,6 @@ function App() {
         reviewCard={reviewCard}
         shouldShowOutline={shouldShowOutline}
         setOutlineLearned={setOutlineLearned}
-        settings={settings}
         examples={examples}
         playPronunciation={playPronunciation}
         speaking={speaking}
