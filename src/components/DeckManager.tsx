@@ -186,13 +186,10 @@ export function DeckManager({
   return (
     <section className="manager-panel">
       <header className="manager-header">
-        <div>
-          <h1>Compose your study run</h1>
-          <p className="tagline">
-            Add characters by {orderMode === 'rth' ? 'original RTH frames' : 'optimized frames'} or paste specific hanzi you
-            want to learn.
-          </p>
-        </div>
+        <p className="tagline">
+          Add characters by {orderMode === 'rth' ? 'original RTH frames' : 'optimized frames'} or paste specific hanzi you
+          want to learn.
+        </p>
       </header>
 
       <div className="manager-grid">
