@@ -127,27 +127,6 @@ function App() {
     }
   }, [currentCharacter, examples, isSupported, playPronunciation, voiceRate])
 
-  if (loading) {
-    return (
-      <main className="app-shell">
-        <div className="empty-state">
-          <p>Loading characters…</p>
-        </div>
-      </main>
-    )
-  }
-
-  if (error) {
-    return (
-      <main className="app-shell">
-        <div className="empty-state">
-          <p>Failed to load deck.</p>
-          <p className="error-detail">{error}</p>
-        </div>
-      </main>
-    )
-  }
-
   const navClass = (target: 'learn' | 'manage' | 'test') => `nav-tab${view === target ? ' is-active' : ''}`
 
   const handleCustomPlayback = () => {
@@ -155,18 +134,86 @@ function App() {
     playPronunciation(customTts, { rate: voiceRate })
   }
 
-  if (view === 'manage') {
-    return (
+  const SettingsButton = ({ inline = false }: { inline?: boolean }) => (
+    <button
+      type="button"
+      className={`settings-trigger${inline ? ' inline' : ''}`}
+      onClick={() => setSettingsOpen(true)}
+      aria-label="Open settings"
+    >
+      ⚙️
+    </button>
+  )
+
+  const NavTabs = () => (
+    <div className="nav-tabs">
+      <button type="button" className={navClass('learn')} onClick={() => setView('learn')}>
+        Learn
+      </button>
+      <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
+        Build deck
+      </button>
+      <button type="button" className={navClass('test')} onClick={() => setView('test')}>
+        Test
+      </button>
+    </div>
+  )
+
+  const handleCardPronunciation = () => {
+    if (!currentCard) return
+    const character = currentCard.character
+    playPronunciation(buildPronunciationUtterance(character), { rate: voiceRate })
+  }
+
+  const handleRating = (rating: ReviewRating) => {
+    setPendingRating(rating)
+    setCardCompleted(true)
+  }
+
+  const handleStrokeReset = () => {
+    setStrokeSession((prev) => prev + 1)
+    setCardCompleted(false)
+    setPendingRating(null)
+  }
+
+  const handleNextCard = () => {
+    if (!pendingRating || !currentCard) return
+    reviewCard(currentCard.id, pendingRating)
+    setPendingRating(null)
+    setCardCompleted(false)
+  }
+
+  let pageContent: JSX.Element
+
+  if (loading) {
+    pageContent = (
+      <main className="app-shell">
+        <div className="empty-state">
+          <p>Loading characters…</p>
+        </div>
+      </main>
+    )
+  } else if (error) {
+    pageContent = (
+      <main className="app-shell">
+        <div className="empty-state">
+          <p>Failed to load deck.</p>
+          <p className="error-detail">{error}</p>
+        </div>
+      </main>
+    )
+  } else if (view === 'manage') {
+    pageContent = (
       <>
-        <button
-          type="button"
-          className="settings-trigger"
-          onClick={() => setSettingsOpen(true)}
-          aria-label="Open settings"
-        >
-          ⚙️
-        </button>
+        <SettingsButton />
         <main className="app-shell">
+          <header className="app-header">
+            <div className="brand-mark">
+              <LogoMark size={20} />
+              <p className="eyebrow">Canto Writer</p>
+            </div>
+            <NavTabs />
+          </header>
           <DeckManager
             deck={deck}
             selectedIds={selectedIds}
@@ -177,42 +224,21 @@ function App() {
             orderMode={settings.orderMode}
           />
         </main>
-        <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </>
     )
-  }
-
-  if (view === 'test') {
-    return (
+  } else if (view === 'test') {
+    pageContent = (
       <>
-        <button
-          type="button"
-          className="settings-trigger"
-          onClick={() => setSettingsOpen(true)}
-          aria-label="Open settings"
-        >
-          ⚙️
-        </button>
+        <SettingsButton />
         <main className="app-shell">
           <header className="app-header">
             <div className="brand-mark">
-          <LogoMark size={20} />
-          <div>
-            <p className="eyebrow">Canto Writer</p>
-            <h1>Try the voice</h1>
-          </div>
+              <LogoMark size={20} />
+              <div>
+                <p className="eyebrow">Canto Writer</p>
+              </div>
             </div>
-            <div className="nav-tabs">
-              <button type="button" className={navClass('learn')} onClick={() => setView('learn')}>
-                Learn
-              </button>
-              <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
-                Build deck
-              </button>
-              <button type="button" className={navClass('test')}>
-                Test
-              </button>
-            </div>
+            <NavTabs />
             <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
           </header>
 
@@ -240,22 +266,12 @@ function App() {
             {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
           </section>
         </main>
-        <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </>
     )
-  }
-
-  if (!currentCard || playableDeck.length === 0) {
-    return (
+  } else if (!currentCard || playableDeck.length === 0) {
+    pageContent = (
       <>
-        <button
-          type="button"
-          className="settings-trigger"
-          onClick={() => setSettingsOpen(true)}
-          aria-label="Open settings"
-        >
-          ⚙️
-        </button>
+        <SettingsButton />
         <main className="app-shell">
           <header className="app-header">
             <div className="brand-mark">
@@ -264,17 +280,7 @@ function App() {
                 <p className="eyebrow">Canto Writer</p>
               </div>
             </div>
-            <div className="nav-tabs">
-              <button type="button" className={navClass('learn')}>
-                Learn
-              </button>
-              <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
-                Build deck
-              </button>
-              <button type="button" className={navClass('test')} onClick={() => setView('test')}>
-                Test
-              </button>
-            </div>
+            <NavTabs />
           </header>
           <div className="empty-state">
             <p>Your study deck is empty. Add characters from the RTH list to begin.</p>
@@ -283,163 +289,126 @@ function App() {
             </button>
           </div>
         </main>
-        <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </>
     )
-  }
+  } else {
+    const displayOrder =
+      settings.orderMode === 'rth'
+        ? currentCard.rthOrder ?? currentCard.order
+        : currentCard.order
+    const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
+    pageContent = (
+      <main className="app-shell">
+        <header className="app-header">
+          <div className="header-row">
+            <div className="brand-mark">
+              <LogoMark size={20} />
+              <p className="eyebrow">Canto Writer</p>
+            </div>
+            <SettingsButton inline />
+          </div>
+          <div className="nav-row">
+            <NavTabs />
+            <div className="session-meta" aria-live="polite">
+              <span>Due</span>
+              <strong>
+                {dueCount}
+                <span className="total"> / {totalCount}</span>
+              </strong>
+            </div>
+          </div>
+        </header>
 
-  const displayOrder =
-    settings.orderMode === 'rth'
-      ? currentCard.rthOrder ?? currentCard.order
-      : currentCard.order
-  const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
-  const handleCardPronunciation = () => {
-    const character = currentCard.character
-    playPronunciation(buildPronunciationUtterance(character), { rate: voiceRate })
-  }
+        <section className="card-stage">
+          <div className="study-card">
+            <div className="card-top">
+              <div className="card-info">
+                <div className="card-character" aria-label="Keyword meaning">
+                  {currentCard.meaning}
+                </div>
+                <p className="card-order">
+                  {orderLabel} #{displayOrder}
+                </p>
+              </div>
+              <button
+                type="button"
+                className="audio-button"
+                onClick={handleCardPronunciation}
+                disabled={!isSupported}
+                aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
+              >
+                <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
+                  <path
+                    d="M16 28h10l12-10v28l-12-10H16z"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M44 22c4 4 4 16 0 20m8-26c6 8 6 24 0 32"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    opacity={speaking ? 1 : 0.6}
+                  />
+                </svg>
+              </button>
+            </div>
 
-  const handleRating = (rating: ReviewRating) => {
-    setPendingRating(rating)
-    setCardCompleted(true)
-  }
+            <div className="stroke-wrapper">
+              <div className="stroke-header">
+                <button type="button" className="clear-button" onClick={handleStrokeReset} aria-label="Clear strokes">
+                  Clear
+                </button>
+              </div>
+              <StrokeAnimator
+                character={currentCard.character}
+                hanziWriterId={currentCard.hanziWriterId}
+                size={writerSize}
+                sessionKey={strokeSession}
+                showOutline={showStrokeOutline}
+                onQuizComplete={handleQuizComplete}
+              />
+            </div>
 
-  const handleStrokeReset = () => {
-    setStrokeSession((prev) => prev + 1)
-    setCardCompleted(false)
-    setPendingRating(null)
-  }
-
-  const handleNextCard = () => {
-    if (!pendingRating || !currentCard) return
-    reviewCard(currentCard.id, pendingRating)
-    setPendingRating(null)
-    setCardCompleted(false)
+            <div className="card-actions">
+              <div className="next-button-container">
+                <button
+                  type="button"
+                  className="next-button"
+                  disabled={!cardCompleted || !pendingRating}
+                  onClick={handleNextCard}
+                >
+                  Next
+                </button>
+              </div>
+              {settings.debug && (
+                <div className="grading-buttons">
+                  {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
+                    <button
+                      key={rating}
+                      className={`grade-button grade-${rating}`}
+                      onClick={() => handleRating(rating)}
+                    >
+                      {ratingLabels[rating]}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      </main>
+    )
   }
 
   return (
     <>
-      <main className="app-shell">
-      <header className="app-header">
-        <div className="header-row">
-          <div className="brand-mark">
-            <LogoMark size={20} />
-            <p className="eyebrow">Canto Writer</p>
-          </div>
-          <button
-            type="button"
-            className="settings-trigger inline"
-            onClick={() => setSettingsOpen(true)}
-            aria-label="Open settings"
-          >
-            ⚙️
-          </button>
-        </div>
-        <div className="nav-row">
-          <div className="nav-tabs">
-            <button type="button" className={navClass('learn')}>
-              Learn
-            </button>
-            <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
-              Build deck
-            </button>
-            <button type="button" className={navClass('test')} onClick={() => setView('test')}>
-              Test
-            </button>
-          </div>
-          <div className="session-meta" aria-live="polite">
-            <span>Due</span>
-            <strong>
-              {dueCount}
-              <span className="total"> / {totalCount}</span>
-            </strong>
-          </div>
-        </div>
-      </header>
-
-      <section className="card-stage">
-        <div className="study-card">
-          <div className="card-top">
-            <div className="card-info">
-              <div className="card-character" aria-label="Keyword meaning">
-                {currentCard.meaning}
-              </div>
-              <p className="card-order">
-                {orderLabel} #{displayOrder}
-              </p>
-            </div>
-            <button
-              type="button"
-              className="audio-button"
-              onClick={handleCardPronunciation}
-              disabled={!isSupported}
-              aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
-            >
-              <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
-                <path
-                  d="M16 28h10l12-10v28l-12-10H16z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M44 22c4 4 4 16 0 20m8-26c6 8 6 24 0 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  opacity={speaking ? 1 : 0.6}
-                />
-              </svg>
-            </button>
-          </div>
-
-          <div className="stroke-wrapper">
-            <div className="stroke-header">
-              <button type="button" className="clear-button" onClick={handleStrokeReset} aria-label="Clear strokes">
-                Clear
-              </button>
-            </div>
-            <StrokeAnimator
-              character={currentCard.character}
-              hanziWriterId={currentCard.hanziWriterId}
-              size={writerSize}
-              sessionKey={strokeSession}
-              showOutline={showStrokeOutline}
-              onQuizComplete={handleQuizComplete}
-            />
-          </div>
-
-          <div className="card-actions">
-            <div className="next-button-container">
-              <button
-                type="button"
-                className="next-button"
-                disabled={!cardCompleted || !pendingRating}
-                onClick={handleNextCard}
-              >
-                Next
-              </button>
-            </div>
-            {settings.debug && (
-              <div className="grading-buttons">
-                {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
-                  <button
-                    key={rating}
-                    className={`grade-button grade-${rating}`}
-                    onClick={() => handleRating(rating)}
-                  >
-                    {ratingLabels[rating]}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-    </main>
+      {pageContent}
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </>
   )

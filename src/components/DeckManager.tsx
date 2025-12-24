@@ -187,16 +187,12 @@ export function DeckManager({
     <section className="manager-panel">
       <header className="manager-header">
         <div>
-          <p className="eyebrow">Deck builder</p>
           <h1>Compose your study run</h1>
           <p className="tagline">
             Add characters by {orderMode === 'rth' ? 'original RTH frames' : 'optimized frames'} or paste specific hanzi you
             want to learn.
           </p>
         </div>
-        <button className="back-link" onClick={onBack}>
-          ← Back to practice
-        </button>
       </header>
 
       <div className="manager-grid">
