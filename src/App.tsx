@@ -5,6 +5,7 @@ import { SettingsPanel } from './components/SettingsPanel'
 import { DeckManager } from './components/DeckManager'
 import { PracticeView } from './components/PracticeView'
 import { TestView } from './components/TestView'
+import { SessionStatus } from './components/SessionStatus'
 import { useScheduler } from './hooks/useScheduler'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
@@ -132,15 +133,7 @@ function App() {
       </div>
     )
   } else {
-    headerRight = (
-      <div className="session-meta" aria-live="polite">
-        <span>Due</span>
-        <strong>
-          {dueCount}
-          <span className="total"> / {totalCount}</span>
-        </strong>
-      </div>
-    )
+    headerRight = <SessionStatus dueCount={dueCount} totalCount={totalCount} />
     bodyContent = (
       <PracticeView
         currentCard={currentCard}
