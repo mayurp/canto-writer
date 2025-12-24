@@ -4,6 +4,7 @@ import { LogoMark } from './components/LogoMark'
 import { StrokeAnimator } from './components/StrokeAnimator'
 import { SettingsPanel } from './components/SettingsPanel'
 import { DeckManager } from './components/DeckManager'
+import { TestView } from './components/TestView'
 import { useScheduler } from './hooks/useScheduler'
 import type { ReviewRating } from './srs/types'
 import type { QuizSummary } from 'hanzi-writer'
@@ -12,7 +13,6 @@ import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { useVocabExamples } from './hooks/useVocabExamples'
-import { db } from './models/db'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -230,42 +230,13 @@ function App() {
     pageContent = (
       <>
         <SettingsButton />
-        <main className="app-shell">
-          <header className="app-header">
-            <div className="brand-mark">
-              <LogoMark size={20} />
-              <div>
-                <p className="eyebrow">Canto Writer</p>
-              </div>
-            </div>
-            <NavTabs />
-            <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
-          </header>
-
-          <section className="test-panel">
-            <div className="custom-tts">
-              <input
-                type="text"
-                className="custom-tts-input"
-                placeholder="Type Cantonese text"
-                value={customTts}
-                onChange={(event) => setCustomTts(event.target.value)}
-              />
-              <button
-                type="button"
-                className="custom-tts-button"
-                onClick={handleCustomPlayback}
-                disabled={!isSupported || customTts.trim().length === 0}
-              >
-                Play
-              </button>
-            </div>
-            <button type="button" className="custom-tts-button" onClick={() => db.cloud.login()}>
-              Login
-            </button>
-            {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
-          </section>
-        </main>
+        <TestView
+          customTts={customTts}
+          onCustomTtsChange={setCustomTts}
+          onPlay={handleCustomPlayback}
+          isSupported={isSupported}
+          NavTabs={NavTabs}
+        />
       </>
     )
   } else if (!currentCard || playableDeck.length === 0) {
