@@ -1,6 +1,6 @@
-import { useSettings } from '../hooks/useSettings'
+import { useSettings, ttsSpeedSteps } from '../hooks/useSettings'
 
-const speedLabels = ['0.65x', '0.8x', '0.95x', '1.1x', '1.25x']
+const speedLabels = ttsSpeedSteps.map((value) => `${value}x`)
 
 type SettingsPanelProps = {
   open: boolean
