@@ -9,9 +9,6 @@ type SettingsPanelProps = {
 
 export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
   const { settings, updateSetting } = useSettings()
-  const ttsSpeed = settings.ttsSpeed
-  const orderMode = settings.orderMode
-  const debug = settings.debug
 
   if (!open) return null
 
@@ -33,36 +30,31 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
               min={0}
               max={speedLabels.length - 1}
               step={1}
-              value={ttsSpeed}
+              value={settings.ttsSpeed}
               onChange={(event) => updateSetting('ttsSpeed', Number(event.target.value))}
             />
-            <div className="speed-label">{speedLabels[ttsSpeed]}</div>
+            <div className="speed-label">{speedLabels[settings.ttsSpeed]}</div>
           </div>
         </div>
 
         <div className="settings-section">
           <p className="settings-label">Initial deck order</p>
           <div className="order-choice">
-            <label>
-              <input
-                type="radio"
-                name="order-mode"
-                value="opt"
-                checked={orderMode === 'opt'}
-                onChange={() => updateSetting('orderMode', 'opt')}
-              />
-              Optimized RTH
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="order-mode"
-                value="rth"
-                checked={orderMode === 'rth'}
-                onChange={() => updateSetting('orderMode', 'rth')}
-              />
-              Original RTH
-            </label>
+            {([
+              { label: 'Optimized RTH', value: 'opt' },
+              { label: 'Original RTH', value: 'rth' },
+            ] as const).map((option) => (
+              <label key={option.value}>
+                <input
+                  type="radio"
+                  name="order-mode"
+                  value={option.value}
+                  checked={settings.orderMode === option.value}
+                  onChange={() => updateSetting('orderMode', option.value)}
+                />
+                {option.label}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -70,7 +62,7 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
           <label className="settings-toggle">
             <input
               type="checkbox"
-              checked={debug}
+              checked={settings.debug}
               onChange={(event) => updateSetting('debug', event.target.checked)}
             />
             Debug mode (show grading buttons)
