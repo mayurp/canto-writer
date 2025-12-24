@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { SettingsPanel } from './components/SettingsPanel'
@@ -48,17 +48,6 @@ function App() {
     playPronunciation(customTts, { rate: voiceRate })
   }
 
-  const SettingsButton = ({ inline = false }: { inline?: boolean }) => (
-    <button
-      type="button"
-      className={`settings-trigger${inline ? ' inline' : ''}`}
-      onClick={() => setSettingsOpen(true)}
-      aria-label="Open settings"
-    >
-      ⚙️
-    </button>
-  )
-
   const NavTabs = () => (
     <div className="nav-tabs">
       <button type="button" className={navClass('learn')} onClick={() => setView('learn')}>
@@ -73,91 +62,88 @@ function App() {
     </div>
   )
 
-  let pageContent: JSX.Element
+  const AppHeader = ({ rightSlot }: { rightSlot?: ReactNode }) => (
+    <header className="app-header">
+      <div className="header-row">
+        <div className="brand-mark">
+          <LogoMark size={20} />
+          <p className="eyebrow">Canto Writer</p>
+        </div>
+        <button
+          type="button"
+          className="settings-trigger inline"
+          onClick={() => setSettingsOpen(true)}
+          aria-label="Open settings"
+        >
+          ⚙️
+        </button>
+      </div>
+      <div className="nav-row">
+        <NavTabs />
+        {rightSlot ?? <span />}
+      </div>
+    </header>
+  )
+
+  let headerRight: ReactNode | null = null
+  let bodyContent: ReactNode
 
   if (loading) {
-    pageContent = (
-      <main className="app-shell">
-        <div className="empty-state">
-          <p>Loading characters…</p>
-        </div>
-      </main>
+    bodyContent = (
+      <div className="empty-state">
+        <p>Loading characters…</p>
+      </div>
     )
   } else if (error) {
-    pageContent = (
-      <main className="app-shell">
-        <div className="empty-state">
-          <p>Failed to load deck.</p>
-          <p className="error-detail">{error}</p>
-        </div>
-      </main>
+    bodyContent = (
+      <div className="empty-state">
+        <p>Failed to load deck.</p>
+        <p className="error-detail">{error}</p>
+      </div>
     )
   } else if (view === 'manage') {
-    pageContent = (
-      <>
-        <SettingsButton />
-        <main className="app-shell">
-          <header className="app-header">
-            <div className="brand-mark">
-              <LogoMark size={20} />
-              <p className="eyebrow">Canto Writer</p>
-            </div>
-            <NavTabs />
-          </header>
-          <DeckManager
-            deck={deck}
-            selectedIds={selectedIds}
-            addCards={addCards}
-            removeCard={removeCard}
-            clearAll={clearAll}
-            onBack={() => setView('learn')}
-            orderMode={settings.orderMode}
-          />
-        </main>
-      </>
+    bodyContent = (
+      <DeckManager
+        deck={deck}
+        selectedIds={selectedIds}
+        addCards={addCards}
+        removeCard={removeCard}
+        clearAll={clearAll}
+        onBack={() => setView('learn')}
+        orderMode={settings.orderMode}
+      />
     )
   } else if (view === 'test') {
-    pageContent = (
-      <>
-        <SettingsButton />
-        <TestView
-          customTts={customTts}
-          onCustomTtsChange={setCustomTts}
-          onPlay={handleCustomPlayback}
-          isSupported={isSupported}
-          NavTabs={NavTabs}
-        />
-      </>
+    bodyContent = (
+      <TestView
+        customTts={customTts}
+        onCustomTtsChange={setCustomTts}
+        onPlay={handleCustomPlayback}
+        isSupported={isSupported}
+      />
     )
   } else if (!currentCard || playableDeck.length === 0) {
-    pageContent = (
-      <>
-        <SettingsButton />
-        <main className="app-shell">
-          <header className="app-header">
-            <div className="brand-mark">
-              <LogoMark size={20} />
-              <div>
-                <p className="eyebrow">Canto Writer</p>
-              </div>
-            </div>
-            <NavTabs />
-          </header>
-          <div className="empty-state">
-            <p>Your study deck is empty. Add characters from the RTH list to begin.</p>
-            <button type="button" className="clear-link" onClick={() => setView('manage')}>
-              Open deck builder
-            </button>
-          </div>
-        </main>
-      </>
+    bodyContent = (
+      <div className="empty-state">
+        <p>Your study deck is empty. Add characters from the RTH list to begin.</p>
+        <button type="button" className="clear-link" onClick={() => setView('manage')}>
+          Open deck builder
+        </button>
+      </div>
     )
   } else {
-    pageContent = (
+    headerRight = (
+      <div className="session-meta" aria-live="polite">
+        <span>Due</span>
+        <strong>
+          {dueCount}
+          <span className="total"> / {totalCount}</span>
+        </strong>
+      </div>
+    )
+    bodyContent = (
       <PracticeView
-        currentCard={currentCard!}
-        dueCount={dueCount}
-        totalCount={totalCount}
+        currentCard={currentCard}
         reviewCard={reviewCard}
         shouldShowOutline={shouldShowOutline}
         setOutlineLearned={setOutlineLearned}
@@ -167,15 +153,16 @@ function App() {
         speaking={speaking}
         isSupported={isSupported}
         voiceRate={voiceRate}
-        NavTabs={NavTabs}
-        onOpenSettings={() => setSettingsOpen(true)}
       />
     )
   }
 
   return (
     <>
-      {pageContent}
+      <main className="app-shell">
+        <AppHeader rightSlot={headerRight} />
+        {bodyContent}
+      </main>
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </>
   )

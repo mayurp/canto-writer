@@ -1,4 +1,3 @@
-import { LogoMark } from './LogoMark'
 import { db } from '../models/db'
 
 type TestViewProps = {
@@ -6,23 +5,12 @@ type TestViewProps = {
   onCustomTtsChange: (value: string) => void
   onPlay: () => void
   isSupported: boolean
-  NavTabs: () => JSX.Element
 }
 
-export function TestView({ customTts, onCustomTtsChange, onPlay, isSupported, NavTabs }: TestViewProps) {
+export function TestView({ customTts, onCustomTtsChange, onPlay, isSupported }: TestViewProps) {
   return (
-    <main className="app-shell">
-      <header className="app-header">
-        <div className="brand-mark">
-          <LogoMark size={20} />
-          <div>
-            <p className="eyebrow">Canto Writer</p>
-          </div>
-        </div>
-        <NavTabs />
-        <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
-      </header>
-
+    <>
+      <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
       <section className="test-panel">
         <div className="custom-tts">
           <input
@@ -46,6 +34,6 @@ export function TestView({ customTts, onCustomTtsChange, onPlay, isSupported, Na
         </button>
         {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
       </section>
-    </main>
+    </>
   )
 }

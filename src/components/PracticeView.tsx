@@ -4,7 +4,6 @@ import type { ReviewRating } from '../srs/types'
 import type { ScheduledCard } from '../srs/SrsDeckManager'
 import type { CardStats } from '../srs/fsrsAlgorithm'
 import type { Settings } from '../models/settings'
-import { LogoMark } from './LogoMark'
 import { StrokeAnimator } from './StrokeAnimator'
 
 const ratingLabels: Record<ReviewRating, string> = {
@@ -43,8 +42,6 @@ const buildPronunciationUtterance = (character: string, examples: Record<string,
 
 type PracticeViewProps = {
   currentCard: ScheduledCard<CardStats>
-  dueCount: number
-  totalCount: number
   reviewCard: (cardId: string, rating: ReviewRating) => void
   shouldShowOutline: (cardId: string) => boolean
   setOutlineLearned: (cardId: string, learned: boolean) => void
@@ -54,14 +51,10 @@ type PracticeViewProps = {
   speaking: boolean
   isSupported: boolean
   voiceRate: number
-  NavTabs: () => JSX.Element
-  onOpenSettings: () => void
 }
 
 export function PracticeView({
   currentCard,
-  dueCount,
-  totalCount,
   reviewCard,
   shouldShowOutline,
   setOutlineLearned,
@@ -71,8 +64,6 @@ export function PracticeView({
   speaking,
   isSupported,
   voiceRate,
-  NavTabs,
-  onOpenSettings,
 }: PracticeViewProps) {
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
@@ -151,117 +142,88 @@ export function PracticeView({
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
 
   return (
-    <main className="app-shell">
-      <header className="app-header">
-        <div className="header-row">
-          <div className="brand-mark">
-            <LogoMark size={20} />
-            <p className="eyebrow">Canto Writer</p>
+    <section className="card-stage">
+      <div className="study-card">
+        <div className="card-top">
+          <div className="card-info">
+            <div className="card-character" aria-label="Keyword meaning">
+              {currentCard.meaning}
+            </div>
+            <p className="card-order">
+              {orderLabel} #{displayOrder}
+            </p>
           </div>
           <button
             type="button"
-            className="settings-trigger inline"
-            onClick={onOpenSettings}
-            aria-label="Open settings"
+            className="audio-button"
+            onClick={handleCardPronunciation}
+            disabled={!isSupported}
+            aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
           >
-            ⚙️
+            <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
+              <path
+                d="M16 28h10l12-10v28l-12-10H16z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M44 22c4 4 4 16 0 20m8-26c6 8 6 24 0 32"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity={speaking ? 1 : 0.6}
+              />
+            </svg>
           </button>
         </div>
-        <div className="nav-row">
-          <NavTabs />
-          <div className="session-meta" aria-live="polite">
-            <span>Due</span>
-            <strong>
-              {dueCount}
-              <span className="total"> / {totalCount}</span>
-            </strong>
-          </div>
-        </div>
-      </header>
 
-      <section className="card-stage">
-        <div className="study-card">
-          <div className="card-top">
-            <div className="card-info">
-              <div className="card-character" aria-label="Keyword meaning">
-                {currentCard.meaning}
-              </div>
-              <p className="card-order">
-                {orderLabel} #{displayOrder}
-              </p>
-            </div>
-            <button
-              type="button"
-              className="audio-button"
-              onClick={handleCardPronunciation}
-              disabled={!isSupported}
-              aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
-            >
-              <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
-                <path
-                  d="M16 28h10l12-10v28l-12-10H16z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M44 22c4 4 4 16 0 20m8-26c6 8 6 24 0 32"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  opacity={speaking ? 1 : 0.6}
-                />
-              </svg>
+        <div className="stroke-wrapper">
+          <div className="stroke-header">
+            <button type="button" className="clear-button" onClick={handleStrokeReset} aria-label="Clear strokes">
+              Clear
             </button>
           </div>
-
-          <div className="stroke-wrapper">
-            <div className="stroke-header">
-              <button type="button" className="clear-button" onClick={handleStrokeReset} aria-label="Clear strokes">
-                Clear
-              </button>
-            </div>
-            <StrokeAnimator
-              character={currentCard.character}
-              hanziWriterId={currentCard.hanziWriterId}
-              size={writerSize}
-              sessionKey={strokeSession}
-              showOutline={showStrokeOutline}
-              onQuizComplete={handleQuizComplete}
-            />
-          </div>
-
-          <div className="card-actions">
-            <div className="next-button-container">
-              <button
-                type="button"
-                className="next-button"
-                disabled={!cardCompleted || !pendingRating}
-                onClick={handleNextCard}
-              >
-                Next
-              </button>
-            </div>
-            {settings.debug && (
-              <div className="grading-buttons">
-                {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
-                  <button
-                    key={rating}
-                    className={`grade-button grade-${rating}`}
-                    onClick={() => handleRating(rating)}
-                  >
-                    {ratingLabels[rating]}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <StrokeAnimator
+            character={currentCard.character}
+            hanziWriterId={currentCard.hanziWriterId}
+            size={writerSize}
+            sessionKey={strokeSession}
+            showOutline={showStrokeOutline}
+            onQuizComplete={handleQuizComplete}
+          />
         </div>
-      </section>
-    </main>
+
+        <div className="card-actions">
+          <div className="next-button-container">
+            <button
+              type="button"
+              className="next-button"
+              disabled={!cardCompleted || !pendingRating}
+              onClick={handleNextCard}
+            >
+              Next
+            </button>
+          </div>
+          {settings.debug && (
+            <div className="grading-buttons">
+              {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
+                <button
+                  key={rating}
+                  className={`grade-button grade-${rating}`}
+                  onClick={() => handleRating(rating)}
+                >
+                  {ratingLabels[rating]}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
   )
 }
