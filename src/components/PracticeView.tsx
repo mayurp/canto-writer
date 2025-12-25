@@ -4,6 +4,7 @@ import type { ReviewRating } from '../srs/types'
 import { StrokeAnimator } from './StrokeAnimator'
 import { useSettings } from '../hooks/useSettings'
 import { useSchedulerContext } from '../context/SchedulerContext'
+import { useVocabExamples } from '../hooks/useVocabExamples'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -40,16 +41,16 @@ const buildPronunciationUtterance = (character: string, examples: Record<string,
 }
 
 type PracticeViewProps = {
-  examples: Record<string, string[]>
   playPronunciation: (text: string, options?: { rate?: number }) => void
   speaking: boolean
   isSupported: boolean
   voiceRate: number
 }
 
-export function PracticeView({ examples, playPronunciation, speaking, isSupported, voiceRate }: PracticeViewProps) {
+export function PracticeView({ playPronunciation, speaking, isSupported, voiceRate }: PracticeViewProps) {
   const { currentCard, reviewCard, shouldShowOutline, setOutlineLearned } = useSchedulerContext()
   const { settings } = useSettings()
+  const { examples } = useVocabExamples()
   if (!currentCard) {
     return null
   }

@@ -12,11 +12,9 @@ import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
 import { useDeckSelection } from './hooks/useDeckSelection'
-import { useVocabExamples } from './hooks/useVocabExamples'
 
 function App() {
   const { deck, loading, error } = useRememberingDeck()
-  const { examples } = useVocabExamples()
   const { settings } = useSettings()
   const orderedDeck = useMemo(() => {
     if (!deck.length) return deck
@@ -128,7 +126,6 @@ function App() {
     headerRight = <SessionStatus />
     bodyContent = (
       <PracticeView
-        examples={examples}
         playPronunciation={playPronunciation}
         speaking={speaking}
         isSupported={isSupported}
