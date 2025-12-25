@@ -37,7 +37,7 @@ function App() {
   }, [orderedDeck, selectedIds])
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const scheduler = useScheduler(playableDeck)
-  const { currentCard, dueCount, totalCount } = scheduler
+  const { currentCard } = scheduler
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]

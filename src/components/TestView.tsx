@@ -1,13 +1,20 @@
+import { useState } from 'react'
 import { db } from '../models/db'
 
 type TestViewProps = {
-  customTts: string
-  onCustomTtsChange: (value: string) => void
-  onPlay: () => void
+  playPronunciation: (text: string, options?: { rate?: number }) => void
+  voiceRate: number
   isSupported: boolean
 }
 
-export function TestView({ customTts, onCustomTtsChange, onPlay, isSupported }: TestViewProps) {
+export function TestView({ playPronunciation, voiceRate, isSupported }: TestViewProps) {
+  const [customTts, setCustomTts] = useState('')
+
+  const handlePlayback = () => {
+    if (!customTts.trim()) return
+    playPronunciation(customTts, { rate: voiceRate })
+  }
+
   return (
     <>
       <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
@@ -18,12 +25,12 @@ export function TestView({ customTts, onCustomTtsChange, onPlay, isSupported }: 
             className="custom-tts-input"
             placeholder="Type Cantonese text"
             value={customTts}
-            onChange={(event) => onCustomTtsChange(event.target.value)}
+            onChange={(event) => setCustomTts(event.target.value)}
           />
           <button
             type="button"
             className="custom-tts-button"
-            onClick={onPlay}
+            onClick={handlePlayback}
             disabled={!isSupported || customTts.trim().length === 0}
           >
             Play
