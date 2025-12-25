@@ -1,9 +1,7 @@
-type SessionStatusProps = {
-  dueCount: number
-  totalCount: number
-}
+import { useSchedulerContext } from '../context/SchedulerContext'
 
-export function SessionStatus({ dueCount, totalCount }: SessionStatusProps) {
+export function SessionStatus() {
+  const { dueCount, totalCount } = useSchedulerContext()
   return (
     <div className="session-meta" aria-live="polite">
       <span>Due</span>

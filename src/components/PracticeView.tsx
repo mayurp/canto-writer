@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { QuizSummary } from 'hanzi-writer'
 import type { ReviewRating } from '../srs/types'
-import type { ScheduledCard } from '../srs/SrsDeckManager'
-import type { CardStats } from '../srs/fsrsAlgorithm'
 import { StrokeAnimator } from './StrokeAnimator'
 import { useSettings } from '../hooks/useSettings'
+import { useSchedulerContext } from '../context/SchedulerContext'
 
 const ratingLabels: Record<ReviewRating, string> = {
   again: 'Again',
@@ -41,10 +40,6 @@ const buildPronunciationUtterance = (character: string, examples: Record<string,
 }
 
 type PracticeViewProps = {
-  currentCard: ScheduledCard<CardStats>
-  reviewCard: (cardId: string, rating: ReviewRating) => void
-  shouldShowOutline: (cardId: string) => boolean
-  setOutlineLearned: (cardId: string, learned: boolean) => void
   examples: Record<string, string[]>
   playPronunciation: (text: string, options?: { rate?: number }) => void
   speaking: boolean
@@ -52,18 +47,12 @@ type PracticeViewProps = {
   voiceRate: number
 }
 
-export function PracticeView({
-  currentCard,
-  reviewCard,
-  shouldShowOutline,
-  setOutlineLearned,
-  examples,
-  playPronunciation,
-  speaking,
-  isSupported,
-  voiceRate,
-}: PracticeViewProps) {
+export function PracticeView({ examples, playPronunciation, speaking, isSupported, voiceRate }: PracticeViewProps) {
+  const { currentCard, reviewCard, shouldShowOutline, setOutlineLearned } = useSchedulerContext()
   const { settings } = useSettings()
+  if (!currentCard) {
+    return null
+  }
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)

@@ -6,6 +6,7 @@ import { DeckManager } from './components/DeckManager'
 import { PracticeView } from './components/PracticeView'
 import { TestView } from './components/TestView'
 import { SessionStatus } from './components/SessionStatus'
+import { SchedulerContext } from './context/SchedulerContext'
 import { useScheduler } from './hooks/useScheduler'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
@@ -35,19 +36,13 @@ function App() {
     return orderedDeck.filter((card) => allowed.has(card.id))
   }, [orderedDeck, selectedIds])
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
-  const { currentCard, dueCount, totalCount, reviewCard, shouldShowOutline, setOutlineLearned } =
-    useScheduler(playableDeck)
-  const [customTts, setCustomTts] = useState('')
+  const scheduler = useScheduler(playableDeck)
+  const { currentCard, dueCount, totalCount } = scheduler
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
 
   const navClass = (target: 'learn' | 'manage' | 'test') => `nav-tab${view === target ? ' is-active' : ''}`
-
-  const handleCustomPlayback = () => {
-    if (!customTts.trim()) return
-    playPronunciation(customTts, { rate: voiceRate })
-  }
 
   const NavTabs = () => (
     <div className="nav-tabs">
@@ -115,9 +110,8 @@ function App() {
   } else if (view === 'test') {
     bodyContent = (
       <TestView
-        customTts={customTts}
-        onCustomTtsChange={setCustomTts}
-        onPlay={handleCustomPlayback}
+        playPronunciation={playPronunciation}
+        voiceRate={voiceRate}
         isSupported={isSupported}
       />
     )
@@ -131,13 +125,9 @@ function App() {
       </div>
     )
   } else {
-    headerRight = <SessionStatus dueCount={dueCount} totalCount={totalCount} />
+    headerRight = <SessionStatus />
     bodyContent = (
       <PracticeView
-        currentCard={currentCard}
-        reviewCard={reviewCard}
-        shouldShowOutline={shouldShowOutline}
-        setOutlineLearned={setOutlineLearned}
         examples={examples}
         playPronunciation={playPronunciation}
         speaking={speaking}
@@ -148,13 +138,13 @@ function App() {
   }
 
   return (
-    <>
+    <SchedulerContext.Provider value={scheduler}>
       <main className="app-shell">
         <AppHeader rightSlot={headerRight} />
         {bodyContent}
       </main>
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-    </>
+    </SchedulerContext.Provider>
   )
 }
 
