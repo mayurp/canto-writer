@@ -1,10 +1,6 @@
 import type { FlashcardDefinition } from '../data/cards'
 import type { ReviewRating } from './types'
 
-// Common base stats independent of specific SRS algorithms
-export interface BaseStats {
-  learnedOutline: boolean
-}
 
 export const SrsCardState = {
   New: 0,
@@ -18,15 +14,15 @@ export type SrsCardState = (typeof SrsCardState)[keyof typeof SrsCardState]
 export type SrsAlgorithm<Stats> = {
   defaultStats: () => Stats
   computeNextStats: (stats: Stats, rating: ReviewRating) => Stats
-  shouldShowOutline: (stats: Stats) => boolean
   deserializeStats?: (raw: unknown) => Stats
   getState: (stats: Stats) => SrsCardState
   getDueDate: (stats: Stats) => Date
   getStability: (stats: Stats) => number
 }
 
-export type ScheduledCard<Stats = unknown> = FlashcardDefinition & {
+export type ScheduledCard<Stats> = FlashcardDefinition & {
   stats: Stats
+  learnedOutline: boolean
 }
 
 export class SrsDeckManager<Stats> {
@@ -55,6 +51,7 @@ export class SrsDeckManager<Stats> {
             ? this.algorithm.deserializeStats(saved.stats)
             : (saved.stats as Stats)
           : this.algorithm.defaultStats(),
+        learnedOutline: saved?.learnedOutline ?? false,
       }
     })
   }
@@ -79,10 +76,7 @@ export class SrsDeckManager<Stats> {
       if (card.id !== cardId) return card
       return {
         ...card,
-        stats: {
-          ...card.stats,
-          learnedOutline: learned,
-        },
+        learnedOutline: learned,
       }
     })
   }
@@ -92,7 +86,12 @@ export class SrsDeckManager<Stats> {
     if (!card) {
       return true
     }
-    return this.algorithm.shouldShowOutline(card.stats)
+    const state = this.getState(card.stats)
+    const needsGuidedState =
+      state === SrsCardState.New ||
+      state === SrsCardState.Learning ||
+      state === SrsCardState.Relearning
+    return needsGuidedState && !card.learnedOutline
   }
 
   getState(stats: Stats) {

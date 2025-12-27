@@ -1,9 +1,9 @@
 import { createEmptyCard, fsrs, Rating, State, type Card, type Grade } from 'ts-fsrs'
 import type { ReviewRating } from './types'
-import type { SrsAlgorithm, BaseStats } from './SrsDeckManager'
+import type { SrsAlgorithm } from './SrsDeckManager'
 import { SrsCardState } from './SrsDeckManager'
 
-export type CardStats = Card & BaseStats
+export type CardStats = Card
 
 const ratingMap: Record<ReviewRating, Grade> = {
   again: Rating.Again,
@@ -36,10 +36,10 @@ const reviveDate = (value: undefined | null | string | number | Date, fallback: 
   return fallback
 }
 
-const deserializeCard = (raw: unknown): CardStats => {
+const deserializeCard = (raw: unknown): Card => {
   const base = createEmptyCard()
   if (!raw || typeof raw !== 'object') {
-    return { ...base, learnedOutline: false }
+    return base
   }
   const partial = raw as Partial<Card & { learnedOutline?: boolean }>
   const due = reviveDate(partial.due, base.due)
@@ -52,23 +52,15 @@ const deserializeCard = (raw: unknown): CardStats => {
     ...partial,
     due,
     last_review: lastReview,
-    learnedOutline: typeof partial.learnedOutline === 'boolean' ? partial.learnedOutline : false,
   }
 }
 
-export const fsrsAlgorithm: SrsAlgorithm<CardStats> = {
-  defaultStats: () => ({ ...createEmptyCard(), learnedOutline: false }),
+export const fsrsAlgorithm: SrsAlgorithm<Card> = {
+  defaultStats: () => (createEmptyCard()),
   computeNextStats: (stats, rating) => {
     const grade = ratingMap[rating]
     const result = scheduler.next(stats, new Date(), grade)
-    return { ...result.card, learnedOutline: stats.learnedOutline }
-  },
-  shouldShowOutline: (stats) => {
-    const needsGuidedState =
-      stats.state === State.New ||
-      stats.state === State.Learning ||
-      stats.state === State.Relearning
-    return needsGuidedState && !stats.learnedOutline
+    return result.card
   },
   deserializeStats: (raw) => deserializeCard(raw),
   getState: (stats) => stateMap[stats.state],
