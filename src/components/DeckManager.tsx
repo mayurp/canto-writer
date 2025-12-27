@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
 import { useSettings } from '../hooks/useSettings'
-import { createSrsManager } from '../srs/createManager'
 import { SrsCardState } from '../srs/SrsDeckManager'
+import { useSchedulerContext } from '../context/SchedulerContext'
+import type { SchedulerCardInfo } from '../hooks/useScheduler'
 
 type DeckManagerProps = {
   deck: FlashcardDefinition[]
@@ -10,12 +11,6 @@ type DeckManagerProps = {
   addCards: (ids: string[]) => void
   removeCard: (id: string) => void
   clearAll: () => void
-}
-
-type CardScheduleInfo = {
-  state: SrsCardState
-  dueDate: Date
-  stability: number
 }
 
 const byId = (deck: FlashcardDefinition[]) =>
@@ -32,6 +27,7 @@ export function DeckManager({
   clearAll,
 }: DeckManagerProps) {
   const { settings } = useSettings()
+  const { cardInfoById } = useSchedulerContext()
   const orderMode = settings.orderMode
   const [rangeStart, setRangeStart] = useState('')
   const [rangeEnd, setRangeEnd] = useState('')
@@ -82,18 +78,7 @@ export function DeckManager({
     setMessage(`Added ${ids.length} cards.`)
   }
 
-  const statsById = useMemo(() => {
-    if (typeof window === 'undefined') return {}
-    const manager = createSrsManager(deck)
-    return manager.getCards().reduce<Record<string, CardScheduleInfo>>((acc, entry) => {
-      acc[entry.id] = {
-        state: manager.getState(entry.stats),
-        dueDate: manager.getDueDate(entry.stats),
-        stability: manager.getStability(entry.stats),
-      }
-      return acc
-    }, {})
-  }, [deck])
+  const statsById: Record<string, SchedulerCardInfo> = cardInfoById
 
   const selectedCards = selectedIds.map((id) => deckById[id]).filter(Boolean)
 
@@ -104,12 +89,12 @@ export function DeckManager({
     [SrsCardState.Relearning]: 'Relearning',
   }
 
-  const formatState = (stats?: CardScheduleInfo) => {
+  const formatState = (stats?: SchedulerCardInfo) => {
     if (!stats) return '—'
-    return stateLabels[stats.state] ?? '—'
+    return stateLabels[stats.state as SrsCardState] ?? '—'
   }
 
-  const formatDue = (stats?: CardScheduleInfo) => {
+  const formatDue = (stats?: SchedulerCardInfo) => {
     if (!stats) return '—'
     const diffMs = stats.dueDate.getTime() - Date.now()
     if (diffMs <= 0) return 'Due now'
@@ -123,7 +108,7 @@ export function DeckManager({
     return `${Math.round(diffMonths)}mo`
   }
 
-  const formatStability = (stats?: CardScheduleInfo) => {
+  const formatStability = (stats?: SchedulerCardInfo) => {
     if (!stats) return '—'
     return `${stats.stability.toFixed(1)}`
   }
