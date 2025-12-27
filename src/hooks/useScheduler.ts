@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState, useCallback } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
 import type { ReviewRating } from '../srs/types'
-import { createSrsManager } from '../srs/createManager'
+import { createSrsManager, createSrsManagerUseRef } from '../srs/createManager'
 import { writeStoredState } from '../srs/storage'
-import type { SrsDeckManager, ScheduledCard } from '../srs/SrsDeckManager'
+import type { ScheduledCard } from '../srs/SrsDeckManager'
 import type { CardStats } from '../srs/fsrsAlgorithm'
 
 export const useScheduler = (definitions: FlashcardDefinition[]) => {
-  const managerRef = useRef<SrsDeckManager<CardStats>>(createSrsManager(definitions))
+  const managerRef = createSrsManagerUseRef(definitions)
   const [cards, setCards] = useState<ScheduledCard<CardStats>[]>(() => managerRef.current.getCards())
   const [heartbeat, setHeartbeat] = useState(() => Date.now())
 
