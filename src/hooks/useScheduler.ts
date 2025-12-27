@@ -33,15 +33,21 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     writeStoredState(manager.getCards())
   }, [cards])
 
+  const getDueData = (stats: CardStats) => {
+    const manager = managerRef.current
+    const dueDate = manager.getDueDate(stats)
+    return dueDate.getTime()
+  }
+
   const sorted = useMemo(
-    () => [...cards].sort((a, b) => a.stats.due.getTime() - b.stats.due.getTime()),
+    () => [...cards].sort((a, b) => getDueData(a.stats) - getDueData(b.stats)),
     [cards],
   )
 
   const now = heartbeat
-  const dueCount = cards.filter((card) => card.stats.due.getTime() <= now).length
+  const dueCount = cards.filter((card) => getDueData(card.stats) <= now).length
   const currentCard =
-    sorted.find((card) => card.stats.due.getTime() <= now) ?? sorted[0] ?? null
+    sorted.find((card) => getDueData(card.stats) <= now) ?? sorted[0] ?? null
 
   const reviewCard = useCallback(
     (cardId: string, rating: ReviewRating) => {

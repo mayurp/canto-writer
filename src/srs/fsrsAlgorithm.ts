@@ -1,6 +1,7 @@
 import { createEmptyCard, fsrs, Rating, State, type Card, type Grade } from 'ts-fsrs'
 import type { ReviewRating } from './types'
 import type { SrsAlgorithm, BaseStats } from './SrsDeckManager'
+import { SrsCardState } from './SrsDeckManager'
 
 export type CardStats = Card & BaseStats
 
@@ -14,6 +15,13 @@ const ratingMap: Record<ReviewRating, Grade> = {
 const scheduler = fsrs({
   enable_fuzz: false,
 })
+
+const stateMap: Record<State, SrsCardState> = {
+  [State.New]: SrsCardState.New,
+  [State.Learning]: SrsCardState.Learning,
+  [State.Review]: SrsCardState.Review,
+  [State.Relearning]: SrsCardState.Relearning,
+}
 
 const reviveDate = (value: undefined | null | string | number | Date, fallback: Date): Date => {
   if (value instanceof Date) return value
@@ -63,4 +71,7 @@ export const fsrsAlgorithm: SrsAlgorithm<CardStats> = {
     return needsGuidedState && !stats.learnedOutline
   },
   deserializeStats: (raw) => deserializeCard(raw),
+  getState: (stats) => stateMap[stats.state],
+  getDueDate: (stats) => stats.due,
+  getStability: (stats) => stats.stability,
 }

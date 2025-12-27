@@ -6,11 +6,23 @@ export interface BaseStats {
   learnedOutline: boolean
 }
 
+export const SrsCardState = {
+  New: 0,
+  Learning: 1,
+  Review: 2,
+  Relearning: 3,
+} as const
+
+export type SrsCardState = (typeof SrsCardState)[keyof typeof SrsCardState]
+
 export type SrsAlgorithm<Stats> = {
   defaultStats: () => Stats
   computeNextStats: (stats: Stats, rating: ReviewRating) => Stats
   shouldShowOutline: (stats: Stats) => boolean
   deserializeStats?: (raw: unknown) => Stats
+  getState: (stats: Stats) => SrsCardState
+  getDueDate: (stats: Stats) => Date
+  getStability: (stats: Stats) => number
 }
 
 export type ScheduledCard<Stats = unknown> = FlashcardDefinition & {
@@ -81,5 +93,17 @@ export class SrsDeckManager<Stats> {
       return true
     }
     return this.algorithm.shouldShowOutline(card.stats)
+  }
+
+  getState(stats: Stats) {
+    return this.algorithm.getState(stats)
+  }
+
+  getDueDate(stats: Stats) {
+    return this.algorithm.getDueDate(stats)
+  }
+
+  getStability(stats: Stats) {
+    return this.algorithm.getStability(stats)
   }
 }
