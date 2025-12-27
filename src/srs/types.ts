@@ -1,4 +1,11 @@
-export type ReviewRating = 'again' | 'hard' | 'good' | 'easy'
+export const ReviewRating = {
+  Again: 'again',
+  Hard: 'hard',
+  Good: 'good',
+  Easy: 'easy',
+} as const
+
+export type ReviewRating = (typeof ReviewRating)[keyof typeof ReviewRating]
 
 export const SrsCardState = {
   New: 0,

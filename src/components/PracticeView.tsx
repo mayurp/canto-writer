@@ -1,25 +1,25 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { QuizSummary } from 'hanzi-writer'
-import type { ReviewRating } from '../srs/types'
+import { ReviewRating, type ReviewRating as ReviewRatingType } from '../srs/types'
 import { StrokeAnimator } from './StrokeAnimator'
 import { useSettings } from '../hooks/useSettings'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamples } from '../hooks/useVocabExamples'
 
-const ratingLabels: Record<ReviewRating, string> = {
-  again: 'Again',
-  hard: 'Hard',
-  good: 'Good',
-  easy: 'Easy',
+const ratingLabels: Record<ReviewRatingType, string> = {
+  [ReviewRating.Again]: 'Again',
+  [ReviewRating.Hard]: 'Hard',
+  [ReviewRating.Good]: 'Good',
+  [ReviewRating.Easy]: 'Easy',
 }
 
-const ratingFromMistakes = (summary: QuizSummary, guidedRun: boolean): ReviewRating => {
-  if (guidedRun) return 'again'
+const ratingFromMistakes = (summary: QuizSummary, guidedRun: boolean): ReviewRatingType => {
+  if (guidedRun) return ReviewRating.Again
   const count = summary.totalMistakes ?? 0
-  if (count === 0) return 'easy'
-  if (count <= 2) return 'good'
-  if (count <= 4) return 'hard'
-  return 'again'
+  if (count === 0) return ReviewRating.Easy
+  if (count <= 2) return ReviewRating.Good
+  if (count <= 4) return ReviewRating.Hard
+  return ReviewRating.Again
 }
 
 const MIN_WRITER_SIZE = 220
@@ -57,7 +57,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
-  const [pendingRating, setPendingRating] = useState<ReviewRating | null>(null)
+  const [pendingRating, setPendingRating] = useState<ReviewRatingType | null>(null)
   const [showStrokeOutline, setShowStrokeOutline] = useState(() => shouldShowOutline(currentCard.id))
   const currentCardId = currentCard.id
 
@@ -103,7 +103,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
     [currentCardId, setOutlineLearned, showStrokeOutline],
   )
 
-  const handleRating = useCallback((rating: ReviewRating) => {
+  const handleRating = useCallback((rating: ReviewRatingType) => {
     setPendingRating(rating)
     setCardCompleted(true)
   }, [])
@@ -200,7 +200,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
           </div>
           {settings.debug && (
             <div className="grading-buttons">
-              {(Object.keys(ratingLabels) as ReviewRating[]).map((rating) => (
+              {(Object.keys(ratingLabels) as ReviewRatingType[]).map((rating) => (
                 <button
                   key={rating}
                   className={`grade-button grade-${rating}`}
