@@ -24,8 +24,7 @@ export const useDeckSelection = (deck: FlashcardDefinition[]) => {
   }, [selectedIds])
 
   const addCards = useCallback((ids: string[]) => {
-    const additions = new Set(ids)
-    updateSelection((prev) => Array.from(new Set([...prev, ...additions])))
+    updateSelection((prev) => Array.from(new Set([...prev, ...ids])))
   }, [updateSelection])
 
   const removeCard = useCallback((id: string) => {
