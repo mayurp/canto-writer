@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
 import { useSettings } from '../hooks/useSettings'
-import { SrsCardState } from '../srs/SrsDeckManager'
+import { SrsCardState } from '../srs/types'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import type { SchedulerCardInfo } from '../hooks/useScheduler'
 

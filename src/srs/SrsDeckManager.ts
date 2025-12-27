@@ -1,16 +1,6 @@
 import type { FlashcardDefinition } from '../data/cards'
-import type { ReviewRating } from './types'
+import { SrsCardState, type ReviewRating } from './types'
 import type { SrsCard, SrsCardRecord } from '../models/SrsCard'
-
-
-export const SrsCardState = {
-  New: 0,
-  Learning: 1,
-  Review: 2,
-  Relearning: 3,
-} as const
-
-export type SrsCardState = (typeof SrsCardState)[keyof typeof SrsCardState]
 
 export type SrsAlgorithm<Stats> = {
   defaultStats: () => Stats

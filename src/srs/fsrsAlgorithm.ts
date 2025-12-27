@@ -1,7 +1,6 @@
 import { createEmptyCard, fsrs, Rating, State, type Card, type Grade } from 'ts-fsrs'
-import type { ReviewRating } from './types'
+import { SrsCardState, type ReviewRating } from './types'
 import type { SrsAlgorithm } from './SrsDeckManager'
-import { SrsCardState } from './SrsDeckManager'
 
 export type CardStats = Card
 

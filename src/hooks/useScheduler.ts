@@ -9,7 +9,7 @@ import {
 } from '../srs/createManager'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../models/db'
-import type { SrsCardState } from '../srs/SrsDeckManager'
+import type { SrsCardState } from '../srs/types'
 
 export type SchedulerCardInfo = {
   state: SrsCardState
