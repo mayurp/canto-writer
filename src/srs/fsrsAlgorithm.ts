@@ -1,10 +1,8 @@
 import { createEmptyCard, fsrs, Rating, State, type Card, type Grade } from 'ts-fsrs'
 import type { ReviewRating } from './types'
-import type { SrsAlgorithm } from './SrsDeckManager'
+import type { SrsAlgorithm, BaseStats } from './SrsDeckManager'
 
-export type CardStats = Card & {
-  learnedOutline: boolean
-}
+export type CardStats = Card & BaseStats
 
 const ratingMap: Record<ReviewRating, Grade> = {
   again: Rating.Again,

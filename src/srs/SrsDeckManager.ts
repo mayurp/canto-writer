@@ -1,6 +1,11 @@
 import type { FlashcardDefinition } from '../data/cards'
 import type { ReviewRating } from './types'
 
+// Common base stats independent of specific SRS algorithms
+export interface BaseStats {
+  learnedOutline: boolean
+}
+
 export type SrsAlgorithm<Stats> = {
   defaultStats: () => Stats
   computeNextStats: (stats: Stats, rating: ReviewRating) => Stats
