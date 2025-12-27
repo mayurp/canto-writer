@@ -1,11 +1,10 @@
 import { createContext, useContext } from 'react'
-import type { ScheduledCard } from '../srs/SrsDeckManager'
-import type { CardStats } from '../srs/fsrsAlgorithm'
 import type { ReviewRating } from '../srs/types'
+import type { SchedulerCard } from '../srs/createManager'
 
 export type SchedulerValue = {
-  cards: ScheduledCard<CardStats>[]
-  currentCard: ScheduledCard<CardStats> | null
+  cards: SchedulerCard[]
+  currentCard: SchedulerCard | null
   totalCount: number
   dueCount: number
   reviewCard: (cardId: string, rating: ReviewRating) => void
