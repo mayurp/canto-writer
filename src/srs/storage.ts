@@ -1,20 +1,19 @@
-import type { ScheduledCard } from './SrsDeckManager'
-import type { CardStats } from './fsrsAlgorithm'
+import type { SrsCardRecord } from '../models/SrsCard'
 
 export const SRS_STORAGE_KEY = 'canto-writer.deck-state'
 
-export const readStoredState = (): ScheduledCard<CardStats>[] | null => {
+export const readStoredState = (): SrsCardRecord[] | null => {
   if (typeof window === 'undefined') return null
   try {
     const stored = window.localStorage.getItem(SRS_STORAGE_KEY)
     if (!stored) return null
-    return JSON.parse(stored) as ScheduledCard<CardStats>[]
+    return JSON.parse(stored) as SrsCardRecord[]
   } catch {
     return null
   }
 }
 
-export const writeStoredState = (cards: ScheduledCard<CardStats>[]) => {
+export const writeStoredState = (cards: SrsCardRecord[]) => {
   if (typeof window === 'undefined') return
   try {
     window.localStorage.setItem(SRS_STORAGE_KEY, JSON.stringify(cards))

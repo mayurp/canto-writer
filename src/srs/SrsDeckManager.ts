@@ -1,5 +1,6 @@
 import type { FlashcardDefinition } from '../data/cards'
 import type { ReviewRating } from './types'
+import type { SrsCard, SrsCardRecord } from '../models/SrsCard'
 
 
 export const SrsCardState = {
@@ -14,16 +15,16 @@ export type SrsCardState = (typeof SrsCardState)[keyof typeof SrsCardState]
 export type SrsAlgorithm<Stats> = {
   defaultStats: () => Stats
   computeNextStats: (stats: Stats, rating: ReviewRating) => Stats
-  deserializeStats?: (raw: unknown) => Stats
+  deserializeStats: (raw: unknown) => Stats
   getState: (stats: Stats) => SrsCardState
   getDueDate: (stats: Stats) => Date
   getStability: (stats: Stats) => number
 }
 
-export type ScheduledCard<Stats> = FlashcardDefinition & {
-  stats: Stats
-  learnedOutline: boolean
-}
+export type ScheduledCard<Stats> = FlashcardDefinition &
+  SrsCard & {
+    stats: Stats
+  }
 
 export class SrsDeckManager<Stats> {
   private cards: ScheduledCard<Stats>[]
@@ -32,7 +33,7 @@ export class SrsDeckManager<Stats> {
   constructor(
     definitions: FlashcardDefinition[],
     algorithm: SrsAlgorithm<Stats>,
-    storedCards?: ScheduledCard<Stats>[],
+    storedCards?: SrsCardRecord[],
   ) {
     this.algorithm = algorithm
     this.cards = this.hydrate(definitions, storedCards)
@@ -40,17 +41,13 @@ export class SrsDeckManager<Stats> {
 
   private hydrate(
     definitions: FlashcardDefinition[],
-    storedCards?: ScheduledCard<Stats>[],
+    storedCards?: SrsCardRecord[],
   ): ScheduledCard<Stats>[] {
     return definitions.map((card) => {
       const saved = storedCards?.find((entry) => entry.id === card.id)
       return {
         ...card,
-        stats: saved?.stats
-          ? this.algorithm.deserializeStats
-            ? this.algorithm.deserializeStats(saved.stats)
-            : (saved.stats as Stats)
-          : this.algorithm.defaultStats(),
+        stats: saved?.stats !== undefined ? this.algorithm.deserializeStats(saved.stats) : this.algorithm.defaultStats(),
         learnedOutline: saved?.learnedOutline ?? false,
       }
     })
@@ -104,5 +101,13 @@ export class SrsDeckManager<Stats> {
 
   getStability(stats: Stats) {
     return this.algorithm.getStability(stats)
+  }
+
+  serializeCard(card: ScheduledCard<Stats>): SrsCardRecord {
+    return {
+      id: card.id,
+      stats: card.stats,
+      learnedOutline: card.learnedOutline,
+    }
   }
 }

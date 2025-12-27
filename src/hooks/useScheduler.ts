@@ -33,7 +33,8 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   useEffect(() => {
     const manager = managerRef.current
     if (!manager) return
-    writeStoredState(manager.getCards())
+    const serialized = manager.getCards().map((card) => manager.serializeCard(card))
+    writeStoredState(serialized)
   }, [cards])
 
   const getDueData = (stats: SchedulerStats) => {
