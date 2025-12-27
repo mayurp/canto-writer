@@ -7,7 +7,7 @@ import {
   type OrderMode,
   type Settings,
   ttsSpeedSteps,
-} from '../models/settings'
+} from '../models/Settings'
 
 export { ttsSpeedSteps }
 export type { OrderMode }

@@ -1,24 +1,47 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
+import { db } from '../models/db'
+import { DEFAULT_SELECTION_KEY } from '../models/DeckSelection'
 
-const STORAGE_KEY = 'canto-writer.deck-selection'
+const readSelection = async (): Promise<string[]> => {
+  const record = await db.deckSelections.get(DEFAULT_SELECTION_KEY)
+  return record?.selectedIds ?? []
+}
+
+const writeSelection = async (selectedIds: string[]) => {
+  await db.deckSelections.put({ key: DEFAULT_SELECTION_KEY, selectedIds })
+}
 
 export const useDeckSelection = (deck: FlashcardDefinition[]) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
-    if (typeof window === 'undefined') return []
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY)
-      if (!stored) return []
-      const parsed = JSON.parse(stored)
-      return Array.isArray(parsed) ? (parsed as string[]) : []
-    } catch {
-      return []
-    }
-  })
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
+
+  const initializedRef = useRef(false)
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedIds))
+    let mounted = true
+    void readSelection()
+      .then((ids) => {
+        if (mounted && ids.length) {
+          console.log('Loaded selection from DB', ids)
+          setSelectedIds(ids)
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to load deck selection', error)
+      })
+      .finally(() => {
+        if (mounted) initializedRef.current = true
+      })
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!initializedRef.current) return
+    void writeSelection(selectedIds).catch((error) => {
+      console.error('Failed to save deck selection', error)
+    })
   }, [selectedIds])
 
   useEffect(() => {
@@ -27,14 +50,14 @@ export const useDeckSelection = (deck: FlashcardDefinition[]) => {
   }, [deck])
 
   // TODO: remove this automatic selection once debugging is done.
-  useEffect(() => {
-    if (!deck.length) return
-    setSelectedIds((prev) => {
-      if (prev.length) return prev
-      const initial = deck.slice(0, 10).map((card) => card.id)
-      return initial
-    })
-  }, [deck])
+  // useEffect(() => {
+  //   if (!deck.length) return
+  //   setSelectedIds((prev) => {
+  //     if (prev.length) return prev
+  //     const initial = deck.slice(0, 10).map((card) => card.id)
+  //     return initial
+  //   })
+  // }, [deck])
   //
 
   const addCards = useCallback((ids: string[]) => {
