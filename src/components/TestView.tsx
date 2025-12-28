@@ -15,6 +15,10 @@ export function TestView({ playPronunciation, voiceRate, isSupported }: TestView
     playPronunciation(customTts, { rate: voiceRate })
   }
 
+  const handleClearSrs = async () => {
+    await db.srsCards.clear()
+  }
+
   return (
     <>
       <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
@@ -38,6 +42,9 @@ export function TestView({ playPronunciation, voiceRate, isSupported }: TestView
         </div>
         <button type="button" className="custom-tts-button" onClick={() => db.cloud.login?.()}>
           Login
+        </button>
+        <button type="button" className="custom-tts-button" onClick={handleClearSrs}>
+          Clear SRS Records
         </button>
         {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
       </section>
