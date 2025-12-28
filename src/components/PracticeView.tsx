@@ -57,7 +57,10 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
-  const [pendingRating, setPendingRating] = useState<ReviewRatingType | null>(null)
+  const [pendingGrading, setPendingGrading] = useState<{
+    rating: ReviewRatingType | null
+    outlineLearned: boolean | null
+  }>({ rating: null, outlineLearned: null })
   const [showStrokeOutline, setShowStrokeOutline] = useState(() => shouldShowOutline(currentCard.id))
   const currentCardId = currentCard.id
 
@@ -70,7 +73,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
 
   useEffect(() => {
     setCardCompleted(false)
-    setPendingRating(null)
+    setPendingGrading({ rating: null, outlineLearned: null })
     setStrokeSession(0)
     setShowStrokeOutline(shouldShowOutline(currentCardId))
   }, [currentCardId, shouldShowOutline])
@@ -94,32 +97,38 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
     (summary: QuizSummary) => {
       const guidedRun = showStrokeOutline
       const rating = ratingFromMistakes(summary, guidedRun)
-      const outlineLearned = guidedRun ? (summary.totalMistakes ?? 0) === 0 : rating === 'easy' || rating === 'good'
+      const outlineLearned =
+        guidedRun ? (summary.totalMistakes ?? 0) === 0 : rating === ReviewRating.Good || rating === ReviewRating.Easy
 
-      setOutlineLearned(currentCardId, outlineLearned)
       setCardCompleted(true)
-      setPendingRating(rating)
+      setPendingGrading({ rating, outlineLearned })
     },
-    [currentCardId, setOutlineLearned, showStrokeOutline],
+    [showStrokeOutline],
   )
 
   const handleRating = useCallback((rating: ReviewRatingType) => {
-    setPendingRating(rating)
+    setPendingGrading((prev) => ({
+      rating,
+      outlineLearned: prev.outlineLearned,
+    }))
     setCardCompleted(true)
   }, [])
 
   const handleStrokeReset = useCallback(() => {
     setStrokeSession((prev) => prev + 1)
     setCardCompleted(false)
-    setPendingRating(null)
+    setPendingGrading({ rating: null, outlineLearned: null })
   }, [])
 
   const handleNextCard = useCallback(() => {
-    if (!pendingRating) return
-    reviewCard(currentCardId, pendingRating)
-    setPendingRating(null)
+    if (!pendingGrading.rating) return
+    if (pendingGrading.outlineLearned !== null) {
+      setOutlineLearned(currentCardId, pendingGrading.outlineLearned)
+    }
+    reviewCard(currentCardId, pendingGrading.rating)
+    setPendingGrading({ rating: null, outlineLearned: null })
     setCardCompleted(false)
-  }, [currentCardId, pendingRating, reviewCard])
+  }, [currentCardId, pendingGrading, reviewCard, setOutlineLearned])
 
   const displayOrder = useMemo(() => {
     if (settings.orderMode === 'rth') {
@@ -192,14 +201,14 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
             <button
               type="button"
               className="next-button"
-              disabled={!cardCompleted || !pendingRating}
+              disabled={!cardCompleted || !pendingGrading.rating}
               onClick={handleNextCard}
             >
               Next
             </button>
           </div>
           {settings.debug && (
-            <div className="grading-buttons">
+             <div className="grading-buttons">
               {(Object.keys(ratingLabels) as ReviewRatingType[]).map((rating) => (
                 <button
                   key={rating}
