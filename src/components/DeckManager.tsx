@@ -191,6 +191,7 @@ export function DeckManager({
           <div className="range-form">
             <input
               type="number"
+              min={1}
               placeholder="Start frame"
               value={rangeStart}
               onChange={(event) => setRangeStart(event.target.value)}
@@ -198,6 +199,7 @@ export function DeckManager({
             <span>to</span>
             <input
               type="number"
+              min={1}
               placeholder="End frame"
               value={rangeEnd}
               onChange={(event) => setRangeEnd(event.target.value)}
