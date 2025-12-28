@@ -18,14 +18,13 @@ export type SchedulerCardInfo = {
 }
 
 export const useScheduler = (definitions: FlashcardDefinition[]) => {
-  const managerRef = useRef<SchedulerManager | null>(null)
+  const managerRef = useRef<SchedulerManager>(createSrsManager())
   const [cards, setCards] = useState<SchedulerCard[]>([])
   const [heartbeat, setHeartbeat] = useState(() => Date.now())
   const storedCards = useLiveQuery(() => db.srsCards.toArray(), [], [])
   const cardInfoById = useMemo(() => {
     const manager = managerRef.current
-    if (!manager) return {}
-    return manager.getCards().reduce<Record<string, SchedulerCardInfo>>((acc, card) => {
+    return cards.reduce<Record<string, SchedulerCardInfo>>((acc, card) => {
       acc[card.id] = {
         state: manager.getState(card.stats),
         dueDate: manager.getDueDate(card.stats),
@@ -37,12 +36,8 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
 
   useEffect(() => {
     if (!storedCards) return
-    if (!managerRef.current) {
-      managerRef.current = createSrsManager(definitions, storedCards)
-    } else {
-      managerRef.current.reset(definitions, storedCards)
-    }
-    setCards(managerRef.current.getCards())
+    const manager = managerRef.current
+    setCards(manager.hydrate(definitions, storedCards))
   }, [definitions, storedCards])
 
   useEffect(() => {
@@ -72,39 +67,39 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   const currentCard =
     sorted.find((card) => getDueData(card.stats) <= now) ?? sorted[0] ?? null
 
-  const persistUpdate = useCallback(
-    (manager: SchedulerManager, updatedCards: SchedulerCard[], cardId: string) => {
-      const updatedCard = updatedCards.find((card) => card.id === cardId)
-      if (updatedCard) {
-        void db.srsCards.put(manager.serializeCard(updatedCard))
-      }
-      setCards(updatedCards)
-    },
-    [],
-  )
+  const persistUpdate = useCallback((manager: SchedulerManager, updatedCards: SchedulerCard[], cardId: string) => {
+    const updatedCard = updatedCards.find((card) => card.id === cardId)
+    if (updatedCard) {
+      void db.srsCards.put(manager.serializeCard(updatedCard))
+    }
+  }, [])
 
   const reviewCard = useCallback(
     (cardId: string, rating: ReviewRating) => {
       const manager = managerRef.current
-      if (!manager) return
-      const updated = manager.reviewCard(cardId, rating)
-      persistUpdate(manager, updated, cardId)
+      setCards((prev) => {
+        const updated = manager.reviewCard(prev, cardId, rating)
+        persistUpdate(manager, updated, cardId)
+        return updated
+      })
       setHeartbeat(Date.now())
     },
     [persistUpdate],
   )
 
   const shouldShowOutline = useCallback(
-    (cardId: string) => managerRef.current?.shouldShowOutline(cardId) ?? false,
-    [],
+    (cardId: string) => managerRef.current.shouldShowOutline(cards, cardId),
+    [cards],
   )
 
   const setOutlineLearned = useCallback(
     (cardId: string, learned: boolean) => {
       const manager = managerRef.current
-      if (!manager) return
-      const updated = manager.setOutlineLearned(cardId, learned)
-      persistUpdate(manager, updated, cardId)
+      setCards((prev) => {
+        const updated = manager.setOutlineLearned(prev, cardId, learned)
+        persistUpdate(manager, updated, cardId)
+        return updated
+      })
     },
     [persistUpdate],
   )

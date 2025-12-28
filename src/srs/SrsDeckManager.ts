@@ -17,22 +17,13 @@ export type ScheduledCard<Stats> = FlashcardDefinition &
   }
 
 export class SrsDeckManager<Stats> {
-  private cards: ScheduledCard<Stats>[]
   private algorithm: SrsAlgorithm<Stats>
 
-  constructor(
-    definitions: FlashcardDefinition[],
-    algorithm: SrsAlgorithm<Stats>,
-    storedCards?: SrsCardRecord[],
-  ) {
+  constructor(algorithm: SrsAlgorithm<Stats>) {
     this.algorithm = algorithm
-    this.cards = this.hydrate(definitions, storedCards)
   }
 
-  private hydrate(
-    definitions: FlashcardDefinition[],
-    storedCards?: SrsCardRecord[],
-  ): ScheduledCard<Stats>[] {
+  hydrate(definitions: FlashcardDefinition[], storedCards?: SrsCardRecord[]): ScheduledCard<Stats>[] {
     return definitions.map((card) => {
       const saved = storedCards?.find((entry) => entry.id === card.id)
       return {
@@ -43,34 +34,28 @@ export class SrsDeckManager<Stats> {
     })
   }
 
-  getCards() {
-    return this.cards
-  }
-
-  reviewCard(cardId: string, rating: ReviewRating) {
-    this.cards = this.cards.map((card) => {
+  reviewCard(cards: ScheduledCard<Stats>[], cardId: string, rating: ReviewRating) {
+    return cards.map((card) => {
       if (card.id !== cardId) return card
       return {
         ...card,
         stats: this.algorithm.computeNextStats(card.stats, rating),
       }
     })
-    return this.cards
   }
 
-  setOutlineLearned(cardId: string, learned: boolean) {
-    this.cards = this.cards.map((card) => {
+  setOutlineLearned(cards: ScheduledCard<Stats>[], cardId: string, learned: boolean) {
+    return cards.map((card) => {
       if (card.id !== cardId) return card
       return {
         ...card,
         learnedOutline: learned,
       }
     })
-    return this.cards
   }
 
-  shouldShowOutline(cardId: string): boolean {
-    const card = this.cards.find((entry) => entry.id === cardId)
+  shouldShowOutline(cards: ScheduledCard<Stats>[], cardId: string): boolean {
+    const card = cards.find((entry) => entry.id === cardId)
     if (!card) {
       return true
     }
@@ -100,9 +85,5 @@ export class SrsDeckManager<Stats> {
       stats: card.stats,
       learnedOutline: card.learnedOutline,
     }
-  }
-
-  reset(definitions: FlashcardDefinition[], storedCards?: SrsCardRecord[]) {
-    this.cards = this.hydrate(definitions, storedCards)
   }
 }
