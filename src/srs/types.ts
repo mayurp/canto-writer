@@ -7,6 +7,11 @@ export const ReviewRating = {
 
 export type ReviewRating = (typeof ReviewRating)[keyof typeof ReviewRating]
 
+export type GradingInfo = {
+  rating: ReviewRating
+  learnedOutline: boolean
+}
+
 export const SrsCardState = {
   New: 0,
   Learning: 1,

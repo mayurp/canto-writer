@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
-import type { ReviewRating, SrsCardState } from '../srs/types'
+import type { GradingInfo, SrsCardState } from '../srs/types'
 import {
   createSrsManager,
   type SchedulerCard,
@@ -74,17 +74,15 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     }
   }, [])
 
-  const reviewCard = useCallback(
-    (cardId: string, rating: ReviewRating) => {
+  const gradeCard = useCallback(
+    (cardId: string, grading: GradingInfo) => {
       const manager = managerRef.current
-      setCards((prev) => {
-        const updated = manager.reviewCard(prev, cardId, rating)
-        persistUpdate(manager, updated, cardId)
-        return updated
-      })
+      const updated = manager.gradeCard(cards, cardId, grading)
+      persistUpdate(manager, updated, cardId)
+      setCards(updated)
       setHeartbeat(Date.now())
     },
-    [persistUpdate],
+    [cards, persistUpdate],
   )
 
   const shouldShowOutline = useCallback(
@@ -92,26 +90,13 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     [cards],
   )
 
-  const setOutlineLearned = useCallback(
-    (cardId: string, learned: boolean) => {
-      const manager = managerRef.current
-      setCards((prev) => {
-        const updated = manager.setOutlineLearned(prev, cardId, learned)
-        persistUpdate(manager, updated, cardId)
-        return updated
-      })
-    },
-    [persistUpdate],
-  )
-
   return {
     cards,
     currentCard,
     totalCount: cards.length,
     dueCount,
-    reviewCard,
+    gradeCard,
     shouldShowOutline,
-    setOutlineLearned,
     cardInfoById,
   }
 }

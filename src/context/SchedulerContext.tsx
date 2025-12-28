@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import type { ReviewRating } from '../srs/types'
+import type { GradingInfo } from '../srs/types'
 import type { SchedulerCard } from '../srs/createManager'
 import type { SchedulerCardInfo } from '../hooks/useScheduler'
 
@@ -8,9 +8,8 @@ export type SchedulerValue = {
   currentCard: SchedulerCard | null
   totalCount: number
   dueCount: number
-  reviewCard: (cardId: string, rating: ReviewRating) => void
+  gradeCard: (cardId: string, grading: GradingInfo) => void
   shouldShowOutline: (cardId: string) => boolean
-  setOutlineLearned: (cardId: string, learned: boolean) => void
   cardInfoById: Record<string, SchedulerCardInfo>
 }
 

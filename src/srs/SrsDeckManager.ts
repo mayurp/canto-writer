@@ -1,5 +1,5 @@
 import type { FlashcardDefinition } from '../data/cards'
-import { SrsCardState, type ReviewRating } from './types'
+import { SrsCardState, type GradingInfo, type ReviewRating } from './types'
 import type { SrsCard, SrsCardRecord } from '../models/SrsCard'
 
 export type SrsAlgorithm<Stats> = {
@@ -34,22 +34,13 @@ export class SrsDeckManager<Stats> {
     })
   }
 
-  reviewCard(cards: ScheduledCard<Stats>[], cardId: string, rating: ReviewRating) {
+  gradeCard(cards: ScheduledCard<Stats>[], cardId: string, grading: GradingInfo) {
     return cards.map((card) => {
       if (card.id !== cardId) return card
       return {
         ...card,
-        stats: this.algorithm.computeNextStats(card.stats, rating),
-      }
-    })
-  }
-
-  setOutlineLearned(cards: ScheduledCard<Stats>[], cardId: string, learned: boolean) {
-    return cards.map((card) => {
-      if (card.id !== cardId) return card
-      return {
-        ...card,
-        learnedOutline: learned,
+        stats: this.algorithm.computeNextStats(card.stats, grading.rating),
+        learnedOutline: grading.learnedOutline,
       }
     })
   }

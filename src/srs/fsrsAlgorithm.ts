@@ -57,7 +57,7 @@ const deserializeCard = (raw: unknown): Card => {
 export const fsrsAlgorithm: SrsAlgorithm<Card> = {
   defaultStats: () => (createEmptyCard()),
   computeNextStats: (stats, rating) => {
-    const grade = ratingMap[rating]
+    const grade = ratingMap[rating as keyof typeof ratingMap]
     const result = scheduler.next(stats, new Date(), grade)
     return result.card
   },

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { QuizSummary } from 'hanzi-writer'
-import { ReviewRating, type ReviewRating as ReviewRatingType } from '../srs/types'
+import { ReviewRating, type ReviewRating as ReviewRatingType, type GradingInfo } from '../srs/types'
 import { StrokeAnimator } from './StrokeAnimator'
 import { useSettings } from '../hooks/useSettings'
 import { useSchedulerContext } from '../context/SchedulerContext'
@@ -48,7 +48,7 @@ type PracticeViewProps = {
 }
 
 export function PracticeView({ playPronunciation, speaking, isSupported, voiceRate }: PracticeViewProps) {
-  const { currentCard, reviewCard, shouldShowOutline, setOutlineLearned } = useSchedulerContext()
+  const { currentCard, gradeCard, shouldShowOutline } = useSchedulerContext()
   const { settings } = useSettings()
   const { examples } = useVocabExamples()
   if (!currentCard) {
@@ -57,10 +57,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
-  const [pendingGrading, setPendingGrading] = useState<{
-    rating: ReviewRatingType | null
-    outlineLearned: boolean | null
-  }>({ rating: null, outlineLearned: null })
+  const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
   const [showStrokeOutline, setShowStrokeOutline] = useState(() => shouldShowOutline(currentCard.id))
   const currentCardId = currentCard.id
 
@@ -73,10 +70,10 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
 
   useEffect(() => {
     setCardCompleted(false)
-    setPendingGrading({ rating: null, outlineLearned: null })
+    setPendingGrading(null)
     setStrokeSession(0)
     setShowStrokeOutline(shouldShowOutline(currentCardId))
-  }, [currentCardId, shouldShowOutline])
+  }, [currentCard, currentCardId, shouldShowOutline])
 
   const currentCharacter = currentCard.character
 
@@ -97,38 +94,38 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
     (summary: QuizSummary) => {
       const guidedRun = showStrokeOutline
       const rating = ratingFromMistakes(summary, guidedRun)
-      const outlineLearned =
+      const learnedOutline =
         guidedRun ? (summary.totalMistakes ?? 0) === 0 : rating === ReviewRating.Good || rating === ReviewRating.Easy
 
       setCardCompleted(true)
-      setPendingGrading({ rating, outlineLearned })
+      setPendingGrading({ rating, learnedOutline })
     },
     [showStrokeOutline],
   )
 
-  const handleRating = useCallback((rating: ReviewRatingType) => {
-    setPendingGrading((prev) => ({
-      rating,
-      outlineLearned: prev.outlineLearned,
-    }))
-    setCardCompleted(true)
-  }, [])
+  const handleRating = useCallback(
+    (rating: ReviewRatingType) => {
+      setPendingGrading((prev) => ({
+        rating,
+        learnedOutline: prev?.learnedOutline ?? currentCard.learnedOutline,
+      }))
+      setCardCompleted(true)
+    },
+    [currentCard.learnedOutline],
+  )
 
   const handleStrokeReset = useCallback(() => {
     setStrokeSession((prev) => prev + 1)
     setCardCompleted(false)
-    setPendingGrading({ rating: null, outlineLearned: null })
+    setPendingGrading(null)
   }, [])
 
   const handleNextCard = useCallback(() => {
-    if (!pendingGrading.rating) return
-    if (pendingGrading.outlineLearned !== null) {
-      setOutlineLearned(currentCardId, pendingGrading.outlineLearned)
-    }
-    reviewCard(currentCardId, pendingGrading.rating)
-    setPendingGrading({ rating: null, outlineLearned: null })
+    if (!pendingGrading) return
+    gradeCard(currentCardId, pendingGrading)
+    setPendingGrading(null)
     setCardCompleted(false)
-  }, [currentCardId, pendingGrading, reviewCard, setOutlineLearned])
+  }, [currentCard, currentCardId, gradeCard, pendingGrading])
 
   const displayOrder = useMemo(() => {
     if (settings.orderMode === 'rth') {
@@ -201,7 +198,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
             <button
               type="button"
               className="next-button"
-              disabled={!cardCompleted || !pendingGrading.rating}
+              disabled={!cardCompleted || !pendingGrading?.rating}
               onClick={handleNextCard}
             >
               Next
