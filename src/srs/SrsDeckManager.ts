@@ -14,6 +14,10 @@ export type SrsAlgorithm<Stats> = {
 export type ScheduledCard<Stats> = FlashcardDefinition &
   SrsCard & {
     stats: Stats
+    // Fields derived from stats
+    state: SrsCardState
+    dueDate: Date
+    stability: number
   }
 
 export class SrsDeckManager<Stats> {
@@ -26,10 +30,15 @@ export class SrsDeckManager<Stats> {
   hydrate(definitions: FlashcardDefinition[], storedCards?: SrsCardRecord[]): ScheduledCard<Stats>[] {
     return definitions.map((card) => {
       const saved = storedCards?.find((entry) => entry.id === card.id)
+      const stats =
+        saved?.stats !== undefined ? this.algorithm.deserializeStats(saved.stats) : this.algorithm.defaultStats()
       return {
         ...card,
-        stats: saved?.stats !== undefined ? this.algorithm.deserializeStats(saved.stats) : this.algorithm.defaultStats(),
+        stats,
         learnedOutline: saved?.learnedOutline ?? false,
+        state: this.algorithm.getState(stats),
+        dueDate: this.algorithm.getDueDate(stats),
+        stability: this.algorithm.getStability(stats),
       }
     })
   }
@@ -37,10 +46,14 @@ export class SrsDeckManager<Stats> {
   gradeCard(cards: ScheduledCard<Stats>[], cardId: string, grading: GradingInfo) {
     return cards.map((card) => {
       if (card.id !== cardId) return card
+      const stats = this.algorithm.computeNextStats(card.stats, grading.rating)
       return {
         ...card,
-        stats: this.algorithm.computeNextStats(card.stats, grading.rating),
+        stats,
         learnedOutline: grading.learnedOutline,
+        state: this.algorithm.getState(stats),
+        dueDate: this.algorithm.getDueDate(stats),
+        stability: this.algorithm.getStability(stats),
       }
     })
   }

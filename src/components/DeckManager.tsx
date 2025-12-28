@@ -3,7 +3,6 @@ import type { FlashcardDefinition } from '../data/cards'
 import { useSettings } from '../hooks/useSettings'
 import { SrsCardState } from '../srs/types'
 import { useSchedulerContext } from '../context/SchedulerContext'
-import type { SchedulerCardInfo } from '../hooks/useScheduler'
 
 type DeckManagerProps = {
   deck: FlashcardDefinition[]
@@ -13,12 +12,6 @@ type DeckManagerProps = {
   clearAll: () => void
 }
 
-const byId = (deck: FlashcardDefinition[]) =>
-  deck.reduce<Record<string, FlashcardDefinition>>((acc, card) => {
-    acc[card.id] = card
-    return acc
-  }, {})
-
 export function DeckManager({
   deck,
   selectedIds,
@@ -27,22 +20,23 @@ export function DeckManager({
   clearAll,
 }: DeckManagerProps) {
   const { settings } = useSettings()
-  const { cardInfoById } = useSchedulerContext()
+  const { cards: scheduledCards } = useSchedulerContext()
   const orderMode = settings.orderMode
   const [rangeStart, setRangeStart] = useState('')
   const [rangeEnd, setRangeEnd] = useState('')
   const [charInput, setCharInput] = useState('')
   const [message, setMessage] = useState<string | null>(null)
-  const deckById = useMemo(() => byId(deck), [deck])
-  const deckByFrame = useMemo(() => {
-    return deck.reduce<Record<number, FlashcardDefinition>>((acc, card) => {
-      const key = orderMode === 'rth' ? card.rthOrder : card.order
-      if (typeof key === 'number' && Number.isFinite(key)) {
-        acc[key] = card
-      }
-      return acc
-    }, {})
-  }, [deck, orderMode])
+  const deckByFrame = useMemo(
+    () =>
+      deck.reduce<Record<number, FlashcardDefinition>>((acc, card) => {
+        const key = orderMode === 'rth' ? card.rthOrder : card.order
+        if (typeof key === 'number' && Number.isFinite(key)) {
+          acc[key] = card
+        }
+        return acc
+      }, {}),
+    [deck, orderMode],
+  )
 
   const handleAddRange = () => {
     const start = Number(rangeStart)
@@ -78,9 +72,18 @@ export function DeckManager({
     setMessage(`Added ${ids.length} cards.`)
   }
 
-  const statsById: Record<string, SchedulerCardInfo> = cardInfoById
+  const scheduledById = useMemo(
+    () =>
+      scheduledCards.reduce<Record<string, typeof scheduledCards[number]>>((acc, card) => {
+        acc[card.id] = card
+        return acc
+      }, {}),
+    [scheduledCards],
+  )
 
-  const selectedCards = selectedIds.map((id) => deckById[id]).filter(Boolean)
+  const selectedCards = selectedIds
+    .map((id) => scheduledById[id])
+    .filter((card): card is typeof scheduledCards[number] => !!card)
 
   const stateLabels: Record<SrsCardState, string> = {
     [SrsCardState.New]: 'New',
@@ -89,14 +92,14 @@ export function DeckManager({
     [SrsCardState.Relearning]: 'Relearning',
   }
 
-  const formatState = (stats?: SchedulerCardInfo) => {
-    if (!stats) return '—'
-    return stateLabels[stats.state as SrsCardState] ?? '—'
+  const formatState = (scheduled?: typeof scheduledCards[number]) => {
+    if (!scheduled) return '—'
+    return stateLabels[scheduled.state] ?? '—'
   }
 
-  const formatDue = (stats?: SchedulerCardInfo) => {
-    if (!stats) return '—'
-    const diffMs = stats.dueDate.getTime() - Date.now()
+  const formatDue = (scheduled?: typeof scheduledCards[number]) => {
+    if (!scheduled) return '—'
+    const diffMs = scheduled.dueDate.getTime() - Date.now()
     if (diffMs <= 0) return 'Due now'
     const diffMinutes = diffMs / 60000
     if (diffMinutes < 60) return `${Math.round(diffMinutes)}m`
@@ -108,9 +111,9 @@ export function DeckManager({
     return `${Math.round(diffMonths)}mo`
   }
 
-  const formatStability = (stats?: SchedulerCardInfo) => {
-    if (!stats) return '—'
-    return `${stats.stability.toFixed(1)}`
+  const formatStability = (scheduled?: typeof scheduledCards[number]) => {
+    if (!scheduled) return '—'
+    return `${scheduled.stability.toFixed(1)}`
   }
 
   const [sortColumn, setSortColumn] = useState<'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due' | 'stability'>(
@@ -122,8 +125,6 @@ export function DeckManager({
     const sorted = [...selectedCards]
     const directionMultiplier = sortDirection === 'asc' ? 1 : -1
     sorted.sort((a, b) => {
-      const statsA = statsById[a.id]
-      const statsB = statsById[b.id]
       switch (sortColumn) {
         case 'character':
           return a.character.localeCompare(b.character) * directionMultiplier
@@ -140,18 +141,18 @@ export function DeckManager({
           return (frameA - frameB) * directionMultiplier
         }
         case 'state': {
-          const stateA = statsA?.state ?? SrsCardState.New
-          const stateB = statsB?.state ?? SrsCardState.New
+          const stateA = a.state ?? SrsCardState.New
+          const stateB = b.state ?? SrsCardState.New
           return (stateA - stateB) * directionMultiplier
         }
         case 'due': {
-          const dueA = statsA?.dueDate.getTime() ?? 0
-          const dueB = statsB?.dueDate.getTime() ?? 0
+          const dueA = a.dueDate.getTime() ?? 0
+          const dueB = b.dueDate.getTime() ?? 0
           return (dueA - dueB) * directionMultiplier
         }
         case 'stability': {
-          const stabilityA = statsA?.stability ?? 0
-          const stabilityB = statsB?.stability ?? 0
+          const stabilityA = a.stability ?? 0
+          const stabilityB = b.stability ?? 0
           return (stabilityA - stabilityB) * directionMultiplier
         }
         default:
@@ -159,7 +160,7 @@ export function DeckManager({
       }
     })
     return sorted
-  }, [selectedCards, sortColumn, sortDirection, orderMode, statsById])
+  }, [selectedCards, sortColumn, sortDirection])
 
   const handleSort = (column: typeof sortColumn) => {
     if (sortColumn === column) {
@@ -275,16 +276,15 @@ export function DeckManager({
               </thead>
               <tbody>
                 {sortedSelectedCards.map((card) => {
-                  const stats = statsById[card.id]
                   return (
                     <tr key={card.id}>
                       <td>{card.rthOrder ?? '—'}</td>
                       <td>{card.order ?? '—'}</td>
                       <td className="selected-character">{card.character}</td>
                       <td>{card.meaning}</td>
-                      <td>{formatState(stats)}</td>
-                      <td>{formatDue(stats)}</td>
-                      <td>{formatStability(stats)}</td>
+                      <td>{formatState(card)}</td>
+                      <td>{formatDue(card)}</td>
+                      <td>{formatStability(card)}</td>
                       <td>
                         <button className="selected-remove" onClick={() => removeCard(card.id)}>
                           Remove

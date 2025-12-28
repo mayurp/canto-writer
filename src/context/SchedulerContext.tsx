@@ -1,7 +1,6 @@
 import { createContext, useContext } from 'react'
 import type { GradingInfo } from '../srs/types'
 import type { SchedulerCard } from '../srs/createManager'
-import type { SchedulerCardInfo } from '../hooks/useScheduler'
 
 export type SchedulerValue = {
   cards: SchedulerCard[]
@@ -10,7 +9,6 @@ export type SchedulerValue = {
   dueCount: number
   gradeCard: (cardId: string, grading: GradingInfo) => void
   shouldShowOutline: (cardId: string) => boolean
-  cardInfoById: Record<string, SchedulerCardInfo>
 }
 
 export const SchedulerContext = createContext<SchedulerValue | null>(null)
