@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
-import type { ReviewRating } from '../srs/types'
+import type { ReviewRating, SrsCardState } from '../srs/types'
 import {
   createSrsManager,
   type SchedulerCard,
@@ -9,7 +9,7 @@ import {
 } from '../srs/createManager'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../models/db'
-import type { SrsCardState } from '../srs/types'
+
 
 export type SchedulerCardInfo = {
   state: SrsCardState
@@ -19,7 +19,6 @@ export type SchedulerCardInfo = {
 
 export const useScheduler = (definitions: FlashcardDefinition[]) => {
   const managerRef = useRef<SchedulerManager | null>(null)
-  const hydratingRef = useRef(false)
   const [cards, setCards] = useState<SchedulerCard[]>([])
   const [heartbeat, setHeartbeat] = useState(() => Date.now())
   const storedCards = useLiveQuery(() => db.srsCards.toArray(), [], [])
@@ -38,10 +37,12 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
 
   useEffect(() => {
     if (!storedCards) return
-    hydratingRef.current = true
-    const manager = createSrsManager(definitions, storedCards)
-    managerRef.current = manager
-    setCards(manager.getCards())
+    if (!managerRef.current) {
+      managerRef.current = createSrsManager(definitions, storedCards)
+    } else {
+      managerRef.current.reset(definitions, storedCards)
+    }
+    setCards(managerRef.current.getCards())
   }, [definitions, storedCards])
 
   useEffect(() => {
@@ -53,17 +54,6 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
       window.clearInterval(timer)
     }
   }, [])
-
-  useEffect(() => {
-    const manager = managerRef.current
-    if (!manager) return
-    if (hydratingRef.current) {
-      hydratingRef.current = false
-      return
-    }
-    const serialized = manager.getCards().map((card) => manager.serializeCard(card))
-    void db.srsCards.bulkPut(serialized)
-  }, [cards])
 
   const getDueData = (stats: SchedulerStats) => {
     const manager = managerRef.current
@@ -82,15 +72,26 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   const currentCard =
     sorted.find((card) => getDueData(card.stats) <= now) ?? sorted[0] ?? null
 
+  const persistUpdate = useCallback(
+    (manager: SchedulerManager, updatedCards: SchedulerCard[], cardId: string) => {
+      const updatedCard = updatedCards.find((card) => card.id === cardId)
+      if (updatedCard) {
+        void db.srsCards.put(manager.serializeCard(updatedCard))
+      }
+      setCards(updatedCards)
+    },
+    [],
+  )
+
   const reviewCard = useCallback(
     (cardId: string, rating: ReviewRating) => {
       const manager = managerRef.current
       if (!manager) return
       const updated = manager.reviewCard(cardId, rating)
-      setCards(updated)
+      persistUpdate(manager, updated, cardId)
       setHeartbeat(Date.now())
     },
-    [],
+    [persistUpdate],
   )
 
   const shouldShowOutline = useCallback(
@@ -102,10 +103,10 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     (cardId: string, learned: boolean) => {
       const manager = managerRef.current
       if (!manager) return
-      manager.setOutlineLearned(cardId, learned)
-      setCards(manager.getCards())
+      const updated = manager.setOutlineLearned(cardId, learned)
+      persistUpdate(manager, updated, cardId)
     },
-    [],
+    [persistUpdate],
   )
 
   return {

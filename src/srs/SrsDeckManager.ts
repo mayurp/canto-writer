@@ -66,6 +66,7 @@ export class SrsDeckManager<Stats> {
         learnedOutline: learned,
       }
     })
+    return this.cards
   }
 
   shouldShowOutline(cardId: string): boolean {
@@ -99,5 +100,9 @@ export class SrsDeckManager<Stats> {
       stats: card.stats,
       learnedOutline: card.learnedOutline,
     }
+  }
+
+  reset(definitions: FlashcardDefinition[], storedCards?: SrsCardRecord[]) {
+    this.cards = this.hydrate(definitions, storedCards)
   }
 }
