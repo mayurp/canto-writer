@@ -6,7 +6,7 @@ An app for remebering tranditional chinese characters using audio hints in Canto
 
 In priority order:
 
-* Fix blank page issue in Safari desktop and Dylan's iPad
 * Allow parent / child modes using dexie realms? 
 * Read Flashcard definitions from google sheet? Hardcode url into app? 
-* Optimize loading times / pagination.
+* Pagination of deck builder?
+* Optimize loading times?
