@@ -27,7 +27,7 @@ function AppContent() {
   const { deck, loading, error } = useRememberingDeck()
   const { settings } = useSettingsContext()
   const { selectedIds, addCards, removeCard, clearAll } = useDeckSelection(deck)
-  const { playableDeck } = usePlayableDeck(deck, settings.orderMode, selectedIds)
+  const { playableDeck } = usePlayableDeck(deck, selectedIds, settings.orderMode)
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const scheduler = useScheduler(playableDeck)
   const { currentCard } = scheduler

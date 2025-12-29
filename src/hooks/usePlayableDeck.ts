@@ -4,8 +4,8 @@ import type { OrderMode } from './useSettings'
 
 export const usePlayableDeck = (
   deck: FlashcardDefinition[],
-  orderMode: OrderMode,
   selectedIds: string[],
+  orderMode: OrderMode,
 ) => {
   const orderedDeck = useMemo(() => {
     if (!deck.length) return deck
@@ -25,5 +25,5 @@ export const usePlayableDeck = (
     return orderedDeck.filter((card) => allowed.has(card.id))
   }, [orderedDeck, selectedIds])
 
-  return { orderedDeck, playableDeck }
+  return { playableDeck }
 }
