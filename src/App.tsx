@@ -10,12 +10,21 @@ import { SchedulerContext } from './context/SchedulerContext'
 import { useScheduler } from './hooks/useScheduler'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
-import { useSettings, ttsSpeedSteps } from './hooks/useSettings'
+import { ttsSpeedSteps } from './hooks/useSettings'
+import { SettingsProvider, useSettingsContext } from './context/SettingsContext'
 import { useDeckSelection } from './hooks/useDeckSelection'
 
 function App() {
+  return (
+    <SettingsProvider>
+      <AppContent />
+    </SettingsProvider>
+  )
+}
+
+function AppContent() {
   const { deck, loading, error } = useRememberingDeck()
-  const { settings } = useSettings()
+  const { settings } = useSettingsContext()
   const orderedDeck = useMemo(() => {
     if (!deck.length) return deck
     if (settings.orderMode === 'rth') {

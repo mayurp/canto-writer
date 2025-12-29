@@ -1,4 +1,5 @@
-import { useSettings, ttsSpeedSteps } from '../hooks/useSettings'
+import { useSettingsContext } from '../context/SettingsContext'
+import { ttsSpeedSteps } from '../hooks/useSettings'
 
 const speedLabels = ttsSpeedSteps.map((value) => `${value}x`)
 
@@ -8,7 +9,7 @@ type SettingsPanelProps = {
 }
 
 export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
-  const { settings, updateSetting } = useSettings()
+  const { settings, updateSetting } = useSettingsContext()
 
   if (!open) return null
 

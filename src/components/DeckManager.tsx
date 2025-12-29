@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
-import { useSettings } from '../hooks/useSettings'
+import { useSettingsContext } from '../context/SettingsContext'
 import { SrsCardState } from '../srs/types'
 import { useSchedulerContext } from '../context/SchedulerContext'
 
@@ -19,7 +19,7 @@ export function DeckManager({
   removeCard,
   clearAll,
 }: DeckManagerProps) {
-  const { settings } = useSettings()
+  const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
   const orderMode = settings.orderMode
   const [rangeStart, setRangeStart] = useState('')

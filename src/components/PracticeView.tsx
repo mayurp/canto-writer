@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { QuizSummary } from 'hanzi-writer'
 import { ReviewRating, type ReviewRating as ReviewRatingType, type GradingInfo } from '../srs/types'
 import { StrokeAnimator } from './StrokeAnimator'
-import { useSettings } from '../hooks/useSettings'
+import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamples } from '../hooks/useVocabExamples'
 
@@ -49,7 +49,7 @@ type PracticeViewProps = {
 
 export function PracticeView({ playPronunciation, speaking, isSupported, voiceRate }: PracticeViewProps) {
   const { currentCard, gradeCard, shouldShowOutline } = useSchedulerContext()
-  const { settings } = useSettings()
+  const { settings } = useSettingsContext()
   const { examples } = useVocabExamples()
   if (!currentCard) {
     return null
