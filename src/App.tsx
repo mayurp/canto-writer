@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { SettingsPanel } from './components/SettingsPanel'
@@ -13,6 +13,7 @@ import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { ttsSpeedSteps } from './hooks/useSettings'
 import { SettingsProvider, useSettingsContext } from './context/SettingsContext'
 import { useDeckSelection } from './hooks/useDeckSelection'
+import { usePlayableDeck } from './hooks/usePlayableDeck'
 
 function App() {
   return (
@@ -25,23 +26,8 @@ function App() {
 function AppContent() {
   const { deck, loading, error } = useRememberingDeck()
   const { settings } = useSettingsContext()
-  const orderedDeck = useMemo(() => {
-    if (!deck.length) return deck
-    if (settings.orderMode === 'rth') {
-      return [...deck].sort((a, b) => {
-        const aOrder = a.rthOrder ?? Number.MAX_SAFE_INTEGER
-        const bOrder = b.rthOrder ?? Number.MAX_SAFE_INTEGER
-        return aOrder - bOrder
-      })
-    }
-    return [...deck].sort((a, b) => a.order - b.order)
-  }, [deck, settings.orderMode])
   const { selectedIds, addCards, removeCard, clearAll } = useDeckSelection(deck)
-  const playableDeck = useMemo(() => {
-    if (!selectedIds.length) return []
-    const allowed = new Set(selectedIds)
-    return orderedDeck.filter((card) => allowed.has(card.id))
-  }, [orderedDeck, selectedIds])
+  const { playableDeck } = usePlayableDeck(deck, settings.orderMode, selectedIds)
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const scheduler = useScheduler(playableDeck)
   const { currentCard } = scheduler
