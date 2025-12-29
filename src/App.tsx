@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { SettingsPanel } from './components/SettingsPanel'
+import { UserPanel } from './components/UserPanel'
 import { DeckManager } from './components/DeckManager'
 import { PracticeView } from './components/PracticeView'
 import { TestView } from './components/TestView'
@@ -29,6 +30,7 @@ function AppContent() {
   const { playableDeck } = usePlayableDeck(deck, selectedIds, settings.orderMode)
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [userPanelOpen, setUserPanelOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
 
@@ -55,14 +57,24 @@ function AppContent() {
           <LogoMark size={20} />
           <p className="eyebrow">Canto Writer</p>
         </div>
-        <button
-          type="button"
-          className="settings-trigger inline"
-          onClick={() => setSettingsOpen(true)}
-          aria-label="Open settings"
-        >
-          ⚙️
-        </button>
+        <div className="header-actions">
+          <button
+            type="button"
+            className="settings-trigger inline"
+            onClick={() => setUserPanelOpen(true)}
+            aria-label="Open user panel"
+          >
+            👤
+          </button>
+          <button
+            type="button"
+            className="settings-trigger inline"
+            onClick={() => setSettingsOpen(true)}
+            aria-label="Open settings"
+          >
+            ⚙️
+          </button>
+        </div>
       </div>
       <div className="nav-row">
         <NavTabs />
@@ -133,6 +145,7 @@ function AppContent() {
         {bodyContent}
       </main>
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <UserPanel open={userPanelOpen} onClose={() => setUserPanelOpen(false)} />
     </SchedulerProvider>
   )
 }
