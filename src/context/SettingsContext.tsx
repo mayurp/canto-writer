@@ -1,7 +1,6 @@
-import { createContext, useContext } from 'react'
-import type { ReactNode } from 'react'
-import type { Settings } from '../models/Settings'
+import { createContext, useContext, type ReactNode } from 'react'
 import { useSettings } from '../hooks/useSettings'
+import type { Settings } from '../models/Settings'
 
 export type SettingsValue = {
   settings: Settings

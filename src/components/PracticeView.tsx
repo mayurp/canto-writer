@@ -51,15 +51,12 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   const { currentCard, gradeCard, shouldShowOutline } = useSchedulerContext()
   const { settings } = useSettingsContext()
   const { examples } = useVocabExamples()
-  if (!currentCard) {
-    return null
-  }
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
-  const [showStrokeOutline, setShowStrokeOutline] = useState(() => shouldShowOutline(currentCard.id))
-  const currentCardId = currentCard.id
+  const [showStrokeOutline, setShowStrokeOutline] = useState(false)
+  const currentCardId = currentCard?.id ?? null
 
   useEffect(() => {
     const handleResize = () => setWriterSize(getResponsiveWriterSize())
@@ -72,13 +69,15 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
     setCardCompleted(false)
     setPendingGrading(null)
     setStrokeSession(0)
-    setShowStrokeOutline(shouldShowOutline(currentCardId))
-  }, [currentCard, currentCardId, shouldShowOutline])
+    if (currentCardId) {
+      setShowStrokeOutline(shouldShowOutline(currentCardId))
+    }
+  }, [currentCardId, shouldShowOutline])
 
-  const currentCharacter = currentCard.character
+  const currentCharacter = currentCard?.character
 
   useEffect(() => {
-    if (!isSupported) return
+    if (!isSupported || !currentCharacter) return
     const timer = window.setTimeout(() => {
       playPronunciation(buildPronunciationUtterance(currentCharacter, examples), { rate: voiceRate })
     }, PRONUNCIATION_DELAY_MS)
@@ -86,7 +85,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   }, [currentCharacter, examples, isSupported, playPronunciation, voiceRate])
 
   const handleCardPronunciation = useCallback(() => {
-    if (!isSupported) return
+    if (!isSupported || !currentCharacter) return
     playPronunciation(buildPronunciationUtterance(currentCharacter, examples), { rate: voiceRate })
   }, [currentCharacter, examples, isSupported, playPronunciation, voiceRate])
 
@@ -105,13 +104,14 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
 
   const handleRating = useCallback(
     (rating: ReviewRatingType) => {
+      if (!currentCard) return
       setPendingGrading((prev) => ({
         rating,
         learnedOutline: prev?.learnedOutline ?? currentCard.learnedOutline,
       }))
       setCardCompleted(true)
     },
-    [currentCard.learnedOutline],
+    [currentCard?.learnedOutline],
   )
 
   const handleStrokeReset = useCallback(() => {
@@ -121,18 +121,23 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   }, [])
 
   const handleNextCard = useCallback(() => {
-    if (!pendingGrading) return
+    if (!pendingGrading || !currentCardId) return
     gradeCard(currentCardId, pendingGrading)
     setPendingGrading(null)
     setCardCompleted(false)
-  }, [currentCard, currentCardId, gradeCard, pendingGrading])
+  }, [currentCardId, gradeCard, pendingGrading])
 
   const displayOrder = useMemo(() => {
+    if (!currentCard) return null
     if (settings.orderMode === 'rth') {
       return currentCard.rthOrder ?? currentCard.order
     }
     return currentCard.order
   }, [currentCard, settings.orderMode])
+
+  if (!currentCard) {
+    return null
+  }
 
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
 
@@ -205,7 +210,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
             </button>
           </div>
           {settings.debug && (
-             <div className="grading-buttons">
+            <div className="grading-buttons">
               {(Object.keys(ratingLabels) as ReviewRatingType[]).map((rating) => (
                 <button
                   key={rating}

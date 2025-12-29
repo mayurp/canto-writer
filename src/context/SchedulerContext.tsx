@@ -1,6 +1,8 @@
-import { createContext, useContext } from 'react'
-import type { GradingInfo } from '../srs/types'
+import { createContext, useContext, type ReactNode } from 'react'
+import { useScheduler } from '../hooks/useScheduler'
 import type { SchedulerCard } from '../srs/createManager'
+import type { FlashcardDefinition } from '../data/cards'
+import type { GradingInfo } from '../srs/types'
 
 export type SchedulerValue = {
   cards: SchedulerCard[]
@@ -12,6 +14,19 @@ export type SchedulerValue = {
 }
 
 export const SchedulerContext = createContext<SchedulerValue | null>(null)
+
+export function SchedulerProvider({deck, children}: {
+  deck: FlashcardDefinition[]
+  children: ReactNode
+}) {
+  const scheduler = useScheduler(deck)
+
+  return (
+    <SchedulerContext.Provider value={scheduler}>
+      {children}
+    </SchedulerContext.Provider>
+  )
+}
 
 export const useSchedulerContext = () => {
   const value = useContext(SchedulerContext)

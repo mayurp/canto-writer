@@ -6,8 +6,7 @@ import { DeckManager } from './components/DeckManager'
 import { PracticeView } from './components/PracticeView'
 import { TestView } from './components/TestView'
 import { SessionStatus } from './components/SessionStatus'
-import { SchedulerContext } from './context/SchedulerContext'
-import { useScheduler } from './hooks/useScheduler'
+import { SchedulerProvider } from './context/SchedulerContext'
 import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { ttsSpeedSteps } from './hooks/useSettings'
@@ -29,8 +28,6 @@ function AppContent() {
   const { selectedIds, addCards, removeCard, clearAll } = useDeckSelection(deck)
   const { playableDeck } = usePlayableDeck(deck, selectedIds, settings.orderMode)
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
-  const scheduler = useScheduler(playableDeck)
-  const { currentCard } = scheduler
   const [settingsOpen, setSettingsOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
@@ -108,7 +105,7 @@ function AppContent() {
         isSupported={isSupported}
       />
     )
-  } else if (!currentCard || playableDeck.length === 0) {
+  } else if (playableDeck.length === 0) {
     bodyContent = (
       <div className="empty-state">
         <p>Your study deck is empty. Add characters from the RTH list to begin.</p>
@@ -130,13 +127,13 @@ function AppContent() {
   }
 
   return (
-    <SchedulerContext.Provider value={scheduler}>
+    <SchedulerProvider deck={playableDeck}>
       <main className="app-shell">
         <AppHeader rightSlot={headerRight} />
         {bodyContent}
       </main>
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-    </SchedulerContext.Provider>
+    </SchedulerProvider>
   )
 }
 
