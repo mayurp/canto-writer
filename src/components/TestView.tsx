@@ -40,12 +40,6 @@ export function TestView({ playPronunciation, voiceRate, isSupported }: TestView
             Play
           </button>
         </div>
-        <button type="button" className="custom-tts-button" onClick={() => db.cloud.login?.()}>
-          Login
-        </button>
-        <button type="button" className="custom-tts-button" onClick={() => db.cloud.logout?.()}>
-          Logout
-        </button>
         <button type="button" className="custom-tts-button" onClick={handleClearSrs}>
           Clear SRS Records
         </button>
