@@ -1,7 +1,7 @@
 export type FlashcardDefinition = {
   id: string
   order: number
-  rthOrder?: number
+  rthOrder: number
   character: string
   meaning: string
   hanziWriterId: string

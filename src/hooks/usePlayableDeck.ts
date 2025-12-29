@@ -10,13 +10,11 @@ export const usePlayableDeck = (
   const orderedDeck = useMemo(() => {
     if (!deck.length) return deck
     if (orderMode === 'rth') {
-      return [...deck].sort((a, b) => {
-        const aOrder = a.rthOrder ?? Number.MAX_SAFE_INTEGER
-        const bOrder = b.rthOrder ?? Number.MAX_SAFE_INTEGER
-        return aOrder - bOrder
-      })
+      return [...deck].sort((a, b) => a.rthOrder - b.rthOrder)
     }
-    return [...deck].sort((a, b) => a.order - b.order)
+    else {
+      return [...deck].sort((a, b) => a.order - b.order)
+    }
   }, [deck, orderMode])
 
   const playableDeck = useMemo(() => {
