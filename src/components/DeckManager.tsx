@@ -100,7 +100,7 @@ export function DeckManager({
   const formatDue = (scheduled?: typeof scheduledCards[number]) => {
     if (!scheduled) return '—'
     const diffMs = scheduled.dueDate.getTime() - Date.now()
-    if (diffMs <= 0) return 'Due now'
+    if (diffMs <= 0) return 'Now'
     const diffMinutes = diffMs / 60000
     if (diffMinutes < 60) return `${Math.round(diffMinutes)}m`
     const diffHours = diffMinutes / 60
@@ -116,9 +116,7 @@ export function DeckManager({
     return `${scheduled.stability.toFixed(1)}`
   }
 
-  const [sortColumn, setSortColumn] = useState<'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due' | 'stability'>(
-    'rth',
-  )
+  const [sortColumn, setSortColumn] = useState<'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due'>('rth')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
 
   const sortedSelectedCards = useMemo(() => {
@@ -187,7 +185,7 @@ export function DeckManager({
 
       <div className="manager-grid">
         <div className="manager-card">
-          <h2>Add by {orderMode === 'rth' ? 'RTH' : 'Optimized'} range</h2>
+          <h2>Add by {(orderMode === 'opt' ? 'Optimized': '') + ' RTH'} range</h2>
           <div className="range-form">
             <input
               type="number"
@@ -268,11 +266,6 @@ export function DeckManager({
                       Due {renderSortIndicator('due')}
                     </button>
                   </th>
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('stability')}>
-                      Stability {renderSortIndicator('stability')}
-                    </button>
-                  </th>
                   <th aria-label="Actions" />
                 </tr>
               </thead>
@@ -286,7 +279,6 @@ export function DeckManager({
                       <td>{card.meaning}</td>
                       <td>{formatState(card)}</td>
                       <td>{formatDue(card)}</td>
-                      <td>{formatStability(card)}</td>
                       <td>
                         <button className="selected-remove" onClick={() => removeCard(card.id)}>
                           Remove
