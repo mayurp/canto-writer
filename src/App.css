@@ -394,6 +394,30 @@
   cursor: pointer;
 }
 
+.table-audio-button {
+  border: none;
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.table-audio-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.table-audio-button:not(:disabled):hover {
+  background: rgba(37, 99, 235, 0.22);
+  transform: translateY(-1px);
+}
+
 .card-stage {
   width: 100%;
 }

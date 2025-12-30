@@ -10,6 +10,8 @@ type DeckManagerProps = {
   addCards: (ids: string[]) => void
   removeCard: (id: string) => void
   clearAll: () => void
+  playPronunciation: (text: string) => void
+  isSpeechSupported: boolean
 }
 
 export function DeckManager({
@@ -18,6 +20,8 @@ export function DeckManager({
   addCards,
   removeCard,
   clearAll,
+  playPronunciation,
+  isSpeechSupported,
 }: DeckManagerProps) {
   const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
@@ -256,6 +260,7 @@ export function DeckManager({
                       Meaning {renderSortIndicator('meaning')}
                     </button>
                   </th>
+                  <th aria-label="Audio" />
                   <th>
                     <button type="button" className="sort-button" onClick={() => handleSort('state')}>
                       SRS state {renderSortIndicator('state')}
@@ -277,6 +282,34 @@ export function DeckManager({
                       <td>{card.order ?? '—'}</td>
                       <td className="selected-character">{card.character}</td>
                       <td>{card.meaning}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="table-audio-button"
+                          onClick={() => playPronunciation(card.character)}
+                          disabled={!isSpeechSupported}
+                          aria-label={`Play ${card.character}`}
+                        >
+                          <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
+                            <path
+                              d="M16 28h10l12-10v28l-12-10H16z"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M44 22c4 4 4 16 0 20m8-26c6 8 6 24 0 32"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      </td>
                       <td>{formatState(card)}</td>
                       <td>{formatDue(card)}</td>
                       <td>

@@ -107,6 +107,8 @@ function AppContent() {
         addCards={addCards}
         removeCard={removeCard}
         clearAll={clearAll}
+        playPronunciation={(text) => playPronunciation(text, { rate: voiceRate })}
+        isSpeechSupported={isSupported}
       />
     )
   } else if (view === 'test') {
