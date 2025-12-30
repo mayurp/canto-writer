@@ -4,7 +4,4 @@ export type FlashcardDefinition = {
   rthOrder: number
   character: string
   meaning: string
-  hanziWriterId: string
-  jyutping?: string
-  notes?: string
 }

@@ -190,7 +190,6 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
           </div>
           <StrokeAnimator
             character={currentCard.character}
-            hanziWriterId={currentCard.hanziWriterId}
             size={writerSize}
             sessionKey={strokeSession}
             showOutline={showStrokeOutline}

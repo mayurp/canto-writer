@@ -108,7 +108,6 @@ const closePolyline = (points: StrokePoint[]): StrokePoint[] => {
 
 type StrokeAnimatorProps = {
   character: string
-  hanziWriterId: string
   size?: number
   sessionKey?: number
   onQuizComplete?: (summary: QuizSummary) => void
@@ -117,7 +116,6 @@ type StrokeAnimatorProps = {
 
 export function StrokeAnimator({
   character,
-  hanziWriterId,
   size = 260,
   sessionKey = 0,
   onQuizComplete,
@@ -319,7 +317,7 @@ export function StrokeAnimator({
     stopGuidedStrokeAnimation()
     let disposed = false
 
-    const writer = HanziWriter.create(container, hanziWriterId, {
+    const writer = HanziWriter.create(container, character, {
       width: size,
       height: size,
       showOutline,
@@ -420,7 +418,7 @@ export function StrokeAnimator({
       mainCharacterGroupRef.current = null
     }
   }, [
-    hanziWriterId,
+    character,
     size,
     sessionKey,
     onQuizComplete,
