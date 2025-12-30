@@ -22,7 +22,7 @@ const buildDeck = (rows: Record<string, string>[]): FlashcardDefinition[] => {
         return null
       }
 
-      const id = `${order}-${character}`
+      const id = character
 
       const card: FlashcardDefinition = {
         id,
