@@ -6,6 +6,7 @@ import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamples } from '../hooks/useVocabExamples'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
+import { AudioButton } from './AudioButton'
 
 const ratingLabels: Record<ReviewRatingType, string> = {
   [ReviewRating.Again]: 'Again',
@@ -149,33 +150,12 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
               {orderLabel} #{displayOrder}
             </p>
           </div>
-          <button
-            type="button"
-            className="audio-button"
+          <AudioButton
             onClick={handleCardPronunciation}
             disabled={!isSupported}
-            aria-label={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
-          >
-            <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
-              <path
-                d="M16 28h10l12-10v28l-12-10H16z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M44 22c4 4 4 16 0 20m8-26c6 8 6 24 0 32"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity={speaking ? 1 : 0.6}
-              />
-            </svg>
-          </button>
+            speaking={speaking}
+            ariaLabel={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
+          />
         </div>
 
         <div className="stroke-wrapper">

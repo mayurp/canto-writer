@@ -394,28 +394,17 @@
   cursor: pointer;
 }
 
-.table-audio-button {
-  border: none;
+.audio-button.audio-button--small {
+  width: 2.4rem;
+  height: 2.4rem;
   background: rgba(37, 99, 235, 0.12);
   color: #1d4ed8;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 120ms ease, transform 120ms ease;
+  font-size: 1rem;
 }
 
-.table-audio-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.table-audio-button:not(:disabled):hover {
-  background: rgba(37, 99, 235, 0.22);
-  transform: translateY(-1px);
+.audio-button.audio-button--small .audio-glyph {
+  width: 1.4rem;
+  height: 1.4rem;
 }
 
 .card-stage {
@@ -494,6 +483,11 @@
 .audio-glyph {
   width: 1.8rem;
   height: 1.8rem;
+}
+.audio-button.audio-button--small:hover:not(:disabled) {
+  box-shadow: none;
+  background: rgba(37, 99, 235, 0.22);
+  transform: translateY(-1px);
 }
 
 .card-details {
