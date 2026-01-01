@@ -5,6 +5,7 @@ import { StrokeAnimator } from './StrokeAnimator'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamples } from '../hooks/useVocabExamples'
+import { buildPronunciationUtterance } from '../utils/pronunciation'
 
 const ratingLabels: Record<ReviewRatingType, string> = {
   [ReviewRating.Again]: 'Again',
@@ -33,11 +34,6 @@ const getResponsiveWriterSize = () => {
   const heightLimit = Math.max(MIN_WRITER_SIZE, window.innerHeight - VERTICAL_RESERVE)
   const target = Math.min(widthLimit, heightLimit, MAX_WRITER_SIZE)
   return Math.max(MIN_WRITER_SIZE, target)
-}
-
-const buildPronunciationUtterance = (character: string, examples: Record<string, string[]>) => {
-  const exampleClue = examples[character]?.[0]
-  return exampleClue ? `${character}，${exampleClue}嘅${character}` : character
 }
 
 type PracticeViewProps = {

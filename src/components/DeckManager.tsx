@@ -3,6 +3,8 @@ import type { FlashcardDefinition } from '../data/cards'
 import { useSettingsContext } from '../context/SettingsContext'
 import { SrsCardState } from '../srs/types'
 import { useSchedulerContext } from '../context/SchedulerContext'
+import { useVocabExamples } from '../hooks/useVocabExamples'
+import { buildPronunciationUtterance } from '../utils/pronunciation'
 
 type DeckManagerProps = {
   deck: FlashcardDefinition[]
@@ -25,6 +27,7 @@ export function DeckManager({
 }: DeckManagerProps) {
   const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
+  const { examples } = useVocabExamples()
   const orderMode = settings.orderMode
   const [rangeStart, setRangeStart] = useState('')
   const [rangeEnd, setRangeEnd] = useState('')
@@ -286,7 +289,9 @@ export function DeckManager({
                         <button
                           type="button"
                           className="table-audio-button"
-                          onClick={() => playPronunciation(card.character)}
+                          onClick={() =>
+                            playPronunciation(buildPronunciationUtterance(card.character, examples))
+                          }
                           disabled={!isSpeechSupported}
                           aria-label={`Play ${card.character}`}
                         >
