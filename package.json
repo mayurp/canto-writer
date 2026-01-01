@@ -16,6 +16,7 @@
     "flubber": "^0.4.2",
     "framer-motion": "^11.18.2",
     "hanzi-writer": "^3.7.3",
+    "papaparse": "^5.5.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "ts-fsrs": "^5.2.3"
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
+    "@types/papaparse": "^5.5.2",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.2.2",

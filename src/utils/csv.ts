@@ -1,40 +1,18 @@
-export const splitCsvLine = (line: string) => {
-  const cells: string[] = []
-  let current = ''
-  let inQuotes = false
+import Papa from 'papaparse'
 
-  for (let i = 0; i < line.length; i += 1) {
-    const char = line[i]
+type CsvRow = Record<string, string>
 
-    if (char === '"') {
-      if (inQuotes && line[i + 1] === '"') {
-        current += '"'
-        i += 1
-      } else {
-        inQuotes = !inQuotes
-      }
-    } else if (char === ',' && !inQuotes) {
-      cells.push(current.trim())
-      current = ''
-    } else {
-      current += char
-    }
+export const parseCsv = (text: string): CsvRow[] => {
+  const { data, errors } = Papa.parse<CsvRow>(text, {
+    header: true,
+    skipEmptyLines: true,
+    transform: (value: string) => value.trim(),
+  })
+
+  if (errors.length > 0) {
+    const firstError = errors[0]
+    throw new Error(`CSV parse error${typeof firstError.row === 'number' ? ` at row ${firstError.row}` : ''}: ${firstError.message}`)
   }
 
-  cells.push(current.trim())
-  return cells
-}
-
-export const parseCsv = (text: string) => {
-  const lines = text.split(/\r?\n/).filter((line) => line.trim().length > 0)
-  if (!lines.length) return []
-  const headers = splitCsvLine(lines[0])
-  return lines.slice(1).map((line) => {
-    const values = splitCsvLine(line)
-    const row: Record<string, string> = {}
-    headers.forEach((header, idx) => {
-      row[header] = values[idx] ?? ''
-    })
-    return row
-  })
+  return data
 }
