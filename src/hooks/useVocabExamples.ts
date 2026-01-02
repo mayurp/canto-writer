@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { parseCsv } from '../utils/csv'
 
-const vocabCsvUrl = new URL('../data/vocab_examples.csv', import.meta.url)
+const vocabCsvUrl = new URL('../data/heisig_group_1_vocab.csv', import.meta.url)
 
 type VocabExamples = Record<string, string[]>
 
