@@ -10,6 +10,8 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   const managerRef = useRef<SchedulerManager>(createSrsManager())
   const storedCards = useLiveQuery(() => db.srsCards.toArray(), [], [])
   const [cards, setCards] = useState<SchedulerCard[]>([])
+  // heartbeat is not used explicitly, but triggers a re-render periodically.
+  // TODO: check if we should be doing something more efficient here.
   const [heartbeat, setHeartbeat] = useState(() => Date.now())
 
   useEffect(() => {
@@ -34,8 +36,9 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     () => [...cards].sort((a, b) => getDueTimestamp(a) - getDueTimestamp(b)),
     [cards],
   )
-
-  const now = heartbeat
+  // Don't use hearbeat here as the timestamp is after the date
+  // given by hydrate to New cards (which don't have srs records).
+  const now = Date.now()
   const dueCount = cards.filter((card) => getDueTimestamp(card) <= now).length
   const currentCard = sorted.find((card) => getDueTimestamp(card) <= now) ?? sorted[0] ?? null
 
