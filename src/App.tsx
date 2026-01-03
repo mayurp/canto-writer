@@ -12,13 +12,16 @@ import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { ttsSpeedSteps } from './hooks/useSettings'
 import { SettingsProvider, useSettingsContext } from './context/SettingsContext'
+import { ParentModeProvider } from './context/ParentModeContext'
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { usePlayableDeck } from './hooks/usePlayableDeck'
 
 function App() {
   return (
     <SettingsProvider>
-      <AppContent />
+      <ParentModeProvider>
+        <AppContent />
+      </ParentModeProvider>
     </SettingsProvider>
   )
 }

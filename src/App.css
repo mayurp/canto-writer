@@ -257,6 +257,32 @@
   font-size: 0.9rem;
 }
 
+.parent-mode-status {
+  margin: 0;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.parent-mode-status.is-unlocked {
+  color: #16a34a;
+}
+
+.parent-mode-hint {
+  margin: 0;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.link-button {
+  border: none;
+  background: none;
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
 .manager-panel {
   display: flex;
   flex-direction: column;

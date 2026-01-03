@@ -6,6 +6,7 @@ import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamples } from '../hooks/useVocabExamples'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
+import { useParentModeContext } from '../context/ParentModeContext'
 
 type DeckManagerProps = {
   deck: FlashcardDefinition[]
@@ -29,6 +30,7 @@ export function DeckManager({
   const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
   const { examples } = useVocabExamples()
+  const { isUnlocked: parentModeUnlocked } = useParentModeContext()
   const orderMode = settings.orderMode
   const [rangeStart, setRangeStart] = useState('')
   const [rangeEnd, setRangeEnd] = useState('')
@@ -191,47 +193,53 @@ export function DeckManager({
         </p>
       </header>
 
-      <div className="manager-grid">
-        <div className="manager-card">
-          <h2>Add by {(orderMode === 'opt' ? 'Optimized': '') + ' RTH'} range</h2>
-          <div className="range-form">
-            <input
-              type="number"
-              min={1}
-              placeholder="Start frame"
-              value={rangeStart}
-              onChange={(event) => setRangeStart(event.target.value)}
-            />
-            <span>to</span>
-            <input
-              type="number"
-              min={1}
-              placeholder="End frame"
-              value={rangeEnd}
-              onChange={(event) => setRangeEnd(event.target.value)}
-            />
+      {parentModeUnlocked ? (
+        <div className="manager-grid">
+          <div className="manager-card">
+            <h2>Add by {(orderMode === 'opt' ? 'Optimized' : '') + ' RTH'} range</h2>
+            <div className="range-form">
+              <input
+                type="number"
+                min={1}
+                placeholder="Start frame"
+                value={rangeStart}
+                onChange={(event) => setRangeStart(event.target.value)}
+              />
+              <span>to</span>
+              <input
+                type="number"
+                min={1}
+                placeholder="End frame"
+                value={rangeEnd}
+                onChange={(event) => setRangeEnd(event.target.value)}
+              />
+            </div>
+            <button onClick={handleAddRange}>Add range</button>
           </div>
-          <button onClick={handleAddRange}>Add range</button>
-        </div>
 
-        <div className="manager-card">
-          <h2>Add by characters</h2>
-          <textarea
-            rows={4}
-            placeholder="Paste characters like 學講聽寫"
-            value={charInput}
-            onChange={(event) => setCharInput(event.target.value)}
-          />
-          <button onClick={handleAddCharacters}>Add characters</button>
+          <div className="manager-card">
+            <h2>Add by characters</h2>
+            <textarea
+              rows={4}
+              placeholder="Paste characters like 學講聽寫"
+              value={charInput}
+              onChange={(event) => setCharInput(event.target.value)}
+            />
+            <button onClick={handleAddCharacters}>Add characters</button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="manager-card">
+          <p className="parent-mode-hint">Enable parent mode to add or remove cards from the deck.</p>
+        </div>
+      )}
 
       {message && <p className="manager-message">{message}</p>}
 
       <section className="selected-panel">
         <div className="selected-header">
           <h2>Selected cards ({selectedCards.length})</h2>
-          {selectedCards.length > 0 && (
+          {selectedCards.length > 0 && parentModeUnlocked && (
             <button className="clear-link" onClick={clearAll}>
               Clear all
             </button>
@@ -275,7 +283,7 @@ export function DeckManager({
                       Due {renderSortIndicator('due')}
                     </button>
                   </th>
-                  <th aria-label="Actions" />
+                  {parentModeUnlocked && <th aria-label="Actions" />}
                 </tr>
               </thead>
               <tbody>
@@ -298,11 +306,13 @@ export function DeckManager({
                       </td>
                       <td>{formatState(card)}</td>
                       <td>{formatDue(card)}</td>
-                      <td>
-                        <button className="selected-remove" onClick={() => removeCard(card.id)}>
-                          Remove
-                        </button>
-                      </td>
+                      {parentModeUnlocked && (
+                        <td>
+                          <button className="selected-remove" onClick={() => removeCard(card.id)}>
+                            Remove
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   )
                 })}

@@ -1,4 +1,5 @@
 import { useCloudUser } from '../hooks/useCloudUser'
+import { useParentModeContext } from '../context/ParentModeContext'
 
 type UserPanelProps = {
   open: boolean
@@ -7,6 +8,7 @@ type UserPanelProps = {
 
 export function UserPanel({ open, onClose }: UserPanelProps) {
   const { user, login, logout } = useCloudUser()
+  const { isUnlocked, unlockParentMode, lockParentMode, error, clearError } = useParentModeContext()
 
   if (!open) return null
 
@@ -59,6 +61,41 @@ export function UserPanel({ open, onClose }: UserPanelProps) {
             </div>
           </>
         )}
+
+        <div className="settings-section">
+          <p className="settings-label">Parent mode</p>
+          <p className={`parent-mode-status ${isUnlocked ? 'is-unlocked' : 'is-locked'}`}>
+            {isUnlocked ? 'Unlocked' : 'Locked'}
+          </p>
+          <div className="user-actions">
+            {isUnlocked ? (
+              <button type="button" className="custom-tts-button" onClick={lockParentMode}>
+                Lock parent mode
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="custom-tts-button"
+                onClick={() => {
+                  const pin = window.prompt('Enter parent PIN')
+                  if (pin) {
+                    unlockParentMode(pin)
+                  }
+                }}
+              >
+                Unlock parent mode
+              </button>
+            )}
+          </div>
+          {error && (
+            <p className="user-warning">
+              {error}{' '}
+              <button type="button" className="link-button" onClick={clearError}>
+                Dismiss
+              </button>
+            </p>
+          )}
+        </div>
       </div>
     </div>
   )
