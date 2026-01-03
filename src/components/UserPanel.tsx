@@ -64,13 +64,10 @@ export function UserPanel({ open, onClose }: UserPanelProps) {
 
         <div className="settings-section">
           <p className="settings-label">Parent mode</p>
-          <p className={`parent-mode-status ${isUnlocked ? 'is-unlocked' : 'is-locked'}`}>
-            {isUnlocked ? 'Unlocked' : 'Locked'}
-          </p>
           <div className="user-actions">
             {isUnlocked ? (
               <button type="button" className="custom-tts-button" onClick={lockParentMode}>
-                Lock parent mode
+                Lock
               </button>
             ) : (
               <button
@@ -83,7 +80,7 @@ export function UserPanel({ open, onClose }: UserPanelProps) {
                   }
                 }}
               >
-                Unlock parent mode
+                Unlock
               </button>
             )}
           </div>
