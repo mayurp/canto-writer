@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { SettingsPanel } from './components/SettingsPanel'
@@ -47,9 +47,11 @@ function AppContent() {
       <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
         Build deck
       </button>
-      <button type="button" className={navClass('test')} onClick={() => setView('test')}>
-        Test
-      </button>
+      {settings.debug && (
+        <button type="button" className={navClass('test')} onClick={() => setView('test')}>
+          Test
+        </button>
+      )}
     </div>
   )
 
@@ -88,6 +90,12 @@ function AppContent() {
 
   let headerRight: ReactNode | null = null
   let bodyContent: ReactNode
+
+  useEffect(() => {
+    if (view === 'test' && !settings.debug) {
+      setView('learn')
+    }
+  }, [settings.debug, view])
 
   if (loading) {
     bodyContent = (
