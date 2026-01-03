@@ -42,8 +42,8 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
           <p className="settings-label">Initial deck order</p>
           <div className="order-choice">
             {([
-              { label: 'Optimized RTH', value: 'opt' },
               { label: 'Original RTH', value: 'rth' },
+              { label: 'Optimized RTH', value: 'opt' },
             ] as const).map((option) => (
               <label key={option.value}>
                 <input

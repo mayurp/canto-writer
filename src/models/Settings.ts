@@ -14,7 +14,7 @@ export const DEFAULT_SETTINGS_KEY = 'user-settings'
 
 export const defaultSettings: Settings = {
   ttsSpeed: 4,
-  orderMode: 'opt',
+  orderMode: 'rth',
   debug: false,
 }
 
