@@ -121,11 +121,6 @@ export function DeckManager({
     return `${Math.round(diffMonths)}mo`
   }
 
-  const formatStability = (scheduled?: typeof scheduledCards[number]) => {
-    if (!scheduled) return '—'
-    return `${scheduled.stability.toFixed(1)}`
-  }
-
   const [sortColumn, setSortColumn] = useState<'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due'>('rth')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
 
@@ -158,11 +153,6 @@ export function DeckManager({
           const dueB = b.dueDate.getTime() ?? 0
           return (dueA - dueB) * directionMultiplier
         }
-        case 'stability': {
-          const stabilityA = a.stability ?? 0
-          const stabilityB = b.stability ?? 0
-          return (stabilityA - stabilityB) * directionMultiplier
-        }
         default:
           return 0
       }
@@ -187,10 +177,11 @@ export function DeckManager({
   return (
     <section className="manager-panel">
       <header className="manager-header">
-        <p className="tagline">
-          Add characters by {orderMode === 'rth' ? 'original RTH frames' : 'optimized frames'} or paste specific hanzi you
-          want to learn.
-        </p>
+        {parentModeUnlocked && (
+          <p className="tagline">
+            Add characters you want to learn.
+          </p>
+        )}
       </header>
 
       {parentModeUnlocked ? (
