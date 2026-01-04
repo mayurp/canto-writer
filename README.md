@@ -6,7 +6,10 @@ An app for remebering tranditional chinese characters using audio hints in Canto
 
 In priority order:
 
-* Allow parent / child modes using dexie realms? 
-* Read Flashcard definitions from google sheet? Hardcode url into app? 
+
+* Make into PWA app
+
+Nice to haves:
+
 * Pagination of deck builder?
 * Optimize loading times?
