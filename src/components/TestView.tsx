@@ -19,6 +19,12 @@ export function TestView({ playPronunciation, voiceRate, isSupported }: TestView
     await db.srsCards.clear()
   }
 
+  const handleClearAll = async () => {
+    await db.srsCards.clear()
+    await db.settings.clear()
+    await db.deckSelections.clear()
+  }
+
   return (
     <>
       <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
@@ -42,6 +48,9 @@ export function TestView({ playPronunciation, voiceRate, isSupported }: TestView
         </div>
         <button type="button" className="custom-tts-button" onClick={handleClearSrs}>
           Clear SRS Records
+        </button>
+        <button type="button" className="custom-tts-button" onClick={handleClearAll}>
+          Clear All Local Data
         </button>
         {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
       </section>
