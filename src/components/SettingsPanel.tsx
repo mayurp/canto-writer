@@ -59,16 +59,18 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
           </div>
         </div>
 
-        <div className="settings-section">
-          <label className="settings-toggle">
-            <input
-              type="checkbox"
-              checked={settings.debug}
-              onChange={(event) => updateSetting('debug', event.target.checked)}
-            />
-            Debug mode (show grading buttons)
-          </label>
-        </div>
+        {import.meta.env.DEV && (
+          <div className="settings-section">
+            <label className="settings-toggle">
+              <input
+                type="checkbox"
+                checked={settings.debug}
+                onChange={(event) => updateSetting('debug', event.target.checked)}
+              />
+              Debug mode (show grading buttons)
+            </label>
+          </div>
+        )}
       </div>
     </div>
   )
