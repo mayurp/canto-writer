@@ -31,6 +31,7 @@ function AppContent() {
   const { settings } = useSettingsContext()
   const { selectedIds, addCards, removeCard, clearAll } = useDeckSelection(deck)
   const { playableDeck } = usePlayableDeck(deck, selectedIds, settings.orderMode)
+  const debugEnabled = import.meta.env.DEV && settings.debug
   const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [userPanelOpen, setUserPanelOpen] = useState(false)
@@ -47,7 +48,7 @@ function AppContent() {
       <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
         Build deck
       </button>
-      {settings.debug && (
+      {debugEnabled && (
         <button type="button" className={navClass('test')} onClick={() => setView('test')}>
           Test
         </button>
@@ -92,10 +93,10 @@ function AppContent() {
   let bodyContent: ReactNode
 
   useEffect(() => {
-    if (view === 'test' && !settings.debug) {
+    if (view === 'test' && !debugEnabled) {
       setView('learn')
     }
-  }, [settings.debug, view])
+  }, [debugEnabled, view])
 
   if (loading) {
     bodyContent = (
