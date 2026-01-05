@@ -1,4 +1,5 @@
 export interface SrsCard {
+  character: string
   // Algorithm-specific srs stats
   stats: unknown
   // Custom metadata

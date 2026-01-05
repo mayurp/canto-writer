@@ -15,7 +15,7 @@ export default class CantoWriterDB extends Dexie {
     this.version(1).stores({
       settings: 'id',
       deckSelections: 'id',
-      srsCards: '&id',
+      srsCards: 'id',
     })
 
     this.cloud.configure({

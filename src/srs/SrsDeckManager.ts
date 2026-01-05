@@ -29,7 +29,7 @@ export class SrsDeckManager<Stats> {
 
   hydrate(definitions: FlashcardDefinition[], storedCards?: SrsCardRecord[]): ScheduledCard<Stats>[] {
     return definitions.map((card) => {
-      const saved = storedCards?.find((entry) => entry.id === card.id)
+      const saved = storedCards?.find((entry) => entry.character === card.character)
       const stats =
         saved?.stats !== undefined ? this.algorithm.deserializeStats(saved.stats) : this.algorithm.defaultStats()
       return {
@@ -85,7 +85,9 @@ export class SrsDeckManager<Stats> {
 
   serializeCard(card: ScheduledCard<Stats>): SrsCardRecord {
     return {
-      id: card.id,
+      // Use # prefix to make private ids unique to user
+      id: '#' + card.id,
+      character: card.character,
       stats: card.stats,
       learnedOutline: card.learnedOutline,
     }
