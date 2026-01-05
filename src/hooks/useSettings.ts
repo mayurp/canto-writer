@@ -22,7 +22,7 @@ export const useSettings = () => {
 
   const updateSetting = useCallback(<K extends keyof Settings>(key: K, value: Settings[K]) => {
     const next = { ...settings, [key]: value }
-    void db.settings.put({ ...next, key: DEFAULT_SETTINGS_KEY }).catch((error) => {
+    void db.settings.put({ ...next, id: DEFAULT_SETTINGS_KEY }).catch((error) => {
       console.error('Failed to save settings', error)
     })
   }, [settings])

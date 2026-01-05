@@ -5,26 +5,21 @@ import type { DeckSelectionRecord } from './DeckSelection'
 import type { SrsCardRecord } from './SrsCard'
 
 export default class CantoWriterDB extends Dexie {
-  settings!: DexieCloudTable<SettingsRecord, 'key'>
-  deckSelections!: DexieCloudTable<DeckSelectionRecord, 'key'>
+  settings!: DexieCloudTable<SettingsRecord, 'id'>
+  deckSelections!: DexieCloudTable<DeckSelectionRecord, 'id'>
   srsCards!: DexieCloudTable<SrsCardRecord, 'id'>
 
   constructor() {
     super('CantoWriterDB', { addons: [dexieCloud] })
 
     this.version(1).stores({
-      settings: '&key',
-      deckSelections: '&key',
-    })
-
-    this.version(2).stores({
-      settings: '&key',
-      deckSelections: '&key',
+      settings: 'id',
+      deckSelections: 'id',
       srsCards: '&id',
     })
 
     this.cloud.configure({
-      databaseUrl: 'https://zbwpeyv2x.dexie.cloud',
+      databaseUrl: 'https://zfmwg6jca.dexie.cloud',
     })
   }
 }

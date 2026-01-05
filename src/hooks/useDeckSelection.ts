@@ -5,7 +5,7 @@ import { DEFAULT_SELECTION_KEY } from '../models/DeckSelection'
 import { useLiveQuery } from 'dexie-react-hooks'
 
 const writeSelection = async (selectedIds: string[]) => {
-  await db.deckSelections.put({ key: DEFAULT_SELECTION_KEY, selectedIds })
+  await db.deckSelections.put({ id: DEFAULT_SELECTION_KEY, selectedIds })
 }
 
 export const useDeckSelection = (deck: FlashcardDefinition[]) => {

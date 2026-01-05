@@ -7,10 +7,10 @@ export interface Settings {
 }
 
 export interface SettingsRecord extends Settings {
-  key: string
+  id: string
 }
 
-export const DEFAULT_SETTINGS_KEY = 'user-settings'
+export const DEFAULT_SETTINGS_KEY = '#settings'
 
 export const defaultSettings: Settings = {
   ttsSpeed: 4,

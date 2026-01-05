@@ -1,6 +1,6 @@
 export type DeckSelectionRecord = {
-  key: string
+  id: string
   selectedIds: string[]
 }
 
-export const DEFAULT_SELECTION_KEY = 'active-selection'
+export const DEFAULT_SELECTION_KEY = '#active-selection'
