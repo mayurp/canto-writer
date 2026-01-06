@@ -24,4 +24,5 @@ export default defineConfig({
       },
     }),
   ],
+  base: '/canto-writer/',
 })
