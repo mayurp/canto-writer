@@ -20,6 +20,7 @@ export default class CantoWriterDB extends Dexie {
 
     this.cloud.configure({
       databaseUrl: 'https://zfmwg6jca.dexie.cloud',
+      tryUseServiceWorker: true,
     })
   }
 }

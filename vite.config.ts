@@ -3,15 +3,28 @@ import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  define: {
+    // (replaces process.env.BUILD_DATE with actual build timestamp - for logging)
+    "process.env.BUILD_DATE": JSON.stringify(new Date().toISOString()),
+  },
+  build: {
+    chunkSizeWarningLimit: 1000,
+  },  
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      // We handle registration manually following dexie-cloud example
+      injectRegister: false,
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
+      //
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
         name: 'Canto Writer',
         short_name: 'CantoWriter',
-        start_url: '/canto-writer/',
+        start_url: './',
         display: 'standalone',
         theme_color: '#ffffff',
         background_color: '#ffffff',
@@ -24,5 +37,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/canto-writer/',
+  base: process.env.PUBLIC_URL ?? './',
 })
