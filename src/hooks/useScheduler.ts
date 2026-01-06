@@ -12,7 +12,7 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   const [cards, setCards] = useState<SchedulerCard[]>([])
   // heartbeat is not used explicitly, but triggers a re-render periodically.
   // TODO: check if we should be doing something more efficient here.
-  const [heartbeat, setHeartbeat] = useState(() => Date.now())
+  const [, setHeartbeat] = useState(() => Date.now())
 
   useEffect(() => {
     if (!storedCards) return
