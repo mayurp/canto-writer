@@ -11,7 +11,7 @@ export default defineConfig({
       manifest: {
         name: 'Canto Writer',
         short_name: 'CantoWriter',
-        start_url: '/',
+        start_url: '/canto-writer/',
         display: 'standalone',
         theme_color: '#ffffff',
         background_color: '#ffffff',
