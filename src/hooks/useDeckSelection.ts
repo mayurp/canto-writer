@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
 import { db } from '../models/db'
 import { DEFAULT_SELECTION_KEY } from '../models/DeckSelection'
+import { prefetchStrokeData } from '../utils/prefetchStrokeData'
 import { useLiveQuery } from 'dexie-react-hooks'
 
 const writeSelection = async (selectedIds: string[]) => {
@@ -24,8 +25,13 @@ export const useDeckSelection = (deck: FlashcardDefinition[]) => {
   }, [selectedIds])
 
   const addCards = useCallback((ids: string[]) => {
+    if (ids.length === 0) return
+    const newIds = ids.filter((id) => !selectedIds.includes(id))
+    if (newIds.length > 0) {
+      prefetchStrokeData(newIds)
+    }
     updateSelection((prev) => Array.from(new Set([...prev, ...ids])))
-  }, [updateSelection])
+  }, [selectedIds, updateSelection])
 
   const removeCard = useCallback((id: string) => {
     updateSelection((prev) => prev.filter((existing) => existing !== id))

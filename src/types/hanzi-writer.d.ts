@@ -50,6 +50,8 @@ declare module 'hanzi-writer' {
   }
 
   class HanziWriter {
+    static loadCharacterData?: (character: string) => Promise<CharacterData>
+
     static create(element: HTMLElement, character: string, options?: WriterOptions): HanziWriter
     loopCharacterAnimation(): void
     pauseAnimation(): void
