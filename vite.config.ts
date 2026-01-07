@@ -19,8 +19,10 @@ export default defineConfig({
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'sw.ts',
-      //
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+      // pre-caching for "strategies" above
+      injectManifest: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,csv}'],
+      },
       manifest: {
         name: 'Canto Writer',
         short_name: 'CantoWriter',
