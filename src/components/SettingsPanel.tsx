@@ -71,6 +71,11 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
             </label>
           </div>
         )}
+
+        <div className="settings-version">
+          <p>Version: {__APP_VERSION__}</p>
+          <p>Built: {new Date(__BUILD_TIMESTAMP__).toLocaleString()}</p>
+        </div>
       </div>
     </div>
   )

@@ -166,6 +166,18 @@
   gap: 0.6rem;
 }
 
+.settings-version {
+  margin-top: auto;
+  text-align: right;
+  font-size: 0.85rem;
+  color: #475569;
+  border-top: 1px solid rgba(148, 163, 184, 0.4);
+  padding-top: 0.75rem;
+}
+.settings-version p {
+  margin: 0;
+}
+
 .settings-label {
   margin: 0;
   font-weight: 600;

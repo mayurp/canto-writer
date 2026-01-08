@@ -1,8 +1,24 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa'
+import { execSync } from 'node:child_process'
+import { version as packageVersion } from './package.json'
+
+const getVersion = () => {
+  try {
+    const githash = execSync('git rev-parse --short HEAD').toString().trim()
+    const suffix = process.env.NODE_ENV === 'development' ? '-dev': ''
+    return `${packageVersion} ${githash}` + suffix
+  } catch {
+    throw new Error('Failed to read git commit hash')
+  }
+}
 
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(getVersion()),
+    __BUILD_TIMESTAMP__: JSON.stringify(new Date().toISOString()),
+  },
   build: {
     chunkSizeWarningLimit: 1000,
   },  
