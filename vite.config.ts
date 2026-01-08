@@ -12,14 +12,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       strategies: 'generateSW',
       workbox: {
-        // Enable for to log caching
+        // Enable for caching logs
         //mode: 'development',
         globPatterns: ['**/*.{js,css,html,ico,png,svg,csv}'],
         runtimeCaching: [
           {
-            // Google doc includes redirect so this pattern matches both the original
-            // request and redirect URL
-            // TODO: try caching just the initial URL again?
             urlPattern: /^https:\/\/docs\.google\.com\/spreadsheets.*output=csv/i,
             handler: 'NetworkFirst',
             options: {
