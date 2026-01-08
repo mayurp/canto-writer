@@ -74,7 +74,11 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   const currentCharacter = currentCard?.character
 
   useEffect(() => {
-    if (!isSupported || !currentCharacter) return
+    // This is triggered twice, once on intialization (examples empty) and 2nd time
+    // when examples finishing loading. We early out to prevent audio playing twice
+    // and also so we have the example text for buildPronunciationUtterance 
+    const loadedExamples = Object.keys(examples).length > 0
+    if (!isSupported || !currentCharacter || !loadedExamples) return
     const timer = window.setTimeout(() => {
       playPronunciation(buildPronunciationUtterance(currentCharacter, examples), { rate: voiceRate })
     }, PRONUNCIATION_DELAY_MS)

@@ -54,7 +54,10 @@ export const useCantonesePronunciation = () => {
       utterance.rate = options?.rate ?? 0.7
       utterance.onstart = () => setSpeaking(true)
       utterance.onend = () => setSpeaking(false)
-      utterance.onerror = () => setSpeaking(false)
+      utterance.onerror = (event) => {
+        console.error('[Pronunciation] onerror', { text, event })
+        setSpeaking(false)
+      }
 
       synth.speak(utterance)
     },
