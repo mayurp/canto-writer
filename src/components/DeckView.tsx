@@ -1,87 +1,21 @@
 import { useMemo, useState } from 'react'
-import type { FlashcardDefinition } from '../data/cards'
 import { useSettingsContext } from '../context/SettingsContext'
 import { SrsCardState } from '../srs/types'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamples } from '../hooks/useVocabExamples'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
-import { useParentModeContext } from '../context/ParentModeContext'
 
-type DeckManagerProps = {
-  deck: FlashcardDefinition[]
+type DeckViewProps = {
   selectedIds: string[]
-  addCards: (ids: string[]) => void
-  removeCard: (id: string) => void
-  clearAll: () => void
   playPronunciation: (text: string) => void
   isSpeechSupported: boolean
 }
 
-export function DeckManager({
-  deck,
-  selectedIds,
-  addCards,
-  removeCard,
-  clearAll,
-  playPronunciation,
-  isSpeechSupported,
-}: DeckManagerProps) {
+export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: DeckViewProps) {
   const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
   const { examples } = useVocabExamples()
-  const { isUnlocked: parentModeUnlocked } = useParentModeContext()
-  const orderMode = settings.orderMode
-  const [rangeStart, setRangeStart] = useState('')
-  const [rangeEnd, setRangeEnd] = useState('')
-  const [charInput, setCharInput] = useState('')
-  const [message, setMessage] = useState<string | null>(null)
-  const deckByFrame = useMemo(
-    () =>
-      deck.reduce<Record<number, FlashcardDefinition>>((acc, card) => {
-        const key = orderMode === 'rth' ? card.rthOrder : card.order
-        if (typeof key === 'number' && Number.isFinite(key)) {
-          acc[key] = card
-        }
-        return acc
-      }, {}),
-    [deck, orderMode],
-  )
-
-  const handleAddRange = () => {
-    const start = Number(rangeStart)
-    const end = Number(rangeEnd)
-    if (!Number.isFinite(start) || !Number.isFinite(end) || start <= 0 || end <= 0) {
-      setMessage('Enter valid frame numbers.')
-      return
-    }
-    const [min, max] = start <= end ? [start, end] : [end, start]
-    const ids: string[] = []
-    for (let i = min; i <= max; i += 1) {
-      const card = deckByFrame[i]
-      if (card) ids.push(card.id)
-    }
-    if (!ids.length) {
-      setMessage('No cards found for that range.')
-      return
-    }
-    addCards(ids)
-    setMessage(`Added ${ids.length} cards.`)
-  }
-
-  const handleAddCharacters = () => {
-    const chars = Array.from(new Set(charInput.replace(/\s+/g, '').split(''))).filter(Boolean)
-    const ids = chars
-      .map((char) => deck.find((card) => card.character === char)?.id)
-      .filter(Boolean) as string[]
-    if (!ids.length) {
-      setMessage('No matching characters found.')
-      return
-    }
-    addCards(ids)
-    setMessage(`Added ${ids.length} cards.`)
-  }
-
   const scheduledById = useMemo(
     () =>
       scheduledCards.reduce<Record<string, typeof scheduledCards[number]>>((acc, card) => {
@@ -123,6 +57,8 @@ export function DeckManager({
 
   const [sortColumn, setSortColumn] = useState<'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due'>('rth')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const showRthColumn = settings.debug || settings.orderMode === 'rth'
+  const showOptColumn = settings.debug || settings.orderMode === 'opt'
 
   const sortedSelectedCards = useMemo(() => {
     const sorted = [...selectedCards]
@@ -176,65 +112,9 @@ export function DeckManager({
 
   return (
     <section className="manager-panel">
-      <header className="manager-header">
-        {parentModeUnlocked && (
-          <p className="tagline">
-            Add characters you want to learn.
-          </p>
-        )}
-      </header>
-
-      {parentModeUnlocked ? (
-        <div className="manager-grid">
-          <div className="manager-card">
-            <h2>Add by {(orderMode === 'opt' ? 'Optimized' : '') + ' RTH'} range</h2>
-            <div className="range-form">
-              <input
-                type="number"
-                min={1}
-                placeholder="Start frame"
-                value={rangeStart}
-                onChange={(event) => setRangeStart(event.target.value)}
-              />
-              <span>to</span>
-              <input
-                type="number"
-                min={1}
-                placeholder="End frame"
-                value={rangeEnd}
-                onChange={(event) => setRangeEnd(event.target.value)}
-              />
-            </div>
-            <button onClick={handleAddRange}>Add range</button>
-          </div>
-
-          <div className="manager-card">
-            <h2>Add by characters</h2>
-            <textarea
-              rows={4}
-              placeholder="Paste characters like 學講聽寫"
-              value={charInput}
-              onChange={(event) => setCharInput(event.target.value)}
-            />
-            <button onClick={handleAddCharacters}>Add characters</button>
-          </div>
-        </div>
-      ) : (
-        <div className="manager-card">
-          <p className="parent-mode-hint">Enable parent mode to add or remove cards from the deck.</p>
-        </div>
-      )}
-
-      {message && <p className="manager-message">{message}</p>}
-
       <section className="selected-panel">
         <div className="selected-header">
           <h2>Selected cards ({selectedCards.length})</h2>
-          {selectedCards.length > 0 && parentModeUnlocked && (
-            <button className="clear-link" onClick={clearAll}>
-              Clear all
-            </button>
-          )}
         </div>
         {selectedCards.length === 0 ? (
           <p className="empty-hint">No cards yet. Add some to start practicing.</p>
@@ -243,16 +123,20 @@ export function DeckManager({
             <table className="selected-table">
               <thead>
                 <tr>
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('rth')}>
-                      RTH # {renderSortIndicator('rth')}
-                    </button>
-                  </th>
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('opt')}>
-                      Opt RTH # {renderSortIndicator('opt')}
-                    </button>
-                  </th>
+                  {showRthColumn && (
+                    <th>
+                      <button type="button" className="sort-button" onClick={() => handleSort('rth')}>
+                        RTH # {renderSortIndicator('rth')}
+                      </button>
+                    </th>
+                  )}
+                  {showOptColumn && (
+                    <th>
+                      <button type="button" className="sort-button" onClick={() => handleSort('opt')}>
+                        Opt RTH # {renderSortIndicator('opt')}
+                      </button>
+                    </th>
+                  )}
                   <th>
                     <button type="button" className="sort-button" onClick={() => handleSort('character')}>
                       Character {renderSortIndicator('character')}
@@ -260,7 +144,7 @@ export function DeckManager({
                   </th>
                   <th>
                     <button type="button" className="sort-button" onClick={() => handleSort('meaning')}>
-                      Meaning {renderSortIndicator('meaning')}
+                      Keyword {renderSortIndicator('meaning')}
                     </button>
                   </th>
                   <th aria-label="Audio" />
@@ -274,15 +158,14 @@ export function DeckManager({
                       Due {renderSortIndicator('due')}
                     </button>
                   </th>
-                  {parentModeUnlocked && <th aria-label="Actions" />}
                 </tr>
               </thead>
               <tbody>
                 {sortedSelectedCards.map((card) => {
                   return (
                     <tr key={card.id}>
-                      <td>{card.rthOrder ?? '—'}</td>
-                      <td>{card.order ?? '—'}</td>
+                      {showRthColumn && <td>{card.rthOrder ?? '—'}</td>}
+                      {showOptColumn && <td>{card.order ?? '—'}</td>}
                       <td className="selected-character">{card.character}</td>
                       <td>{card.meaning}</td>
                       <td>
@@ -297,19 +180,13 @@ export function DeckManager({
                       </td>
                       <td>{formatState(card)}</td>
                       <td>{formatDue(card)}</td>
-                      {parentModeUnlocked && (
-                        <td>
-                          <button className="selected-remove" onClick={() => removeCard(card.id)}>
-                            Remove
-                          </button>
-                        </td>
-                      )}
                     </tr>
                   )
                 })}
               </tbody>
             </table>
           </div>
+
         )}
       </section>
     </section>

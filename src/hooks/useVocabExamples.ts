@@ -14,12 +14,12 @@ type VocabState = {
 
 const buildExampleMap = (rows: Record<string, string>[]): VocabExamples => {
   return rows.reduce((acc, row) => {
-    const character = row['TH']?.trim()
+    const firstColumnKey = Object.keys(row)[0]
+    const character = firstColumnKey ? row[firstColumnKey]?.trim() : undefined
+    if (!character) return acc
     const vocab = row['Vocab']?.trim()
-    if (!character || !vocab) return acc
-
     if (!acc[character]) acc[character] = []
-    acc[character].push(vocab)
+    if (vocab) acc[character].push(vocab)
     return acc
   }, {} as VocabExamples)
 }

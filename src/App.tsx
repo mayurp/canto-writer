@@ -3,7 +3,8 @@ import './App.css'
 import { LogoMark } from './components/LogoMark'
 import { SettingsPanel } from './components/SettingsPanel'
 import { UserPanel } from './components/UserPanel'
-import { DeckManager } from './components/DeckManager'
+import { DeckView } from './components/DeckView'
+import { LibraryView } from './components/LibraryView'
 import { PracticeView } from './components/PracticeView'
 import { TestView } from './components/TestView'
 import { SessionStatus } from './components/SessionStatus'
@@ -12,7 +13,7 @@ import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { ttsSpeedSteps } from './hooks/useSettings'
 import { SettingsProvider, useSettingsContext } from './context/SettingsContext'
-import { ParentModeProvider } from './context/ParentModeContext'
+import { ParentModeProvider, useParentModeContext } from './context/ParentModeContext'
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { usePlayableDeck } from './hooks/usePlayableDeck'
 
@@ -26,28 +27,37 @@ function App() {
   )
 }
 
+type AppView = 'learn' | 'deck' | 'library' | 'test'
+
 function AppContent() {
   const { deck, loading, error } = useRememberingDeck()
   const { settings } = useSettingsContext()
-  const { selectedIds, addCards, removeCard, clearAll } = useDeckSelection(deck)
+  const { selectedIds, addCards, removeCard } = useDeckSelection(deck)
   const { playableDeck } = usePlayableDeck(deck, selectedIds, settings.orderMode)
   const debugEnabled = import.meta.env.DEV && settings.debug
-  const [view, setView] = useState<'learn' | 'manage' | 'test'>('learn')
+  const [view, setView] = useState<AppView>('learn')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [userPanelOpen, setUserPanelOpen] = useState(false)
   const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
+  const { isUnlocked: parentModeUnlocked } = useParentModeContext()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
 
-  const navClass = (target: 'learn' | 'manage' | 'test') => `nav-tab${view === target ? ' is-active' : ''}`
+  const navClass = (target: AppView, disabled = false) =>
+    `nav-tab${view === target ? ' is-active' : ''}${disabled ? ' is-disabled' : ''}`
 
   const NavTabs = () => (
     <div className="nav-tabs">
       <button type="button" className={navClass('learn')} onClick={() => setView('learn')}>
         Learn
       </button>
-      <button type="button" className={navClass('manage')} onClick={() => setView('manage')}>
-        Build deck
+      <button type="button" className={navClass('deck')} onClick={() => setView('deck')}>
+        Deck
       </button>
+      {parentModeUnlocked && (
+        <button type="button" className={navClass('library')} onClick={() => setView('library')}>
+          Library
+        </button>
+      )}
       {debugEnabled && (
         <button type="button" className={navClass('test')} onClick={() => setView('test')}>
           Test
@@ -98,6 +108,12 @@ function AppContent() {
     }
   }, [debugEnabled, view])
 
+  useEffect(() => {
+    if (!parentModeUnlocked && view === 'library') {
+      setView('deck')
+    }
+  }, [parentModeUnlocked, view])
+
   if (loading) {
     bodyContent = (
       <div className="empty-state">
@@ -111,16 +127,21 @@ function AppContent() {
         <p className="error-detail">{error}</p>
       </div>
     )
-  } else if (view === 'manage') {
+  } else if (view === 'deck') {
     bodyContent = (
-      <DeckManager
+      <DeckView
+        selectedIds={selectedIds}
+        playPronunciation={(text) => playPronunciation(text, { rate: voiceRate })}
+        isSpeechSupported={isSupported}
+      />
+    )
+  } else if (view === 'library') {
+    bodyContent = (
+      <LibraryView
         deck={deck}
         selectedIds={selectedIds}
         addCards={addCards}
         removeCard={removeCard}
-        clearAll={clearAll}
-        playPronunciation={(text) => playPronunciation(text, { rate: voiceRate })}
-        isSpeechSupported={isSupported}
       />
     )
   } else if (view === 'test') {
@@ -135,8 +156,8 @@ function AppContent() {
     bodyContent = (
       <div className="empty-state">
         <p>Your study deck is empty. Add characters from the RTH list to begin.</p>
-        <button type="button" className="clear-link" onClick={() => setView('manage')}>
-          Open deck builder
+        <button type="button" className="clear-link" onClick={() => setView('library')}>
+          Open library
         </button>
       </div>
     )
