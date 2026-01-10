@@ -39,8 +39,10 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   // Don't use hearbeat here as the timestamp is after the date
   // given by hydrate to New cards (which don't have srs records).
   const now = Date.now()
-  const dueCount = cards.filter((card) => getDueTimestamp(card) <= now).length
-  const currentCard = sorted.find((card) => getDueTimestamp(card) <= now) ?? sorted[0] ?? null
+  const due = sorted.filter(card => getDueTimestamp(card) <= now)
+  const dueCount = due.length
+  const currentCard = due[0] ?? null
+  const nextDueDate = dueCount === 0 ? sorted[0]?.dueDate ?? null : currentCard?.dueDate ?? null
 
   const gradeCard = useCallback(
     (cardId: string, grading: GradingInfo) => {
@@ -66,6 +68,7 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     currentCard,
     totalCount: cards.length,
     dueCount,
+    nextDueDate,
     gradeCard,
     shouldShowOutline,
   }

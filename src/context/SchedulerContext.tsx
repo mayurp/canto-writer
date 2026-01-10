@@ -9,6 +9,7 @@ export type SchedulerValue = {
   currentCard: SchedulerCard | null
   totalCount: number
   dueCount: number
+  nextDueDate: Date | null
   gradeCard: (cardId: string, grading: GradingInfo) => void
   shouldShowOutline: (cardId: string) => boolean
 }
