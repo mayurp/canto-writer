@@ -42,8 +42,7 @@ function AppContent() {
   const { isUnlocked: parentModeUnlocked } = useParentModeContext()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
 
-  const navClass = (target: AppView, disabled = false) =>
-    `nav-tab${view === target ? ' is-active' : ''}${disabled ? ' is-disabled' : ''}`
+  const navClass = (target: AppView) => `nav-tab${view === target ? ' is-active' : ''}`
 
   const NavTabs = () => (
     <div className="nav-tabs">
@@ -66,7 +65,7 @@ function AppContent() {
     </div>
   )
 
-  const AppHeader = ({ rightSlot }: { rightSlot?: ReactNode }) => (
+  const AppHeader = () => (
     <header className="app-header">
       <div className="header-row">
         <div className="brand-mark">
@@ -74,6 +73,7 @@ function AppContent() {
           <p className="eyebrow">Canto Writer</p>
         </div>
         <div className="header-actions">
+          <SessionStatus />
           <button
             type="button"
             className="settings-trigger inline"
@@ -94,12 +94,11 @@ function AppContent() {
       </div>
       <div className="nav-row">
         <NavTabs />
-        {rightSlot ?? <span />}
+        <span />
       </div>
     </header>
   )
 
-  let headerRight: ReactNode | null = null
   let bodyContent: ReactNode
 
   useEffect(() => {
@@ -166,7 +165,6 @@ function AppContent() {
       </div>
     )
   } else {
-    headerRight = <SessionStatus />
     bodyContent = (
       <PracticeView
         playPronunciation={playPronunciation}
@@ -180,7 +178,7 @@ function AppContent() {
   return (
     <SchedulerProvider deck={playableDeck}>
       <main className="app-shell">
-        <AppHeader rightSlot={headerRight} />
+        <AppHeader />
         {bodyContent}
       </main>
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
