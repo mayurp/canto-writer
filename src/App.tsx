@@ -16,12 +16,15 @@ import { SettingsProvider, useSettingsContext } from './context/SettingsContext'
 import { ParentModeProvider, useParentModeContext } from './context/ParentModeContext'
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { usePlayableDeck } from './hooks/usePlayableDeck'
+import { VocabExamplesProvider } from './context/VocabExamplesContext'
 
 function App() {
   return (
     <SettingsProvider>
       <ParentModeProvider>
-        <AppContent />
+        <VocabExamplesProvider>
+          <AppContent />
+        </VocabExamplesProvider>
       </ParentModeProvider>
     </SettingsProvider>
   )

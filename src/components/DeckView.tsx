@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { useSettingsContext } from '../context/SettingsContext'
 import { SrsCardState } from '../srs/types'
 import { useSchedulerContext } from '../context/SchedulerContext'
-import { useVocabExamples } from '../hooks/useVocabExamples'
+import { useVocabExamplesContext } from '../context/VocabExamplesContext'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
 
@@ -15,7 +15,7 @@ type DeckViewProps = {
 export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: DeckViewProps) {
   const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
-  const { examples } = useVocabExamples()
+  const { examples } = useVocabExamplesContext()
   const scheduledById = useMemo(
     () =>
       scheduledCards.reduce<Record<string, typeof scheduledCards[number]>>((acc, card) => {

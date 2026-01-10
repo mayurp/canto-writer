@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../data/cards'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useParentModeContext } from '../context/ParentModeContext'
-import { useVocabExamples } from '../hooks/useVocabExamples'
+import { useVocabExamplesContext } from '../context/VocabExamplesContext'
 
 type LibraryViewProps = {
   deck: FlashcardDefinition[]
@@ -14,7 +14,7 @@ type LibraryViewProps = {
 export function LibraryView({ deck, selectedIds, addCards, removeCard }: LibraryViewProps) {
   const { settings } = useSettingsContext()
   const { isUnlocked: parentModeUnlocked } = useParentModeContext()
-  const { examples, loading, error } = useVocabExamples()
+  const { examples, loading, error } = useVocabExamplesContext()
   const [showAdded, setShowAdded] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [sortColumn, setSortColumn] = useState<'order' | 'character' | 'keyword' | 'example'>('order')

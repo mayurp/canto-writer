@@ -4,7 +4,7 @@ import { ReviewRating, type ReviewRating as ReviewRatingType, type GradingInfo }
 import { StrokeAnimator } from './StrokeAnimator'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
-import { useVocabExamples } from '../hooks/useVocabExamples'
+import { useVocabExamplesContext } from '../context/VocabExamplesContext'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
 
@@ -47,7 +47,7 @@ type PracticeViewProps = {
 export function PracticeView({ playPronunciation, speaking, isSupported, voiceRate }: PracticeViewProps) {
   const { currentCard, gradeCard, shouldShowOutline } = useSchedulerContext()
   const { settings } = useSettingsContext()
-  const { examples } = useVocabExamples()
+  const { examples } = useVocabExamplesContext()
   const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
