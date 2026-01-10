@@ -155,10 +155,14 @@ function AppContent() {
   } else if (playableDeck.length === 0) {
     bodyContent = (
       <div className="empty-state">
-        <p>Your study deck is empty. Add characters from the RTH list to begin.</p>
-        <button type="button" className="clear-link" onClick={() => setView('library')}>
-          Open library
-        </button>
+        <p>Your study deck is empty. Add characters from the Library to begin.</p>
+        {parentModeUnlocked ? (
+          <button type="button" className="clear-link" onClick={() => setView('library')}>
+            Open library
+          </button>
+        ) : (
+          <p className="parent-mode-hint">Unlock parent mode to add more cards.</p>
+        )}
       </div>
     )
   } else {
