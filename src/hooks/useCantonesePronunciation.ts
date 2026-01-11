@@ -33,10 +33,16 @@ export const useCantonesePronunciation = () => {
     }
 
     hydrateVoices()
-    synth.addEventListener('voiceschanged', hydrateVoices)
 
-    return () => {
-      synth.removeEventListener('voiceschanged', hydrateVoices)
+    // Defensive check for older browsers
+    const supportsVoicesChanged: boolean = 'onvoiceschanged' in synth
+    if (supportsVoicesChanged)
+    {
+      synth.addEventListener('voiceschanged', hydrateVoices)
+
+      return () => {
+        synth.removeEventListener('voiceschanged', hydrateVoices)
+      }
     }
   }, [isSupported])
 
