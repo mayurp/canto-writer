@@ -13,7 +13,7 @@ export interface SettingsRecord extends Settings {
 export const DEFAULT_SETTINGS_KEY = '#settings'
 
 export const defaultSettings: Settings = {
-  ttsSpeed: 4,
+  ttsSpeed: 0.3,
   orderMode: 'rth',
   debug: false,
 }
