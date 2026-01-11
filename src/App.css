@@ -480,7 +480,6 @@
   height: 2.4rem;
   background: rgba(37, 99, 235, 0.12);
   color: #1d4ed8;
-  font-size: 1rem;
 }
 
 .audio-button.audio-button--small .audio-glyph {
@@ -541,7 +540,6 @@
   border-radius: 50%;
   background: #2563eb;
   color: #f8fafc;
-  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
