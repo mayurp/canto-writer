@@ -87,6 +87,33 @@
   opacity: 1;
 }
 
+.main-nav {
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.main-nav button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.main-nav button:hover {
+  background-color: #e0e0e0;
+}
+
+.main-nav button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Existing styles below */
+
 
 .custom-tts-input {
   border: 1px solid rgba(15, 23, 42, 0.2);

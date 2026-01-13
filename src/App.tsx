@@ -17,6 +17,7 @@ import { ParentModeProvider, useParentModeContext } from './context/ParentModeCo
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { usePlayableDeck } from './hooks/usePlayableDeck'
 import { VocabExamplesProvider } from './context/VocabExamplesContext'
+import { StatsView } from './components/StatsView'
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
   )
 }
 
-type AppView = 'learn' | 'deck' | 'library' | 'test'
+type AppView = 'learn' | 'deck' | 'library' | 'stats' | 'test'
 
 function AppContent() {
   const { deck, loading, error } = useRememberingDeck()
@@ -54,6 +55,9 @@ function AppContent() {
       </button>
       <button type="button" className={navClass('deck')} onClick={() => setView('deck')}>
         Deck
+      </button>
+      <button type="button" className={navClass('stats')} onClick={() => setView('stats')}>
+        Stats
       </button>
       {parentModeUnlocked && (
         <button type="button" className={navClass('library')} onClick={() => setView('library')}>
@@ -137,6 +141,8 @@ function AppContent() {
         isSpeechSupported={isSupported}
       />
     )
+  } else if (view === 'stats') {
+    bodyContent = <StatsView />
   } else if (view === 'library') {
     bodyContent = (
       <LibraryView
