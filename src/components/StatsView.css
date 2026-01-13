@@ -6,7 +6,7 @@
 .stats-section-panel {
   background-color: #f9fafb; /* Lighter background */
   border: 1px solid #e5e7eb; /* Same border as stat-panel */
-  border-radius: 0.5rem; /* Same border-radius as stat-panel */
+  border-radius: var(--panel-border-radius);
   padding: 1.5rem; /* Slightly more padding than stat-panel */
   margin-bottom: 1.5rem; /* Space between sections */
 }
@@ -20,7 +20,7 @@
 .stat-panel {
   background-color: #ffffff; /* Changed to white for sub-panels inside a light section panel */
   border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
+  border-radius: var(--panel-border-radius);
   padding: 1rem;
   flex-grow: 1;
   text-align: center;

@@ -1,3 +1,7 @@
+:root {
+  --panel-border-radius: 1rem;
+}
+
 .app-shell {
   margin: 0 auto;
   max-width: 1100px;
@@ -161,7 +165,7 @@
 .settings-card {
   width: min(420px, 100%);
   background: #f8fafc;
-  border-radius: 1.2rem;
+  border-radius: var(--panel-border-radius);
   padding: 1.5rem;
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
   display: flex;
@@ -393,7 +397,7 @@
 
 .manager-card {
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 1rem;
+  border-radius: var(--panel-border-radius);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -438,7 +442,7 @@
 
 .selected-panel {
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 1rem;
+  border-radius: var(--panel-border-radius);
   padding: 1rem;
   box-shadow: 0 15px 30px rgba(15, 23, 42, 0.12);
 }
@@ -520,7 +524,7 @@
 
 .study-card {
   background: rgba(255, 255, 255, 0.92);
-  border-radius: 1.5rem;
+  border-radius: var(--panel-border-radius);
   padding: clamp(1.25rem, 4vw, 2.25rem);
   box-shadow: 0 30px 50px rgba(15, 23, 42, 0.12);
   display: flex;
@@ -679,7 +683,7 @@
   aspect-ratio: 1 / 1;
   position: relative;
   background: #fff;
-  border-radius: 1rem;
+  border-radius: var(--panel-border-radius);
   border: 1px solid #e2e8f0;
   overflow: hidden;
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.05);
@@ -787,7 +791,7 @@
   padding: 3rem;
   max-width: 500px;
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 1.2rem;
+  border-radius: var(--panel-border-radius);
   text-align: center;
   color: #475569;
 }
@@ -838,7 +842,7 @@
 .test-panel {
   margin-top: 2rem;
   background: rgba(255, 255, 255, 0.92);
-  border-radius: 1rem;
+  border-radius: var(--panel-border-radius);
   padding: 1.5rem;
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
   display: flex;
