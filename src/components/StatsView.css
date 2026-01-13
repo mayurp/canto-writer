@@ -1,10 +1,9 @@
 .stats-view {
-  padding: 1rem;
-  animation: fadeIn 0.3s ease-in-out;
+  width: 100%
 }
 
 .stats-section-panel {
-  background-color: #f9fafb; /* Lighter background */
+  background-color: var(--panel-bg); /* Lighter background */
   border: 1px solid #e5e7eb; /* Same border as stat-panel */
   border-radius: var(--panel-border-radius);
   padding: 1.5rem; /* Slightly more padding than stat-panel */
