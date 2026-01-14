@@ -67,10 +67,16 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   const currentCardId = currentCard?.id ?? null
 
   useEffect(() => {
-    const handleResize = () => setWriterSize(getResponsiveWriterSize())
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    const handleResize = () => {
+      // Need delay as orientationchange triggers before layout has finished
+      setTimeout(() => {
+        setWriterSize(getResponsiveWriterSize())
+      }, 50)
+    }
+    // Only resize on orientation change otherwise resize can happen during accidental
+    // scrolling causing hanzi-writer to be recreated, losing user strokes.
+    window.addEventListener('orientationchange', handleResize)
+    return () => window.removeEventListener('orientationchange', handleResize)
   }, [])
 
   useEffect(() => {
