@@ -6,7 +6,7 @@ export interface SrsCard {
 }
 
 export interface SrsCardRecord extends SrsCard {
-  id: string     // Globally unique id (requird by dexie-cloud)
+  id: string     // Globally unique id (required by dexie-cloud)
   cardId: string // FlashcardDefinition id
 }
 
