@@ -14,6 +14,13 @@ const isToday = (someDate: Date): boolean => {
   )
 }
 
+const startOfDay = (d: Date) =>
+  new Date(d.getFullYear(), d.getMonth(), d.getDate())
+
+const addDays = (d: Date, days: number) =>
+  new Date(d.getFullYear(), d.getMonth(), d.getDate() + days)
+
+
 export const useStats = () => {
   const storedCards = useLiveQuery(() => db.srsCards.toArray(), [], [])
 
@@ -47,7 +54,7 @@ export const useStats = () => {
       }).length ?? 0
 
     const reviewedCharacters =
-      dailyReviewedCards?.map((card) => card.cardId) ?? [] // cardId is character
+      dailyReviewedCards?.map((card) => card.cardId) ?? []
 
     const reviewsAllTime =
       allSrsCards?.reduce((acc, card) => acc + card.stats.reps, 0) ?? 0
@@ -67,9 +74,41 @@ export const useStats = () => {
     }
   }, [dailyReviewedCards, allSrsCards])
 
+  const dueBuckets = useMemo(() => {
+    if (!allSrsCards) return null
+
+    const todayStart = startOfDay(new Date())
+    const tomorrowStart = addDays(todayStart, 1)
+    const threeDayEnd = addDays(todayStart, 3)   // end of day +2
+    const weekEnd = addDays(todayStart, 7)       // end of day +6
+
+    const buckets = {
+      now: 0,        // overdue (before today)
+      today: 0,      // today (calendar day)
+      threeDays: 0,  // today + next 2 days
+      week: 0,       // next 7 days
+      later: 0,
+    }
+
+    for (const card of allSrsCards) {
+      if (!card.stats.due) continue
+
+      const due = card.stats.due
+
+      if (due < todayStart) buckets.now++
+      else if (due < tomorrowStart) buckets.today++
+      else if (due < threeDayEnd) buckets.threeDays++
+      else if (due < weekEnd) buckets.week++
+      else buckets.later++
+    }
+
+    return buckets
+  }, [allSrsCards])
+
   return {
     dailyReviewedCards,
     summary,
+    dueBuckets,
     isLoading: !allSrsCards,
   }
 }
