@@ -18,10 +18,10 @@ export const StatsView = () => {
   // Transform dueBuckets into chart data
   const chartData = dueBuckets
     ? [
-        { label: "Now", value: dueBuckets.now, color: "#b91c1c" },    // deep muted red
-        { label: "Today", value: dueBuckets.today, color: "#d97706" }, // warm amber
-        { label: "≤ 3d", value: dueBuckets.threeDays, color: "#eab308" }, // soft yellow
-        { label: "≤ 1w", value: dueBuckets.week, color: "#3b82f6" },   // calm blue
+        { label: "Today", value: dueBuckets.today, color: "#b91c1c" },    // deep muted red
+        { label: "Tomorrow", value: dueBuckets.tomorrow, color: "#d97706" }, // warm amber
+        { label: "3 days", value: dueBuckets.threeDays, color: "#eab308" }, // soft yellow
+        { label: "1 week", value: dueBuckets.week, color: "#3b82f6" },   // calm blue
         { label: "Later", value: dueBuckets.later, color: "#16a34a" }, // muted green
       ]
     : []

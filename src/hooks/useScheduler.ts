@@ -4,6 +4,7 @@ import type { GradingInfo } from '../srs/types'
 import { createSrsManager, type SchedulerCard, type SchedulerManager } from '../srs/createManager'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '../models/db'
+import { endOfDay } from '../utils/date'
 
 
 export const useScheduler = (definitions: FlashcardDefinition[]) => {
@@ -38,8 +39,7 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
   )
   // Don't use hearbeat here as the timestamp is after the date
   // given by hydrate to New cards (which don't have srs records).
-  const now = Date.now()
-  const due = sorted.filter(card => getDueTimestamp(card) <= now)
+  const due = sorted.filter(card => card.dueDate <= endOfDay(new Date()))
   const dueCount = due.length
   const currentCard = due[0] ?? null
   const nextDueDate = dueCount === 0 ? sorted[0]?.dueDate ?? null : currentCard?.dueDate ?? null
