@@ -102,7 +102,7 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
   }
 
   const renderSortIndicator = (column: typeof sortColumn) => {
-    if (sortColumn !== column) return null
+    if (sortColumn !== column) return <span className="sort-indicator"> </span>
     return <span className="sort-indicator">{sortDirection === 'asc' ? '▲' : '▼'}</span>
   }
 

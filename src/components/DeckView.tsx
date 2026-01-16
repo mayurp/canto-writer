@@ -106,7 +106,7 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
   }
 
   const renderSortIndicator = (column: typeof sortColumn) => {
-    if (sortColumn !== column) return null
+    if (sortColumn !== column) return <span className="sort-indicator"> </span>
     return <span className="sort-indicator">{sortDirection === 'asc' ? '▲' : '▼'}</span>
   }
 

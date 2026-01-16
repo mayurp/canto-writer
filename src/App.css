@@ -477,12 +477,26 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #94a3b8;
-  padding: 0.4rem 0;
+  padding: 0.4rem 0.5rem 0.4rem 0;
   border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .selected-table th {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.3rem 0.3rem 0;
+  }
+
+  .selected-table td {
+    padding: 0.5rem 0.3rem 0.5rem 0;
+    font-size: 0.9rem;
+  }
 }
 
 .selected-table td {
-  padding: 0.65rem 0;
+  padding: 0.65rem 0.5rem 0.65rem 0;
   border-bottom: 1px solid #e2e8f0;
   color: #0f172a;
 }
@@ -919,6 +933,9 @@
 .sort-indicator {
   font-size: 0.65rem;
   color: #0f172a;
+  display: inline-block;
+  width: 0.75rem;
+  text-align: center;
 }
 
 .settings-toggle {
