@@ -529,11 +529,19 @@
 .study-card {
   background: var(--panel-bg);
   border-radius: var(--panel-border-radius);
-  padding: clamp(1.25rem, 4vw, 2.25rem);
+  padding: clamp(1rem, 3vw, 1.75rem);
   box-shadow: var(--panel-shadow);
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: clamp(0.75rem, 2.5vw, 1.5rem);
+  position: relative;
+}
+
+.audio-button-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 5;
 }
 
 .card-top {

@@ -175,6 +175,15 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   return (
     <section className="card-stage">
       <div className="study-card">
+        <div className="audio-button-container">
+          <AudioButton
+            onClick={handleCardPronunciation}
+            disabled={!isSupported}
+            speaking={speaking}
+            ariaLabel={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
+          />
+        </div>
+
         <div className="card-top">
           <div className="card-info">
             <div className="card-character" aria-label="Keyword meaning">
@@ -189,12 +198,6 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
               </div>
             )}
           </div>
-          <AudioButton
-            onClick={handleCardPronunciation}
-            disabled={!isSupported}
-            speaking={speaking}
-            ariaLabel={speaking ? 'Playing pronunciation' : 'Play Cantonese audio'}
-          />
         </div>
 
         <div className="stroke-wrapper">
