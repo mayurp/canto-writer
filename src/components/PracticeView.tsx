@@ -82,11 +82,11 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   useEffect(() => {
     setCardCompleted(false)
     setPendingGrading(null)
-    setStrokeSession(0)
+    setStrokeSession((s) => s + 1)
     if (currentCardId) {
       setShowStrokeOutline(shouldShowOutline(currentCardId))
     }
-  }, [currentCardId, shouldShowOutline])
+  }, [currentCard, currentCardId, shouldShowOutline])
 
   const currentCharacter = currentCard?.character
 
@@ -100,7 +100,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
       playPronunciation(buildPronunciationUtterance(currentCharacter, examples), { rate: voiceRate })
     }, PRONUNCIATION_DELAY_MS)
     return () => window.clearTimeout(timer)
-  }, [currentCharacter, examples, isSupported, playPronunciation, voiceRate])
+  }, [currentCard, currentCharacter, examples, isSupported, playPronunciation, voiceRate])
 
   const handleCardPronunciation = useCallback(() => {
     if (!isSupported || !currentCharacter) return
