@@ -4,4 +4,5 @@ export type FlashcardDefinition = {
   rthOrder: number
   character: string
   meaning: string
+  story: string
 }

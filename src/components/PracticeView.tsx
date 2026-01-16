@@ -183,6 +183,11 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
             <p className="card-order">
               {orderLabel} #{displayOrder}
             </p>
+            {(cardCompleted || showStrokeOutline) && currentCard.story && (
+              <div className="card-story">
+                <p>{currentCard.story}</p>
+              </div>
+            )}
           </div>
           <AudioButton
             onClick={handleCardPronunciation}
@@ -193,17 +198,13 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
         </div>
 
         <div className="stroke-wrapper">
-          <div className="stroke-header">
-            <button type="button" className="clear-button" onClick={handleStrokeReset} aria-label="Clear strokes">
-              Clear
-            </button>
-          </div>
           <StrokeAnimator
             character={currentCard.character}
             size={writerSize}
             sessionKey={strokeSession}
             showOutline={showStrokeOutline}
             onQuizComplete={handleQuizComplete}
+            onClearStrokes={handleStrokeReset}
           />
         </div>
 
@@ -218,7 +219,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
               Next
             </button>
           </div>
-          {settings.debug && (
+          {cardCompleted && settings.debug && (
             <div className="grading-buttons">
               {(Object.keys(ratingLabels) as ReviewRatingType[]).map((rating) => (
                 <button

@@ -17,6 +17,7 @@ const buildDeck = (rows: Record<string, string>[]): FlashcardDefinition[] => {
       const character = row['TH']?.trim()
       const meaning = row['RTH Keyword']?.trim()
       const rthOrder = Number(row['RTH #'])
+      const story = row['Story']
 
       if (!order || !rthOrder || !character || !meaning) {
         return null
@@ -30,6 +31,7 @@ const buildDeck = (rows: Record<string, string>[]): FlashcardDefinition[] => {
         rthOrder,
         character,
         meaning,
+        story
       }
 
       return card

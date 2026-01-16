@@ -112,6 +112,7 @@ type StrokeAnimatorProps = {
   sessionKey?: number
   onQuizComplete?: (summary: QuizSummary) => void
   showOutline?: boolean
+  onClearStrokes?: () => void
 }
 
 export function StrokeAnimator({
@@ -120,6 +121,7 @@ export function StrokeAnimator({
   sessionKey = 0,
   onQuizComplete,
   showOutline = false,
+  onClearStrokes,
 }: StrokeAnimatorProps) {
   const writerContainerRef = useRef<HTMLDivElement | null>(null)
   const strokeShapesRef = useRef<StrokeShape[]>([])
@@ -437,6 +439,17 @@ export function StrokeAnimator({
       aria-label={`Stroke order animation for ${character}`}
       style={style}
     >
+      {onClearStrokes && (
+        <button
+          type="button"
+          className="stroke-clear-button"
+          onClick={onClearStrokes}
+          aria-label="Clear strokes"
+          title="Clear strokes"
+        >
+          ✕
+        </button>
+      )}
       <div ref={writerContainerRef} className="stroke-animator__writer" />
       <svg
         className="stroke-animator__overlay"
