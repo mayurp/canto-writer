@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion'
+import { animate, motion, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion'
 import { interpolate } from 'flubber'
 import HanziWriter, { type StrokeData, type QuizSummary } from 'hanzi-writer'
 import type { AnimationPlaybackControls } from 'framer-motion'
+import { usePictogramMorph } from '../hooks/usePictogramMorph'
 
 type StrokePoint = {
   x: number
@@ -62,7 +63,8 @@ const hideStrokeElement = (group: SVGGElement | null, strokeIndex: number): (() 
   }
 }
 
-const CHARACTER_VIEWBOX = '0 -124 1024 1024'
+const HANZI_VIEWBOX_Y_OFFSET = -124
+const CHARACTER_VIEWBOX = `0 ${HANZI_VIEWBOX_Y_OFFSET} 1024 1024`
 const STROKE_COLOR = '#000'
 const OVERLAY_FILL_COLOR = STROKE_COLOR
 const OVERLAY_STROKE_COLOR = STROKE_COLOR
@@ -135,6 +137,10 @@ export function StrokeAnimator({
   const guidedStrokeIndexRef = useRef(0)
   const guidedPathElementRef = useRef<SVGPathElement | null>(null)
   const guidedPathLengthRef = useRef(0)
+  const [isPictogramMorphFinished, setIsPictogramMorphFinished] = useState(false)
+  const [isPictogramFadeFinished, setIsPictogramFadeFinished] = useState(false)
+  const isPictogramFadeFinishedRef = useRef(false)
+  const [completeCharacterPaths, setCompleteCharacterPaths] = useState<string[]>([])
   const [morphState, setMorphState] = useState<MorphState | null>(null)
   const [pathData, setPathData] = useState('')
   const [showGuidedDot, setShowGuidedDot] = useState(false)
@@ -151,6 +157,21 @@ export function StrokeAnimator({
     () => ({ transform: 'scale(1, -1)', transformOrigin: '50% 50%' }),
     [],
   )
+
+  const { morphPaths: pictogramMorphPaths, pictogramPaths, overlayStyle: pictogramOverlayStyle, isActive: isPictogramMorphActive, progress: pictogramProgress } = usePictogramMorph({
+    character,
+    enabled: showOutline,
+    targetPath: completeCharacterPaths,
+    onMorphComplete: () => setIsPictogramMorphFinished(true),
+    onFadeComplete: () => {
+      setIsPictogramFadeFinished(true)
+      isPictogramFadeFinishedRef.current = true
+    }
+  })
+
+  // Animate the vertical offset from pictogram center (geometric 512) to character center (visual 388)
+  // The difference is precisely the VIEWBOX_Y_OFFSET (124)
+  const morphY = useTransform(pictogramProgress, [0, 1], [HANZI_VIEWBOX_Y_OFFSET, 0])
 
   useEffect(() => {
     morphStateRef.current = morphState
@@ -257,8 +278,11 @@ export function StrokeAnimator({
       }
       guidedStrokeIndexRef.current = strokeIndex
       guidedDotProgress.set(0)
-      setShowGuidedDot(true)
       setGuidedPath(stroke.guidePath)
+      // Only show the dot if the pictogram has finished fading out
+      if (isPictogramFadeFinishedRef.current) {
+        setShowGuidedDot(true)
+      }
       guidedControlsRef.current?.stop()
       guidedPathLengthRef.current = 0
       const schedule = () => {
@@ -308,8 +332,21 @@ export function StrokeAnimator({
     guidedDotY.set(point.y)
   })
 
+  // When pictogram fades out, trigger the guided dot if it's meant to be shown
+  useEffect(() => {
+    if (isPictogramFadeFinished && showOutline) {
+      const currentStroke = guidedStrokeIndexRef.current
+      if (currentStroke < strokeShapesRef.current.length) {
+        startGuidedStrokeAnimation(currentStroke)
+      }
+    }
+  }, [isPictogramFadeFinished, showOutline, startGuidedStrokeAnimation])
+
   useEffect(() => {
     if (!writerContainerRef.current) return
+    setIsPictogramMorphFinished(false)
+    setIsPictogramFadeFinished(false)
+    isPictogramFadeFinishedRef.current = false
 
     const container = writerContainerRef.current
     container.innerHTML = ''
@@ -317,6 +354,7 @@ export function StrokeAnimator({
     mainCharacterGroupRef.current = null
     clearMorphs()
     stopGuidedStrokeAnimation()
+    setCompleteCharacterPaths([])
     let disposed = false
 
     const writer = HanziWriter.create(container, character, {
@@ -392,19 +430,19 @@ export function StrokeAnimator({
       .getCharacterData()
       .then((character: HanziCharacterData) => {
         if (disposed) return
-        strokeShapesRef.current = character.strokes.map((stroke) => ({
+        const strokes = character.strokes.map((stroke) => ({
           path: stroke.path,
           guidePath: pointsToPath(
             (stroke.points ?? []).map((pt) => (Array.isArray(pt) ? { x: pt[0], y: pt[1] } : { x: pt.x, y: pt.y })),
           ),
         }))
+        strokeShapesRef.current = strokes
+
+        // Combine strokes for pictogram morph target
+        const allPaths = character.strokes.map(s => s.path)
+        setCompleteCharacterPaths(allPaths)
+
         mainCharacterGroupRef.current = findMainCharacterGroup(container)
-        if (showOutline && strokeShapesRef.current.length > 0) {
-          const initialIndex = guidedStrokeIndexRef.current
-          if (initialIndex < strokeShapesRef.current.length) {
-            startGuidedStrokeAnimation(initialIndex)
-          }
-        }
       })
       .catch((error: unknown) => {
         console.error('Failed to load character data', error)
@@ -432,6 +470,9 @@ export function StrokeAnimator({
     stopGuidedStrokeAnimation,
   ])
 
+  // DEBUGGING: Set to true to see static pictogram without animation
+  const DEBUG_PICTOGRAM = false
+
   return (
     <div
       className="stroke-animator"
@@ -450,7 +491,11 @@ export function StrokeAnimator({
           ✕
         </button>
       )}
-      <div ref={writerContainerRef} className="stroke-animator__writer" />
+      <div
+        ref={writerContainerRef}
+        className="stroke-animator__writer"
+        style={{ visibility: (!showOutline || isPictogramMorphFinished) ? 'visible' : 'hidden' }}
+      />
       <svg
         className="stroke-animator__overlay"
         viewBox={CHARACTER_VIEWBOX}
@@ -458,7 +503,38 @@ export function StrokeAnimator({
         style={overlayTransformStyle}
         aria-hidden="true"
       >
-        {morphState && pathData && (
+        <g transform={`translate(0, ${HANZI_VIEWBOX_Y_OFFSET})`}>
+          {/* Debug: Static Pictogram with distinct colors */}
+          {DEBUG_PICTOGRAM && showOutline && pictogramPaths.map((d, i) => (
+            <path
+              key={`debug-p-${i}`}
+              d={d}
+              fill={['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A'][i % 4]}
+              fillRule="evenodd"
+              stroke="white"
+              strokeWidth="4"
+            />
+          ))}
+        </g>
+
+        {/* Regular Morph Animation (Disabled in Debug Mode) */}
+        {!DEBUG_PICTOGRAM && isPictogramMorphActive && (
+          <motion.g style={{ y: morphY }}>
+            {pictogramMorphPaths.map((d, i) => (
+              <motion.path
+                key={`morph-${i}`}
+                d={d}
+                fill={OVERLAY_FILL_COLOR}
+                fillRule="evenodd"
+                stroke={OVERLAY_STROKE_COLOR}
+                strokeWidth={OVERLAY_OUTLINE_WIDTH}
+                style={{ ...pictogramOverlayStyle, transformOrigin: '50% 50%' }}
+              />
+            ))}
+          </motion.g>
+        )}
+
+        {!isPictogramMorphActive && morphState && pathData && (
           <motion.path
             key={morphState.id}
             d={pathData}
@@ -479,13 +555,15 @@ export function StrokeAnimator({
               stroke="transparent"
               strokeWidth="1"
             />
-            <motion.circle
-              cx={guidedDotX}
-              cy={guidedDotY}
-              r={GUIDED_DOT_RADIUS}
-              fill={GUIDED_DOT_COLOR}
-              style={{ opacity: 0.9 }}
-            />
+            {isPictogramFadeFinished && (
+              <motion.circle
+                cx={guidedDotX}
+                cy={guidedDotY}
+                r={GUIDED_DOT_RADIUS}
+                fill={GUIDED_DOT_COLOR}
+                style={{ opacity: 0.9 }}
+              />
+            )}
           </>
         )}
       </svg>

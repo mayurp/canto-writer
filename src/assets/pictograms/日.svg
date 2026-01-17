@@ -1,0 +1,13 @@
+<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- 1. Stroke 1: Left Vertical (TL to BL) - CCW sweep -->
+  <path d="M 257.44 257.44 A 360 360 0 0 0 257.44 766.56 L 299.87 724.13 A 300 300 0 0 1 299.87 299.87 Z" fill="#000" />
+
+  <!-- 2. Stroke 2: Top-Right Corner (TL to TR to BR) - CW sweep -->
+  <path d="M 257.44 257.44 A 360 360 0 0 1 766.56 257.44 A 360 360 0 0 1 766.56 766.56 L 724.13 724.13 A 300 300 0 0 0 724.13 299.87 A 300 300 0 0 0 299.87 299.87 Z" fill="#000" />
+
+  <!-- 3. Stroke 3: Middle Bar (Central Dot) -->
+  <path d="M 512 432 A 80 80 0 1 0 512 592 A 80 80 0 1 0 512 432 Z" fill="#000" />
+
+  <!-- 4. Stroke 4: Bottom Bar (BL to BR) - CCW sweep -->
+  <path d="M 257.44 766.56 A 360 360 0 0 0 766.56 766.56 L 724.13 724.13 A 300 300 0 0 1 299.87 724.13 Z" fill="#000" />
+</svg>
