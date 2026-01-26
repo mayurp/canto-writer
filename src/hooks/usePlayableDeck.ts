@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { FlashcardDefinition } from '../data/cards'
+import type { FlashcardDefinition } from '../types/cards'
 import type { OrderMode } from './useSettings'
 
 export const usePlayableDeck = (

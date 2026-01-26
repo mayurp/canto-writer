@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import type { FlashcardDefinition } from '../data/cards'
+import type { FlashcardDefinition } from '../types/cards'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useParentModeContext } from '../context/ParentModeContext'
 import { useVocabExamplesContext } from '../context/VocabExamplesContext'

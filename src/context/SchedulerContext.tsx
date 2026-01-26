@@ -1,7 +1,7 @@
 import { createContext, useContext, type ReactNode } from 'react'
 import { useScheduler } from '../hooks/useScheduler'
 import type { SchedulerCard } from '../srs/createManager'
-import type { FlashcardDefinition } from '../data/cards'
+import type { FlashcardDefinition } from '../types/cards'
 import type { GradingInfo } from '../srs/types'
 
 export type SchedulerValue = {
@@ -16,7 +16,7 @@ export type SchedulerValue = {
 
 export const SchedulerContext = createContext<SchedulerValue | null>(null)
 
-export function SchedulerProvider({deck, children}: {
+export function SchedulerProvider({ deck, children }: {
   deck: FlashcardDefinition[]
   children: ReactNode
 }) {

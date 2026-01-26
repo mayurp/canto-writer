@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import type { FlashcardDefinition } from '../data/cards'
+import type { FlashcardDefinition } from '../types/cards'
 import { db } from '../models/db'
 import { DEFAULT_SELECTION_KEY } from '../models/DeckSelection'
 import { prefetchStrokeData } from '../utils/prefetchStrokeData'

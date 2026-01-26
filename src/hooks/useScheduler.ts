@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
-import type { FlashcardDefinition } from '../data/cards'
+import type { FlashcardDefinition } from '../types/cards'
 import type { GradingInfo } from '../srs/types'
 import { createSrsManager, type SchedulerCard, type SchedulerManager } from '../srs/createManager'
 import { useLiveQuery } from 'dexie-react-hooks'

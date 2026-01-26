@@ -1,4 +1,4 @@
-import type { FlashcardDefinition } from '../data/cards'
+import type { FlashcardDefinition } from '../types/cards'
 import { SrsCardState, type GradingInfo, type ReviewRating } from './types'
 import type { SrsCard, SrsCardRecord } from '../models/SrsCard'
 
