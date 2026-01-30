@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useSettingsContext } from '../context/SettingsContext'
 import { SrsCardState } from '../srs/types'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamplesContext } from '../context/VocabExamplesContext'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
+import { SortableHeader } from './SortableHeader'
+import { useSortableTable } from '../hooks/useSortableTable'
 
 type DeckViewProps = {
   selectedIds: string[]
@@ -12,10 +14,14 @@ type DeckViewProps = {
   isSpeechSupported: boolean
 }
 
+type DeckSortColumn = 'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due'
+
 export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: DeckViewProps) {
   const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
   const { examples } = useVocabExamplesContext()
+  const { sortColumn, sortDirection, handleSort } = useSortableTable<DeckSortColumn>('rth')
+
   const scheduledById = useMemo(
     () =>
       scheduledCards.reduce<Record<string, typeof scheduledCards[number]>>((acc, card) => {
@@ -55,8 +61,6 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
     return `${Math.round(diffMonths)}mo`
   }
 
-  const [sortColumn, setSortColumn] = useState<'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due'>('rth')
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
   const showRthColumn = settings.debug || settings.orderMode === 'rth'
   const showOptColumn = settings.debug || settings.orderMode === 'opt'
 
@@ -96,20 +100,6 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
     return sorted
   }, [selectedCards, sortColumn, sortDirection])
 
-  const handleSort = (column: typeof sortColumn) => {
-    if (sortColumn === column) {
-      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
-    } else {
-      setSortColumn(column)
-      setSortDirection('asc')
-    }
-  }
-
-  const renderSortIndicator = (column: typeof sortColumn) => {
-    if (sortColumn !== column) return <span className="sort-indicator"> </span>
-    return <span className="sort-indicator">{sortDirection === 'asc' ? '▲' : '▼'}</span>
-  }
-
   return (
     <section className="manager-panel">
       <section className="selected-panel">
@@ -124,40 +114,16 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
               <thead>
                 <tr>
                   {showRthColumn && (
-                    <th>
-                      <button type="button" className="sort-button" onClick={() => handleSort('rth')}>
-                        RTH # {renderSortIndicator('rth')}
-                      </button>
-                    </th>
+                    <SortableHeader column="rth" label="RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
                   )}
                   {showOptColumn && (
-                    <th>
-                      <button type="button" className="sort-button" onClick={() => handleSort('opt')}>
-                        Opt RTH # {renderSortIndicator('opt')}
-                      </button>
-                    </th>
+                    <SortableHeader column="opt" label="Opt RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
                   )}
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('character')}>
-                      Character {renderSortIndicator('character')}
-                    </button>
-                  </th>
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('meaning')}>
-                      Keyword {renderSortIndicator('meaning')}
-                    </button>
-                  </th>
+                  <SortableHeader column="character" label="Character" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                  <SortableHeader column="meaning" label="Keyword" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
                   <th aria-label="Audio" />
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('state')}>
-                      SRS state {renderSortIndicator('state')}
-                    </button>
-                  </th>
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('due')}>
-                      Due {renderSortIndicator('due')}
-                    </button>
-                  </th>
+                  <SortableHeader column="state" label="SRS state" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                  <SortableHeader column="due" label="Due" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
                 </tr>
               </thead>
               <tbody>

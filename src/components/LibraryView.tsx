@@ -3,6 +3,8 @@ import type { FlashcardDefinition } from '../types/cards'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useParentModeContext } from '../context/ParentModeContext'
 import { useVocabExamplesContext } from '../context/VocabExamplesContext'
+import { SortableHeader } from './SortableHeader'
+import { useSortableTable } from '../hooks/useSortableTable'
 
 type LibraryViewProps = {
   deck: FlashcardDefinition[]
@@ -11,14 +13,15 @@ type LibraryViewProps = {
   removeCard: (id: string) => void
 }
 
+type LibrarySortColumn = 'order' | 'character' | 'keyword' | 'example'
+
 export function LibraryView({ deck, selectedIds, addCards, removeCard }: LibraryViewProps) {
   const { settings } = useSettingsContext()
   const { isUnlocked: parentModeUnlocked } = useParentModeContext()
   const { examples, loading, error } = useVocabExamplesContext()
   const [showAdded, setShowAdded] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [sortColumn, setSortColumn] = useState<'order' | 'character' | 'keyword' | 'example'>('order')
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const { sortColumn, sortDirection, handleSort } = useSortableTable<LibrarySortColumn>('order')
   const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds])
   const showRthColumn = settings.debug || settings.orderMode === 'rth'
   const showOptColumn = settings.debug || settings.orderMode === 'opt'
@@ -48,7 +51,7 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
       }
     })
     return byOrder
-  }, [curatedDeck, settings.orderMode, sortColumn, sortDirection])
+  }, [curatedDeck, examples, settings.orderMode, sortColumn, sortDirection])
 
   const normalizedQuery = searchQuery.trim().toLowerCase()
 
@@ -101,20 +104,6 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
     )
   }
 
-  const renderSortIndicator = (column: typeof sortColumn) => {
-    if (sortColumn !== column) return <span className="sort-indicator"> </span>
-    return <span className="sort-indicator">{sortDirection === 'asc' ? '▲' : '▼'}</span>
-  }
-
-  const handleSort = (column: typeof sortColumn) => {
-    if (sortColumn === column) {
-      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
-    } else {
-      setSortColumn(column)
-      setSortDirection('asc')
-    }
-  }
-
   return (
     <section className="manager-panel">
       <header className="manager-header library-header">
@@ -143,34 +132,14 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
               <thead>
                 <tr>
                   {showRthColumn && (
-                    <th>
-                      <button type="button" className="sort-button" onClick={() => handleSort('order')}>
-                        RTH # {renderSortIndicator('order')}
-                      </button>
-                    </th>
+                    <SortableHeader column="order" label="RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
                   )}
                   {showOptColumn && (
-                    <th>
-                      <button type="button" className="sort-button" onClick={() => handleSort('order')}>
-                        Opt RTH # {renderSortIndicator('order')}
-                      </button>
-                    </th>
+                    <SortableHeader column="order" label="Opt RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
                   )}
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('character')}>
-                      Character {renderSortIndicator('character')}
-                    </button>
-                  </th>
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('keyword')}>
-                      Keyword {renderSortIndicator('keyword')}
-                    </button>
-                  </th>
-                  <th>
-                    <button type="button" className="sort-button" onClick={() => handleSort('example')}>
-                      Example {renderSortIndicator('example')}
-                    </button>
-                  </th>
+                  <SortableHeader column="character" label="Character" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                  <SortableHeader column="keyword" label="Keyword" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                  <SortableHeader column="example" label="Example" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
                   <th aria-label="Actions" />
                 </tr>
               </thead>
