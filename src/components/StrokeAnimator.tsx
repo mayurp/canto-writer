@@ -2,35 +2,10 @@ import './styles/StrokeAnimator.css'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion'
 import { interpolate } from 'flubber'
-import HanziWriter, { type StrokeData, type QuizSummary } from 'hanzi-writer'
+import HanziWriter, { type StrokeData, type QuizSummary, type StrokePoint, type CharacterData } from 'hanzi-writer'
 import type { AnimationPlaybackControls } from 'framer-motion'
+import type { StrokeShape, MorphState } from '../types/stroke'
 
-type StrokePoint = {
-  x: number
-  y: number
-}
-
-type StrokeShape = {
-  path: string
-  guidePath: string
-}
-
-type HanziStrokePoint = [number, number] | StrokePoint
-
-type HanziStrokeData = {
-  path: string
-  points: HanziStrokePoint[]
-}
-
-type HanziCharacterData = {
-  strokes: HanziStrokeData[]
-}
-
-type MorphState = {
-  id: string
-  sourcePath: string
-  targetPath: string
-}
 
 const findMainCharacterGroup = (root: HTMLElement | null): SVGGElement | null => {
   if (!root) return null
@@ -391,7 +366,7 @@ export function StrokeAnimator({
 
     writer
       .getCharacterData()
-      .then((character: HanziCharacterData) => {
+      .then((character: CharacterData) => {
         if (disposed) return
         strokeShapesRef.current = character.strokes.map((stroke) => ({
           path: stroke.path,

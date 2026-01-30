@@ -42,7 +42,7 @@ declare module 'hanzi-writer' {
 
   type CharacterStrokeData = {
     path: string
-    points: [number, number][]
+    points: ([number, number] | StrokePoint)[]
   }
 
   type CharacterData = {
@@ -62,5 +62,5 @@ declare module 'hanzi-writer' {
   }
 
   export default HanziWriter
-  export type { StrokeData, QuizSummary }
+  export type { StrokeData, QuizSummary, StrokePoint, CharacterData }
 }
