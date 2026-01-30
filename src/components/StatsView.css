@@ -3,11 +3,11 @@
 }
 
 .stats-section-panel {
-  background-color: var(--panel-bg); /* Lighter background */
-  border: 1px solid #e5e7eb; /* Same border as stat-panel */
+  background-color: var(--panel-bg);
+  border: 1px solid var(--border-color);
   border-radius: var(--panel-border-radius);
-  padding: 1.5rem; /* Slightly more padding than stat-panel */
-  margin-bottom: 1.5rem; /* Space between sections */
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .stats-summary {
@@ -17,8 +17,8 @@
 }
 
 .stat-panel {
-  background-color: #ffffff; /* Changed to white for sub-panels inside a light section panel */
-  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
   border-radius: var(--panel-border-radius);
   padding: 1rem;
   flex-grow: 1;
@@ -32,7 +32,7 @@
 
 .stat-label {
   font-size: 0.9rem;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .stats-view h2 {
@@ -47,19 +47,20 @@
 
 .stats-view th,
 .stats-view td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   padding: 8px;
   text-align: left;
 }
 
 .stats-view th {
-  background-color: #f2f2f2;
+  background-color: var(--panel-bg);
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

@@ -2,14 +2,12 @@
   --panel-border-radius: 1rem;
   --panel-bg: rgba(255, 255, 255, 0.95);
   --panel-shadow: 0 15px 30px rgba(15, 23, 42, 0.12);
+  --border-color: #e2e8f0;
+  --text-muted: #64748b;
+  --primary-accent: #2563eb;
 }
 
-/* Ensure consistent box model across all elements to prevent coordinate shifts */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+
 
 html,
 body,
