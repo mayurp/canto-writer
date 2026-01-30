@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { QuizSummary } from 'hanzi-writer'
 import { ReviewRating, type ReviewRating as ReviewRatingType, type GradingInfo } from '../srs/types'
 import { StrokeAnimator } from './StrokeAnimator'
@@ -24,17 +24,11 @@ const ratingFromMistakes = (summary: QuizSummary, guidedRun: boolean): ReviewRat
   return ReviewRating.Again
 }
 
-const MIN_WRITER_SIZE = 220
-const MAX_WRITER_SIZE = 520
-const VERTICAL_RESERVE = 360
+const DEFAULT_WRITER_SIZE = 220
 const PRONUNCIATION_DELAY_MS = 500
 
-const getResponsiveWriterSize = () => {
-  if (typeof window === 'undefined') return MIN_WRITER_SIZE
-  const widthLimit = window.innerWidth * 0.65
-  const heightLimit = Math.max(MIN_WRITER_SIZE, window.innerHeight - VERTICAL_RESERVE)
-  const target = Math.min(widthLimit, heightLimit, MAX_WRITER_SIZE)
-  return Math.max(MIN_WRITER_SIZE, target)
+const calculateWriterSize = (width: number, height: number) => {
+  return Math.min(width, height)
 }
 
 type PracticeViewProps = {
@@ -59,25 +53,36 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
   const { currentCard, gradeCard, shouldShowOutline, nextDueDate, dueCount } = useSchedulerContext()
   const { settings } = useSettingsContext()
   const { examples } = useVocabExamplesContext()
-  const [writerSize, setWriterSize] = useState(() => getResponsiveWriterSize())
+  const [writerSize, setWriterSize] = useState(DEFAULT_WRITER_SIZE)
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
   const [showStrokeOutline, setShowStrokeOutline] = useState(false)
   const currentCardId = currentCard?.id ?? null
+  const strokeWrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const handleResize = () => {
-      // Need delay as orientationchange triggers before layout has finished
-      setTimeout(() => {
-        setWriterSize(getResponsiveWriterSize())
-      }, 50)
-    }
-    // Only resize on orientation change otherwise resize can happen during accidental
-    // scrolling causing hanzi-writer to be recreated, losing user strokes.
-    window.addEventListener('orientationchange', handleResize)
-    return () => window.removeEventListener('orientationchange', handleResize)
-  }, [])
+    if (!strokeWrapperRef.current || typeof ResizeObserver === 'undefined') return
+
+    // Note that a resize will recreate HanziWriter which will reset the stroke session
+    // We make an attempt to disable zoom so mostly this will only be triggered by an
+    // orientation change.
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect
+        if (width > 0 && height > 0) {
+          setWriterSize((prev) => {
+            const next = calculateWriterSize(width, height)
+            // Only update if change is significant (> 2px) to avoid minor jitter
+            return Math.abs(prev - next) > 2 ? next : prev
+          })
+        }
+      }
+    })
+
+    observer.observe(strokeWrapperRef.current)
+    return () => observer.disconnect()
+  }, [currentCardId])
 
   useEffect(() => {
     setCardCompleted(false)
@@ -155,18 +160,14 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
 
   if (!currentCard || dueCount === 0) {
     return (
-      <section className="card-stage">
-        <div className="study-card">
-          <div className="empty-hint">
-            <p>All due cards are complete for now.</p>
-            {nextDueDate ? (
-              <p className="hint">Next review unlocks in about {formatWaitTime(nextDueDate)}.</p>
-            ) : (
-              <p className="hint">Add more characters in the Library to keep practicing.</p>
-            )}
-          </div>
-        </div>
-      </section>
+      <div className="empty-state">
+        <p>All due cards are complete for now.</p>
+        {nextDueDate ? (
+          <p className="hint">Next review unlocks in about {formatWaitTime(nextDueDate)}.</p>
+        ) : (
+          <p className="hint">Add more characters in the Library to keep practicing.</p>
+        )}
+      </div>
     )
   }
 
@@ -200,7 +201,7 @@ export function PracticeView({ playPronunciation, speaking, isSupported, voiceRa
           </div>
         </div>
 
-        <div className="stroke-wrapper">
+        <div ref={strokeWrapperRef} className="stroke-wrapper">
           <StrokeAnimator
             character={currentCard.character}
             size={writerSize}

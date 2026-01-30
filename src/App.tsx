@@ -185,9 +185,11 @@ function AppContent() {
 
   return (
     <SchedulerProvider deck={playableDeck}>
-      <main className="app-shell">
+      <main className={`app-shell${view === 'learn' ? ' is-practice-view' : ''}`}>
         <AppHeader />
-        {bodyContent}
+        <div className="app-body">
+          {bodyContent}
+        </div>
       </main>
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <UserPanel open={userPanelOpen} onClose={() => setUserPanelOpen(false)} />
