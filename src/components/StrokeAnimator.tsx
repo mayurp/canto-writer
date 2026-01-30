@@ -2,41 +2,11 @@ import './styles/StrokeAnimator.css'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion'
 import { interpolate } from 'flubber'
-import HanziWriter, { type StrokeData, type QuizSummary, type StrokePoint, type CharacterData } from 'hanzi-writer'
+import HanziWriter, { type StrokeData, type QuizSummary, type CharacterData } from 'hanzi-writer'
 import type { AnimationPlaybackControls } from 'framer-motion'
 import type { StrokeShape, MorphState } from '../types/stroke'
-
-
-const findMainCharacterGroup = (root: HTMLElement | null): SVGGElement | null => {
-  if (!root) return null
-  const svg = root.querySelector('svg')
-  if (!svg) return null
-  const positionedGroup = Array.from(svg.children).find(
-    (child): child is SVGGElement => child instanceof SVGGElement,
-  )
-  if (!positionedGroup) return null
-  const characterGroups = Array.from(positionedGroup.children).filter(
-    (child): child is SVGGElement => child instanceof SVGGElement,
-  )
-  return characterGroups[1] ?? null
-}
-
-const hideStrokeElement = (group: SVGGElement | null, strokeIndex: number): (() => void) | null => {
-  if (!group) return null
-  const strokeNode = group.children.item(strokeIndex)
-  if (!(strokeNode instanceof SVGPathElement)) {
-    return null
-  }
-  const element = strokeNode
-  const previousVisibility = element.style.visibility
-  let restored = false
-  element.style.visibility = 'hidden'
-  return () => {
-    if (restored) return
-    restored = true
-    element.style.visibility = previousVisibility
-  }
-}
+import { pointsToPath, closePolyline } from '../utils/strokePath'
+import { findMainCharacterGroup, hideStrokeElement } from '../utils/hanziWriterDom'
 
 const CHARACTER_VIEWBOX = '0 -124 1024 1024'
 const STROKE_COLOR = '#000'
@@ -57,30 +27,6 @@ const GUIDED_DOT_MIN_DURATION = 0.6
 const GUIDED_DOT_SPEED = 450 // approximate units per second (slower for clarity)
 const GUIDED_REPEAT_DELAY = 0.6
 
-
-const formatPathValue = (value: number) => {
-  if (Number.isInteger(value)) return value.toString()
-  return value.toFixed(2)
-}
-
-const pointsToPath = (points: StrokePoint[]) => {
-  if (!points.length) return ''
-  const [first, ...rest] = points
-  const commands = [`M ${formatPathValue(first.x)} ${formatPathValue(first.y)}`]
-  rest.forEach((point) => {
-    commands.push(`L ${formatPathValue(point.x)} ${formatPathValue(point.y)}`)
-  })
-  return commands.join(' ')
-}
-
-const closePolyline = (points: StrokePoint[]): StrokePoint[] => {
-  if (points.length <= 1) return points.slice()
-  const closed: StrokePoint[] = [...points]
-  for (let i = points.length - 2; i >= 0; i -= 1) {
-    closed.push({ ...points[i] })
-  }
-  return closed
-}
 
 type StrokeAnimatorProps = {
   character: string
