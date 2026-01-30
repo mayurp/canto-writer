@@ -38,6 +38,11 @@ body,
   flex-direction: column;
 }
 
+.app-shell.is-practice-view {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .app-shell.is-practice-view .app-body {
   overflow: hidden;
   touch-action: none;
@@ -654,6 +659,8 @@ body,
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 
@@ -664,6 +671,8 @@ body,
   font-size: clamp(2rem, 5vw, 3.2rem);
   letter-spacing: -0.01em;
   line-height: 1.1;
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 .card-order {
@@ -875,6 +884,8 @@ body,
   cursor: pointer;
   background: #e2e8f0;
   transition: transform 120ms ease, box-shadow 120ms ease;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .grade-button:hover {
@@ -912,6 +923,8 @@ body,
   cursor: pointer;
   min-width: 120px;
   transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .next-button:disabled {
