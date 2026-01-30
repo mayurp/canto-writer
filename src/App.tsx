@@ -75,7 +75,7 @@ function AppContent() {
     <header className="app-header">
       <div className="header-row">
         <div className="brand-mark">
-          <img src="/icon-192.png" alt="Canto Writer" width={20} height={20} style={{ borderRadius: '4px' }} />
+          <img src="icon-192.png" alt="Canto Writer" width={20} height={20} style={{ borderRadius: '4px' }} />
           <p className="eyebrow">Canto Writer</p>
         </div>
         <div className="header-actions">
