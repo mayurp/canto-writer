@@ -1,0 +1,256 @@
+/* Practice View Styles */
+
+.card-stage {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.study-card {
+    background: var(--panel-bg);
+    border-radius: var(--panel-border-radius);
+    padding: clamp(0.75rem, 2.5vw, 1.5rem);
+    box-shadow: var(--panel-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+}
+
+.audio-button-container {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 5;
+}
+
+.card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.card-story {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+.card-character {
+    font-weight: 600;
+    color: #020617;
+    text-align: left;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+.card-order {
+    margin: 0;
+    color: #94a3b8;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.card-details {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+}
+
+.example {
+    display: grid;
+    gap: 0.2rem;
+    margin: 0;
+}
+
+.example-hanzi {
+    font-size: 1.1rem;
+    color: #0f172a;
+}
+
+.example-jyutping {
+    font-size: 0.95rem;
+    color: #0369a1;
+}
+
+.example-translation {
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.card-notes {
+    margin: 0.75rem 0 0;
+    color: #334155;
+    font-size: 0.95rem;
+}
+
+.card-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.next-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.grading-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.grade-button {
+    border: none;
+    padding: 0.65rem 0.9rem;
+    border-radius: 0.6rem;
+    font-weight: 600;
+    color: #0f172a;
+    cursor: pointer;
+    background: #e2e8f0;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.grade-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.15);
+}
+
+.grade-again {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.grade-hard {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.grade-good {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.grade-easy {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.next-button {
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 0.7rem;
+    font-weight: 600;
+    background: #2563eb;
+    color: #f8fafc;
+    cursor: pointer;
+    min-width: 120px;
+    transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.next-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #94a3b8;
+}
+
+.next-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+}
+
+/* Landscape layout for study card */
+@media (orientation: landscape) and (min-width: 640px) and (min-height: 480px) {
+    .study-card {
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 2rem;
+    }
+
+    .card-top {
+        order: 2;
+        flex: 1;
+        height: 100%;
+        margin: 0;
+        align-items: flex-start;
+        justify-content: flex-start;
+        overflow-y: auto;
+    }
+
+    .card-info {
+        width: 100%;
+    }
+
+    .stroke-wrapper {
+        order: 1;
+        flex: 1.2;
+        max-width: 600px;
+        height: 100%;
+    }
+
+    .card-actions {
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        width: auto;
+        margin: 0;
+    }
+}
+
+/* Desktop grid layout for study card */
+@media (min-width: 900px) {
+    .study-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+        grid-template-areas:
+            'strokes card-info'
+            'strokes card-actions';
+        align-items: center;
+        gap: clamp(1rem, 3vw, 2.5rem);
+    }
+
+    .stroke-wrapper {
+        grid-area: strokes;
+        min-height: 0;
+    }
+
+    .card-top {
+        grid-area: card-info;
+    }
+
+    .card-actions {
+        grid-area: card-actions;
+        align-self: end;
+        width: 100%;
+    }
+}

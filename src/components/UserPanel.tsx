@@ -1,3 +1,4 @@
+import './styles/UserPanel.css'
 import { useCloudUser } from '../hooks/useCloudUser'
 import { useParentModeContext } from '../context/ParentModeContext'
 import { Modal } from './Modal'

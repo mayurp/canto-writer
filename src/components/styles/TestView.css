@@ -1,0 +1,12 @@
+/* Test View Styles */
+
+.test-panel {
+    margin-top: 2rem;
+    background: var(--panel-bg);
+    border-radius: var(--panel-border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--panel-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

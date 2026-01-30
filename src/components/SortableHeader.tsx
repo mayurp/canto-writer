@@ -1,3 +1,5 @@
+import './styles/SortableHeader.css'
+
 type SortableHeaderProps<T extends string> = {
     column: T
     label: string

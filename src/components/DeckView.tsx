@@ -1,3 +1,4 @@
+import './styles/DeckView.css'
 import { useMemo } from 'react'
 import { useSettingsContext } from '../context/SettingsContext'
 import { SrsCardState } from '../srs/types'

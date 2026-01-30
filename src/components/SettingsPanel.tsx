@@ -1,3 +1,4 @@
+import './styles/SettingsPanel.css'
 import { useSettingsContext } from '../context/SettingsContext'
 import { ttsSpeedSteps } from '../hooks/useSettings'
 import { Modal } from './Modal'

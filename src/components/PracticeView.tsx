@@ -1,3 +1,4 @@
+import './styles/PracticeView.css'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { QuizSummary } from 'hanzi-writer'
 import { ReviewRating, type ReviewRating as ReviewRatingType, type GradingInfo } from '../srs/types'

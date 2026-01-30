@@ -1,3 +1,4 @@
+import './styles/LibraryView.css'
 import { useMemo, useState } from 'react'
 import type { FlashcardDefinition } from '../types/cards'
 import { useSettingsContext } from '../context/SettingsContext'

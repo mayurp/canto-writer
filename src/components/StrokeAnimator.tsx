@@ -1,3 +1,4 @@
+import './styles/StrokeAnimator.css'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion'
 import { interpolate } from 'flubber'

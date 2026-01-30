@@ -1,0 +1,101 @@
+/* Stroke Animator Styles */
+
+.stroke-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.stroke-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  width: fit-content;
+  align-self: flex-end;
+}
+
+.stroke-clear-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 120ms ease;
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.stroke-clear-button:hover {
+  color: #475569;
+  transform: scale(1.1);
+}
+
+.clear-button {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.6rem;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.clear-button:hover {
+  color: #0f172a;
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.stroke-animator {
+  position: relative;
+  background: #fff;
+  border-radius: var(--panel-border-radius);
+  /* Use box-shadow instead of border to avoid dimension shifts that break coordinates */
+  box-shadow: 0 0 0 1px #e2e8f0, inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  margin: auto;
+  flex-shrink: 0;
+}
+
+.stroke-animator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(148, 163, 184, 0.35), transparent calc(50% + 0.5px)),
+    linear-gradient(transparent calc(50% - 0.5px), rgba(148, 163, 184, 0.35), transparent calc(50% + 0.5px)),
+    linear-gradient(45deg, transparent calc(50% - 0.5px), rgba(148, 163, 184, 0.25), transparent calc(50% + 0.5px)),
+    linear-gradient(-45deg, transparent calc(50% - 0.5px), rgba(148, 163, 184, 0.25), transparent calc(50% + 0.5px));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stroke-animator__writer,
+.stroke-animator__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stroke-animator__writer {
+  z-index: 2;
+}
+
+.stroke-animator__overlay {
+  z-index: 3;
+  pointer-events: none;
+}

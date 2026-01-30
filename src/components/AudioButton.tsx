@@ -1,3 +1,5 @@
+import './styles/AudioButton.css'
+
 type AudioButtonProps = {
   onClick: () => void
   disabled?: boolean
