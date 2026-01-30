@@ -1,13 +1,17 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo } from 'react'
 import { db } from '../models/db'
+import { DEFAULT_SELECTION_KEY } from '../models/DeckSelection'
 import { fsrsAlgorithm } from '../srs/fsrsAlgorithm'
 import { SrsCardState } from '../srs/types'
 import { isToday, startOfDay, addDays } from '../utils/date'
 
 
 export const useStats = () => {
+  const selectionRecord = useLiveQuery(() => db.deckSelections.get(DEFAULT_SELECTION_KEY), [], null)
   const storedCards = useLiveQuery(() => db.srsCards.toArray(), [], [])
+
+  const selectedIds = selectionRecord?.selectedIds ?? []
 
   // Note that ts-fsrs data types are relied on for stats here
   // This is inconsistent with SrsDeckManager which attempts to hide the 
@@ -15,10 +19,14 @@ export const useStats = () => {
   // TODO: consider a better abstraction to conver the use case in this
   // file or remove the abstraction from SrsDeckManager and just use
   // fsrs directly everywhere.
-  const allSrsCards = storedCards.map((card) => ({
-    ...card,
-    stats: fsrsAlgorithm.deserializeStats(card.stats)
-  }))
+  const allSrsCards = useMemo(() => {
+    return storedCards
+      .filter((card) => selectedIds.includes(card.cardId))
+      .map((card) => ({
+        ...card,
+        stats: fsrsAlgorithm.deserializeStats(card.stats)
+      }))
+  }, [storedCards, selectedIds])
 
   const dailyReviewedCards = useMemo(() => {
     if (!allSrsCards) return []
