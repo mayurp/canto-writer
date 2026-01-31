@@ -1,32 +1,21 @@
 import './styles/StrokeAnimator.css'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion'
-import { interpolate } from 'flubber'
 import HanziWriter, { type StrokeData, type QuizSummary, type CharacterData } from 'hanzi-writer'
 import type { AnimationPlaybackControls } from 'framer-motion'
-import type { StrokeShape, MorphState } from '../types/stroke'
+import type { StrokeShape } from '../types/stroke'
 import { pointsToPath, closePolyline } from '../utils/strokePath'
-import { findMainCharacterGroup, hideStrokeElement } from '../utils/hanziWriterDom'
+import { findMainCharacterGroup } from '../utils/hanziWriterDom'
+import { useStrokeMorphAnimation } from '../hooks/useStrokeMorphAnimation'
 
 const CHARACTER_VIEWBOX = '0 -124 1024 1024'
 const STROKE_COLOR = '#000'
-const OVERLAY_FILL_COLOR = STROKE_COLOR
-const OVERLAY_STROKE_COLOR = STROKE_COLOR
-const OVERLAY_OUTLINE_WIDTH = 0
 const WRITER_PADDING = 0
-const DEBUG_SHOW_ACTUAL_STROKES = false
-const MORPH_DURATION = 200
-const MORPH_FADE_DURATION = 100
-const SCALE_OVERSHOOT = 0.08
-const SCALE_OVERSHOOT_DURATION = 80
-const SCALE_SPRING_STIFFNESS = 260
-const SCALE_SPRING_DAMPING = 28
 const GUIDED_DOT_RADIUS = 22
 const GUIDED_DOT_COLOR = '#38bdf8'
 const GUIDED_DOT_MIN_DURATION = 0.6
-const GUIDED_DOT_SPEED = 450 // approximate units per second (slower for clarity)
+const GUIDED_DOT_SPEED = 450
 const GUIDED_REPEAT_DELAY = 0.6
-
 
 type StrokeAnimatorProps = {
   character: string
@@ -45,118 +34,33 @@ export function StrokeAnimator({
   showOutline = false,
   onClearStrokes,
 }: StrokeAnimatorProps) {
+  // Refs for HanziWriter and stroke data
   const writerContainerRef = useRef<HTMLDivElement | null>(null)
   const strokeShapesRef = useRef<StrokeShape[]>([])
   const mainCharacterGroupRef = useRef<SVGGElement | null>(null)
-  const morphStateRef = useRef<MorphState | null>(null)
-  const visibilityRestoreRef = useRef<(() => void) | null>(null)
-  const progressControlsRef = useRef<AnimationPlaybackControls | null>(null)
-  const opacityControlsRef = useRef<AnimationPlaybackControls | null>(null)
-  const scaleControlsRef = useRef<AnimationPlaybackControls | null>(null)
+
+  // Guided dot animation refs and state
   const guidedControlsRef = useRef<AnimationPlaybackControls | null>(null)
   const guidedStrokeIndexRef = useRef(0)
   const guidedPathElementRef = useRef<SVGPathElement | null>(null)
   const guidedPathLengthRef = useRef(0)
-  const [morphState, setMorphState] = useState<MorphState | null>(null)
-  const [pathData, setPathData] = useState('')
   const [showGuidedDot, setShowGuidedDot] = useState(false)
   const [guidedPath, setGuidedPath] = useState('')
-  const morphInterpolatorRef = useRef<((t: number) => string) | null>(null)
-  const progress = useMotionValue(0)
-  const overlayOpacity = useMotionValue(0)
-  const overlayScale = useMotionValue(1)
   const guidedDotProgress = useMotionValue(0)
   const guidedDotX = useMotionValue(0)
   const guidedDotY = useMotionValue(0)
+
+  // Morph animation hook
+  const { StrokeMorphOverlay, triggerMorph, reset: resetMorph } = useStrokeMorphAnimation({ mainCharacterGroupRef })
+
+  // Styles
   const style = useMemo(() => ({ width: `${size}px`, height: `${size}px` }), [size])
   const overlayTransformStyle = useMemo(
     () => ({ transform: 'scale(1, -1)', transformOrigin: '50% 50%' }),
     [],
   )
 
-  useEffect(() => {
-    morphStateRef.current = morphState
-  }, [morphState])
-
-  const stopAllAnimations = useCallback(() => {
-    progressControlsRef.current?.stop()
-    opacityControlsRef.current?.stop()
-    scaleControlsRef.current?.stop()
-    progressControlsRef.current = null
-    opacityControlsRef.current = null
-    scaleControlsRef.current = null
-  }, [])
-
-  const restoreHiddenStroke = useCallback(() => {
-    if (DEBUG_SHOW_ACTUAL_STROKES) {
-      visibilityRestoreRef.current = null
-      return
-    }
-    if (visibilityRestoreRef.current) {
-      visibilityRestoreRef.current()
-      visibilityRestoreRef.current = null
-    }
-  }, [])
-
-  const cleanupOverlay = useCallback(() => {
-    stopAllAnimations()
-    restoreHiddenStroke()
-    morphStateRef.current = null
-    morphInterpolatorRef.current = null
-    setMorphState(null)
-    setPathData('')
-    overlayOpacity.set(0)
-    overlayScale.set(1)
-  }, [overlayOpacity, overlayScale, restoreHiddenStroke, stopAllAnimations])
-
-  const startMorphAnimation = useCallback(
-    (state: MorphState) => {
-      stopAllAnimations()
-      setMorphState(state)
-      setPathData(state.sourcePath)
-      morphInterpolatorRef.current = interpolate(state.sourcePath, state.targetPath, { maxSegmentLength: 30 })
-      progress.set(0)
-      overlayOpacity.set(1)
-      overlayScale.set(1)
-      const runFadeOut = () => {
-        restoreHiddenStroke()
-        if (DEBUG_SHOW_ACTUAL_STROKES) {
-          return
-        }
-        opacityControlsRef.current = animate(overlayOpacity, 0, {
-          duration: MORPH_FADE_DURATION / 1000,
-          onComplete: cleanupOverlay,
-        })
-      }
-      const runScaleOvershoot = () => {
-        const settle = () => {
-          scaleControlsRef.current = animate(overlayScale, 1, {
-            type: 'spring',
-            bounce: 0,
-            stiffness: SCALE_SPRING_STIFFNESS,
-            damping: SCALE_SPRING_DAMPING,
-            onComplete: runFadeOut,
-          })
-        }
-        scaleControlsRef.current = animate(overlayScale, 1 + SCALE_OVERSHOOT, {
-          duration: SCALE_OVERSHOOT_DURATION / 1000,
-          ease: 'easeOut',
-          onComplete: settle,
-        })
-      }
-      progressControlsRef.current = animate(progress, 1, {
-        duration: MORPH_DURATION / 1000,
-        ease: 'easeOut',
-        onComplete: runScaleOvershoot,
-      })
-    },
-    [cleanupOverlay, overlayOpacity, overlayScale, progress, stopAllAnimations, restoreHiddenStroke],
-  )
-
-  const clearMorphs = useCallback(() => {
-    cleanupOverlay()
-  }, [cleanupOverlay])
-
+  // Guided dot animation handlers
   const stopGuidedStrokeAnimation = useCallback(() => {
     guidedControlsRef.current?.stop()
     guidedControlsRef.current = null
@@ -204,8 +108,6 @@ export function StrokeAnimator({
           repeatDelay: GUIDED_REPEAT_DELAY,
         })
       }
-      // Wait two animation frames: first lets React commit the <path>, second ensures the browser paints it
-      // so getTotalLength/getPointAtLength read the correct geometry instead of 0-length placeholders.
       requestAnimationFrame(() => {
         requestAnimationFrame(schedule)
       })
@@ -213,14 +115,7 @@ export function StrokeAnimator({
     [guidedDotProgress, guidedDotX, guidedDotY, showOutline, stopGuidedStrokeAnimation],
   )
 
-  useMotionValueEvent(progress, 'change', (value) => {
-    const state = morphStateRef.current
-    if (!state) return
-    const interpolator = morphInterpolatorRef.current
-    if (interpolator) {
-      setPathData(interpolator(value))
-    }
-  })
+  // Update guided dot position
   useMotionValueEvent(guidedDotProgress, 'change', (value) => {
     const pathElement = guidedPathElementRef.current
     const totalLength = guidedPathLengthRef.current
@@ -230,6 +125,7 @@ export function StrokeAnimator({
     guidedDotY.set(point.y)
   })
 
+  // Main HanziWriter setup effect
   useEffect(() => {
     if (!writerContainerRef.current) return
 
@@ -237,7 +133,7 @@ export function StrokeAnimator({
     container.innerHTML = ''
     strokeShapesRef.current = []
     mainCharacterGroupRef.current = null
-    clearMorphs()
+    resetMorph()
     stopGuidedStrokeAnimation()
     let disposed = false
 
@@ -256,35 +152,18 @@ export function StrokeAnimator({
 
       if (disposed || !targetShape || !drawnPath?.points?.length) return
 
-      cleanupOverlay()
-
-      let restoreStrokeVisibility: (() => void) | null = null
-      if (!DEBUG_SHOW_ACTUAL_STROKES) {
-        if (!mainCharacterGroupRef.current) {
-          mainCharacterGroupRef.current = findMainCharacterGroup(container)
-        }
-        restoreStrokeVisibility = hideStrokeElement(mainCharacterGroupRef.current, strokeData.strokeNum)
-      }
-
-      if (restoreStrokeVisibility) {
-        visibilityRestoreRef.current = () => {
-          restoreStrokeVisibility?.()
-        }
-      } else {
-        visibilityRestoreRef.current = null
-      }
-
-      // Flubber dones't support unclosed lines, so we need to close the drawn path
-      // ourselves by mirroring the points back to the start
+      // Prepare drawn stroke path (closed for Flubber)
       const closedPoints = closePolyline(drawnPath.points.map((point) => ({ x: point.x, y: point.y })))
       const sourcePath = pointsToPath(closedPoints)
 
-      const morph: MorphState = {
-        id: `${strokeData.character}-${strokeData.strokeNum}-${Date.now()}`,
+      // Trigger morph animation
+      triggerMorph({
         sourcePath,
         targetPath: targetShape.path,
-      }
-      startMorphAnimation(morph)
+        strokeIndex: strokeData.strokeNum,
+      })
+
+      // Handle guided dot for next stroke
       if (showOutline) {
         const nextStroke = strokeData.strokeNum + 1
         guidedStrokeIndexRef.current = nextStroke
@@ -334,7 +213,7 @@ export function StrokeAnimator({
 
     return () => {
       disposed = true
-      clearMorphs()
+      resetMorph()
       stopGuidedStrokeAnimation()
       writer.showCharacter()
       container.replaceChildren()
@@ -346,9 +225,8 @@ export function StrokeAnimator({
     size,
     sessionKey,
     onQuizComplete,
-    clearMorphs,
-    cleanupOverlay,
-    startMorphAnimation,
+    resetMorph,
+    triggerMorph,
     showOutline,
     startGuidedStrokeAnimation,
     stopGuidedStrokeAnimation,
@@ -380,18 +258,7 @@ export function StrokeAnimator({
         style={overlayTransformStyle}
         aria-hidden="true"
       >
-        {morphState && pathData && (
-          <motion.path
-            key={morphState.id}
-            d={pathData}
-            fill={OVERLAY_FILL_COLOR}
-            stroke={OVERLAY_STROKE_COLOR}
-            strokeWidth={OVERLAY_OUTLINE_WIDTH}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ opacity: overlayOpacity, scale: overlayScale, transformOrigin: '50% 50%' }}
-          />
-        )}
+        <StrokeMorphOverlay />
         {showGuidedDot && showOutline && guidedPath && (
           <>
             <path
