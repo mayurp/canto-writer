@@ -1,21 +1,15 @@
 import './styles/StrokeAnimator.css'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion'
+import { useEffect, useMemo, useRef } from 'react'
 import HanziWriter, { type StrokeData, type QuizSummary, type CharacterData } from 'hanzi-writer'
-import type { AnimationPlaybackControls } from 'framer-motion'
 import type { StrokeShape } from '../types/stroke'
 import { pointsToPath, closePolyline } from '../utils/strokePath'
 import { findMainCharacterGroup } from '../utils/hanziWriterDom'
 import { useStrokeMorphAnimation } from '../hooks/useStrokeMorphAnimation'
+import { useStrokeGuideAnimation } from '../hooks/useStrokeGuideAnimation'
 
 const CHARACTER_VIEWBOX = '0 -124 1024 1024'
 const STROKE_COLOR = '#000'
 const WRITER_PADDING = 0
-const GUIDED_DOT_RADIUS = 22
-const GUIDED_DOT_COLOR = '#38bdf8'
-const GUIDED_DOT_MIN_DURATION = 0.6
-const GUIDED_DOT_SPEED = 450
-const GUIDED_REPEAT_DELAY = 0.6
 
 type StrokeAnimatorProps = {
   character: string
@@ -39,19 +33,16 @@ export function StrokeAnimator({
   const strokeShapesRef = useRef<StrokeShape[]>([])
   const mainCharacterGroupRef = useRef<SVGGElement | null>(null)
 
-  // Guided dot animation refs and state
-  const guidedControlsRef = useRef<AnimationPlaybackControls | null>(null)
-  const guidedStrokeIndexRef = useRef(0)
-  const guidedPathElementRef = useRef<SVGPathElement | null>(null)
-  const guidedPathLengthRef = useRef(0)
-  const [showGuidedDot, setShowGuidedDot] = useState(false)
-  const [guidedPath, setGuidedPath] = useState('')
-  const guidedDotProgress = useMotionValue(0)
-  const guidedDotX = useMotionValue(0)
-  const guidedDotY = useMotionValue(0)
-
-  // Morph animation hook
+  // Stroke morph animation hook
   const { StrokeMorphOverlay, triggerMorph, reset: resetMorph } = useStrokeMorphAnimation({ mainCharacterGroupRef })
+
+  // Stroke guide dot animation hook
+  const {
+    StrokeGuideOverlay,
+    start: startStrokeGuideAnimation,
+    stop: stopStrokeGuideAnimation,
+    currentIndex: strokeGuideIndexRef,
+  } = useStrokeGuideAnimation({ strokeShapesRef, enable: showOutline })
 
   // Styles
   const style = useMemo(() => ({ width: `${size}px`, height: `${size}px` }), [size])
@@ -59,71 +50,6 @@ export function StrokeAnimator({
     () => ({ transform: 'scale(1, -1)', transformOrigin: '50% 50%' }),
     [],
   )
-
-  // Guided dot animation handlers
-  const stopGuidedStrokeAnimation = useCallback(() => {
-    guidedControlsRef.current?.stop()
-    guidedControlsRef.current = null
-    guidedPathLengthRef.current = 0
-    guidedDotProgress.stop()
-    setShowGuidedDot(false)
-    setGuidedPath('')
-  }, [guidedDotProgress])
-
-  const startGuidedStrokeAnimation = useCallback(
-    (strokeIndex: number) => {
-      if (!showOutline) {
-        stopGuidedStrokeAnimation()
-        return
-      }
-      const stroke = strokeShapesRef.current[strokeIndex]
-      if (!stroke || !stroke.guidePath) {
-        stopGuidedStrokeAnimation()
-        return
-      }
-      guidedStrokeIndexRef.current = strokeIndex
-      guidedDotProgress.set(0)
-      setShowGuidedDot(true)
-      setGuidedPath(stroke.guidePath)
-      guidedControlsRef.current?.stop()
-      guidedPathLengthRef.current = 0
-      const schedule = () => {
-        const pathElement = guidedPathElementRef.current
-        if (!pathElement) return
-        const totalLength = pathElement.getTotalLength()
-        if (totalLength === 0) {
-          guidedControlsRef.current = null
-          setShowGuidedDot(false)
-          return
-        }
-        guidedPathLengthRef.current = totalLength || 1
-        const startPoint = pathElement.getPointAtLength(0)
-        guidedDotX.set(startPoint.x)
-        guidedDotY.set(startPoint.y)
-        const durationSeconds = Math.max(GUIDED_DOT_MIN_DURATION, totalLength / GUIDED_DOT_SPEED)
-        guidedControlsRef.current = animate(guidedDotProgress, 1, {
-          duration: durationSeconds,
-          ease: 'linear',
-          repeat: Infinity,
-          repeatDelay: GUIDED_REPEAT_DELAY,
-        })
-      }
-      requestAnimationFrame(() => {
-        requestAnimationFrame(schedule)
-      })
-    },
-    [guidedDotProgress, guidedDotX, guidedDotY, showOutline, stopGuidedStrokeAnimation],
-  )
-
-  // Update guided dot position
-  useMotionValueEvent(guidedDotProgress, 'change', (value) => {
-    const pathElement = guidedPathElementRef.current
-    const totalLength = guidedPathLengthRef.current
-    if (!pathElement || totalLength <= 0) return
-    const point = pathElement.getPointAtLength(value * totalLength)
-    guidedDotX.set(point.x)
-    guidedDotY.set(point.y)
-  })
 
   // Main HanziWriter setup effect
   useEffect(() => {
@@ -134,7 +60,7 @@ export function StrokeAnimator({
     strokeShapesRef.current = []
     mainCharacterGroupRef.current = null
     resetMorph()
-    stopGuidedStrokeAnimation()
+    stopStrokeGuideAnimation()
     let disposed = false
 
     const writer = HanziWriter.create(container, character, {
@@ -166,19 +92,19 @@ export function StrokeAnimator({
       // Handle guided dot for next stroke
       if (showOutline) {
         const nextStroke = strokeData.strokeNum + 1
-        guidedStrokeIndexRef.current = nextStroke
+        strokeGuideIndexRef.current = nextStroke
         if (nextStroke < strokeShapesRef.current.length) {
-          startGuidedStrokeAnimation(nextStroke)
+          startStrokeGuideAnimation(nextStroke)
         } else {
-          stopGuidedStrokeAnimation()
+          stopStrokeGuideAnimation()
         }
       }
     }
 
     writer.hideCharacter()
-    guidedStrokeIndexRef.current = 0
+    strokeGuideIndexRef.current = 0
     if (!showOutline) {
-      stopGuidedStrokeAnimation()
+      stopStrokeGuideAnimation()
     }
     writer.quiz({
       onCorrectStroke: handleCorrectStroke,
@@ -201,9 +127,9 @@ export function StrokeAnimator({
         }))
         mainCharacterGroupRef.current = findMainCharacterGroup(container)
         if (showOutline && strokeShapesRef.current.length > 0) {
-          const initialIndex = guidedStrokeIndexRef.current
+          const initialIndex = strokeGuideIndexRef.current
           if (initialIndex < strokeShapesRef.current.length) {
-            startGuidedStrokeAnimation(initialIndex)
+            startStrokeGuideAnimation(initialIndex)
           }
         }
       })
@@ -214,7 +140,7 @@ export function StrokeAnimator({
     return () => {
       disposed = true
       resetMorph()
-      stopGuidedStrokeAnimation()
+      stopStrokeGuideAnimation()
       writer.showCharacter()
       container.replaceChildren()
       strokeShapesRef.current = []
@@ -228,8 +154,9 @@ export function StrokeAnimator({
     resetMorph,
     triggerMorph,
     showOutline,
-    startGuidedStrokeAnimation,
-    stopGuidedStrokeAnimation,
+    startStrokeGuideAnimation,
+    stopStrokeGuideAnimation,
+    strokeGuideIndexRef,
   ])
 
   return (
@@ -259,24 +186,7 @@ export function StrokeAnimator({
         aria-hidden="true"
       >
         <StrokeMorphOverlay />
-        {showGuidedDot && showOutline && guidedPath && (
-          <>
-            <path
-              ref={guidedPathElementRef}
-              d={guidedPath}
-              fill="none"
-              stroke="transparent"
-              strokeWidth="1"
-            />
-            <motion.circle
-              cx={guidedDotX}
-              cy={guidedDotY}
-              r={GUIDED_DOT_RADIUS}
-              fill={GUIDED_DOT_COLOR}
-              style={{ opacity: 0.9 }}
-            />
-          </>
-        )}
+        <StrokeGuideOverlay />
       </svg>
     </div>
   )
