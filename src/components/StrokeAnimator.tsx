@@ -42,7 +42,7 @@ export function StrokeAnimator({
     start: startStrokeGuideAnimation,
     stop: stopStrokeGuideAnimation,
     currentIndex: strokeGuideIndexRef,
-  } = useStrokeGuideAnimation({ strokeShapesRef, enable: showOutline })
+  } = useStrokeGuideAnimation({ strokeShapesRef })
 
   // Styles
   const style = useMemo(() => ({ width: `${size}px`, height: `${size}px` }), [size])
@@ -186,7 +186,7 @@ export function StrokeAnimator({
         aria-hidden="true"
       >
         <StrokeMorphOverlay />
-        <StrokeGuideOverlay />
+        {showOutline && <StrokeGuideOverlay />}
       </svg>
     </div>
   )

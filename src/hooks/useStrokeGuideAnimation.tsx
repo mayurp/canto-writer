@@ -12,13 +12,12 @@ const REPEAT_DELAY = 0.6
 
 type UseStrokeGuideOptions = {
     strokeShapesRef: React.RefObject<StrokeShape[]>
-    enable: boolean
 }
 
 /**
  * Hook that manages the animated guide dot showing the next stroke to draw.
  */
-export function useStrokeGuideAnimation({ strokeShapesRef, enable }: UseStrokeGuideOptions) {
+export function useStrokeGuideAnimation({ strokeShapesRef }: UseStrokeGuideOptions) {
     // State
     const [showDot, setShowDot] = useState(false)
     const [path, setPath] = useState('')
@@ -45,10 +44,6 @@ export function useStrokeGuideAnimation({ strokeShapesRef, enable }: UseStrokeGu
 
     const start = useCallback(
         (strokeIndex: number) => {
-            if (!enable) {
-                stop()
-                return
-            }
             const stroke = strokeShapesRef.current?.[strokeIndex]
             if (!stroke || !stroke.guidePath) {
                 stop()
@@ -87,7 +82,7 @@ export function useStrokeGuideAnimation({ strokeShapesRef, enable }: UseStrokeGu
                 requestAnimationFrame(schedule)
             })
         },
-        [dotProgress, dotX, dotY, enable, stop, strokeShapesRef],
+        [dotProgress, dotX, dotY, stop, strokeShapesRef],
     )
 
     // Update dot position along path
@@ -102,7 +97,7 @@ export function useStrokeGuideAnimation({ strokeShapesRef, enable }: UseStrokeGu
 
     // Component to render the guide dot overlay inside an SVG
     const StrokeGuideOverlay = useCallback(() => {
-        if (!showDot || !enable || !path) return null
+        if (!showDot || !path) return null
 
         return (
             <>
@@ -110,7 +105,7 @@ export function useStrokeGuideAnimation({ strokeShapesRef, enable }: UseStrokeGu
                 <motion.circle cx={dotX} cy={dotY} r={DOT_RADIUS} fill={DOT_COLOR} style={{ opacity: 0.9 }} />
             </>
         )
-    }, [showDot, enable, path, dotX, dotY])
+    }, [showDot, path, dotX, dotY])
 
     return {
         StrokeGuideOverlay,
