@@ -19,11 +19,11 @@ const OVERLAY_FILL_COLOR = '#000'
 const OVERLAY_STROKE_COLOR = '#000'
 const OVERLAY_OUTLINE_WIDTH = 0
 
-type TriggerMorphParams = {
-    sourcePath: string
-    targetPath: string
-    strokeIndex: number
-    id?: string
+type StartParams = {
+  sourcePath: string
+  targetPath: string
+  strokeIndex: number
+  id?: string
 }
 
 type UseMorphAnimationOptions = {
@@ -86,8 +86,8 @@ export function useStrokeMorphAnimation({ mainCharacterGroupRef }: UseMorphAnima
         overlayScale.set(1)
     }, [overlayOpacity, overlayScale, restoreHiddenStroke, stopAllAnimations])
 
-    const triggerMorph = useCallback(
-        ({ sourcePath, targetPath, strokeIndex, id }: TriggerMorphParams) => {
+    const start = useCallback(
+        ({ sourcePath, targetPath, strokeIndex, id }: StartParams) => {
             // Cleanup previous animation
             reset()
 
@@ -182,7 +182,7 @@ export function useStrokeMorphAnimation({ mainCharacterGroupRef }: UseMorphAnima
 
     return {
         StrokeMorphOverlay,
-        triggerMorph,
+        start,
         reset,
     }
 }

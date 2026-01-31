@@ -34,7 +34,7 @@ export function StrokeAnimator({
   const mainCharacterGroupRef = useRef<SVGGElement | null>(null)
 
   // Stroke morph animation hook
-  const { StrokeMorphOverlay, triggerMorph, reset: resetMorph } = useStrokeMorphAnimation({ mainCharacterGroupRef })
+  const { StrokeMorphOverlay, start: startMorphAnimation, reset: stopMorphAnimation } = useStrokeMorphAnimation({ mainCharacterGroupRef })
 
   // Stroke guide dot animation hook
   const {
@@ -59,7 +59,7 @@ export function StrokeAnimator({
     container.innerHTML = ''
     strokeShapesRef.current = []
     mainCharacterGroupRef.current = null
-    resetMorph()
+    stopMorphAnimation()
     stopStrokeGuideAnimation()
     let disposed = false
 
@@ -83,7 +83,7 @@ export function StrokeAnimator({
       const sourcePath = pointsToPath(closedPoints)
 
       // Trigger morph animation
-      triggerMorph({
+      startMorphAnimation({
         sourcePath,
         targetPath: targetShape.path,
         strokeIndex: strokeData.strokeNum,
@@ -139,7 +139,7 @@ export function StrokeAnimator({
 
     return () => {
       disposed = true
-      resetMorph()
+      stopMorphAnimation()
       stopStrokeGuideAnimation()
       writer.showCharacter()
       container.replaceChildren()
@@ -151,8 +151,8 @@ export function StrokeAnimator({
     size,
     sessionKey,
     onQuizComplete,
-    resetMorph,
-    triggerMorph,
+    stopMorphAnimation,
+    startMorphAnimation,
     showOutline,
     startStrokeGuideAnimation,
     stopStrokeGuideAnimation,
