@@ -8,7 +8,11 @@ type TestViewProps = {
   isSupported: boolean
 }
 
-export function TestView({ playPronunciation, voiceRate, isSupported }: TestViewProps) {
+export function TestView({
+  playPronunciation,
+  voiceRate,
+  isSupported,
+}: TestViewProps) {
   const [customTts, setCustomTts] = useState('')
 
   const handlePlayback = () => {
@@ -28,7 +32,9 @@ export function TestView({ playPronunciation, voiceRate, isSupported }: TestView
 
   return (
     <>
-      <p className="tagline">Paste any Cantonese characters to hear the current TTS settings.</p>
+      <p className="tagline">
+        Paste any Cantonese characters to hear the current TTS settings.
+      </p>
       <section className="test-panel">
         <div className="custom-tts">
           <input
@@ -47,13 +53,25 @@ export function TestView({ playPronunciation, voiceRate, isSupported }: TestView
             Play
           </button>
         </div>
-        <button type="button" className="custom-tts-button" onClick={handleClearSrs}>
+        <button
+          type="button"
+          className="custom-tts-button"
+          onClick={handleClearSrs}
+        >
           Clear SRS Records
         </button>
-        <button type="button" className="custom-tts-button" onClick={handleClearAll}>
+        <button
+          type="button"
+          className="custom-tts-button"
+          onClick={handleClearAll}
+        >
           Clear All Local Data
         </button>
-        {!isSupported && <p className="empty-hint">Speech synthesis is not supported in this browser.</p>}
+        {!isSupported && (
+          <p className="empty-hint">
+            Speech synthesis is not supported in this browser.
+          </p>
+        )}
       </section>
     </>
   )

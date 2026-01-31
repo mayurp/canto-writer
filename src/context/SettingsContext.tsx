@@ -11,7 +11,11 @@ const SettingsContext = createContext<SettingsValue | null>(null)
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
   const value = useSettings()
-  return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>
+  return (
+    <SettingsContext.Provider value={value}>
+      {children}
+    </SettingsContext.Provider>
+  )
 }
 
 export const useSettingsContext = () => {

@@ -5,9 +5,7 @@ export function SessionStatus() {
   return (
     <div className="session-meta" aria-live="polite">
       <span>Due</span>
-      <strong>
-        {dueCount}
-      </strong>
+      <strong>{dueCount}</strong>
     </div>
   )
 }

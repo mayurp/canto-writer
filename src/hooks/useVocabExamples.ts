@@ -25,7 +25,11 @@ const buildExampleMap = (rows: Record<string, string>[]): VocabExamples => {
 }
 
 export const useVocabExamples = () => {
-  const [state, setState] = useState<VocabState>({ examples: {}, loading: true, error: null })
+  const [state, setState] = useState<VocabState>({
+    examples: {},
+    loading: true,
+    error: null,
+  })
 
   useEffect(() => {
     let cancelled = false
@@ -33,14 +37,19 @@ export const useVocabExamples = () => {
     const load = async () => {
       try {
         const response = await fetch(vocabCsvUrl)
-        if (!response.ok) throw new Error(`Failed to load vocab: ${response.status}`)
+        if (!response.ok)
+          throw new Error(`Failed to load vocab: ${response.status}`)
         const text = await response.text()
         const rows = parseCsv(text)
         const examples = buildExampleMap(rows)
         if (!cancelled) setState({ examples, loading: false, error: null })
       } catch (error) {
         if (!cancelled) {
-          setState({ examples: {}, loading: false, error: error instanceof Error ? error.message : 'Unknown error' })
+          setState({
+            examples: {},
+            loading: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+          })
         }
       }
     }

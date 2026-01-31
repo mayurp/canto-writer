@@ -5,4 +5,5 @@ export type SchedulerStats = CardStats
 export type SchedulerCard = ScheduledCard<SchedulerStats>
 export type SchedulerManager = SrsDeckManager<SchedulerStats>
 
-export const createSrsManager = () => new SrsDeckManager<SchedulerStats>(fsrsAlgorithm)
+export const createSrsManager = () =>
+  new SrsDeckManager<SchedulerStats>(fsrsAlgorithm)

@@ -1,4 +1,4 @@
-import Dexie from "dexie";
+import Dexie from 'dexie'
 
 //
 // Put Dexie on window.
@@ -19,5 +19,5 @@ import Dexie from "dexie";
 //  (8) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
 
 //@ts-ignore
-window.Dexie = Dexie; 
-Dexie.debug = true;
+window.Dexie = Dexie
+Dexie.debug = true

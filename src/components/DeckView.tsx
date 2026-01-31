@@ -17,24 +17,32 @@ type DeckViewProps = {
 
 type DeckSortColumn = 'rth' | 'opt' | 'character' | 'meaning' | 'state' | 'due'
 
-export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: DeckViewProps) {
+export function DeckView({
+  selectedIds,
+  playPronunciation,
+  isSpeechSupported,
+}: DeckViewProps) {
   const { settings } = useSettingsContext()
   const { cards: scheduledCards } = useSchedulerContext()
   const { examples } = useVocabExamplesContext()
-  const { sortColumn, sortDirection, handleSort } = useSortableTable<DeckSortColumn>('rth')
+  const { sortColumn, sortDirection, handleSort } =
+    useSortableTable<DeckSortColumn>('rth')
 
   const scheduledById = useMemo(
     () =>
-      scheduledCards.reduce<Record<string, typeof scheduledCards[number]>>((acc, card) => {
-        acc[card.id] = card
-        return acc
-      }, {}),
+      scheduledCards.reduce<Record<string, (typeof scheduledCards)[number]>>(
+        (acc, card) => {
+          acc[card.id] = card
+          return acc
+        },
+        {},
+      ),
     [scheduledCards],
   )
 
   const selectedCards = selectedIds
     .map((id) => scheduledById[id])
-    .filter((card): card is typeof scheduledCards[number] => !!card)
+    .filter((card): card is (typeof scheduledCards)[number] => !!card)
 
   const stateLabels: Record<SrsCardState, string> = {
     [SrsCardState.New]: 'New',
@@ -43,12 +51,12 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
     [SrsCardState.Relearning]: 'Relearning',
   }
 
-  const formatState = (scheduled?: typeof scheduledCards[number]) => {
+  const formatState = (scheduled?: (typeof scheduledCards)[number]) => {
     if (!scheduled) return '—'
     return stateLabels[scheduled.state] ?? '—'
   }
 
-  const formatDue = (scheduled?: typeof scheduledCards[number]) => {
+  const formatDue = (scheduled?: (typeof scheduledCards)[number]) => {
     if (!scheduled) return '—'
     const diffMs = scheduled.dueDate.getTime() - Date.now()
     if (diffMs <= 0) return 'Now'
@@ -108,23 +116,61 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
           <h2>Selected cards ({selectedCards.length})</h2>
         </div>
         {selectedCards.length === 0 ? (
-          <p className="empty-hint">No cards yet. Add some to start practicing.</p>
+          <p className="empty-hint">
+            No cards yet. Add some to start practicing.
+          </p>
         ) : (
           <div className="selected-table-wrapper">
             <table className="selected-table">
               <thead>
                 <tr>
                   {showRthColumn && (
-                    <SortableHeader column="rth" label="RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                    <SortableHeader
+                      column="rth"
+                      label="RTH #"
+                      currentColumn={sortColumn}
+                      direction={sortDirection}
+                      onSort={handleSort}
+                    />
                   )}
                   {showOptColumn && (
-                    <SortableHeader column="opt" label="Opt RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                    <SortableHeader
+                      column="opt"
+                      label="Opt RTH #"
+                      currentColumn={sortColumn}
+                      direction={sortDirection}
+                      onSort={handleSort}
+                    />
                   )}
-                  <SortableHeader column="character" label="Character" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
-                  <SortableHeader column="meaning" label="Keyword" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                  <SortableHeader
+                    column="character"
+                    label="Character"
+                    currentColumn={sortColumn}
+                    direction={sortDirection}
+                    onSort={handleSort}
+                  />
+                  <SortableHeader
+                    column="meaning"
+                    label="Keyword"
+                    currentColumn={sortColumn}
+                    direction={sortDirection}
+                    onSort={handleSort}
+                  />
                   <th aria-label="Audio" />
-                  <SortableHeader column="state" label="SRS state" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
-                  <SortableHeader column="due" label="Due" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                  <SortableHeader
+                    column="state"
+                    label="SRS state"
+                    currentColumn={sortColumn}
+                    direction={sortDirection}
+                    onSort={handleSort}
+                  />
+                  <SortableHeader
+                    column="due"
+                    label="Due"
+                    currentColumn={sortColumn}
+                    direction={sortDirection}
+                    onSort={handleSort}
+                  />
                 </tr>
               </thead>
               <tbody>
@@ -139,7 +185,12 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
                         <AudioButton
                           variant="small"
                           onClick={() =>
-                            playPronunciation(buildPronunciationUtterance(card.character, examples))
+                            playPronunciation(
+                              buildPronunciationUtterance(
+                                card.character,
+                                examples,
+                              ),
+                            )
                           }
                           disabled={!isSpeechSupported}
                           ariaLabel={`Play ${card.character}`}
@@ -153,7 +204,6 @@ export function DeckView({ selectedIds, playPronunciation, isSpeechSupported }: 
               </tbody>
             </table>
           </div>
-
         )}
       </section>
     </section>

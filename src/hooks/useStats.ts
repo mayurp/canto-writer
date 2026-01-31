@@ -6,15 +6,18 @@ import { fsrsAlgorithm } from '../srs/fsrsAlgorithm'
 import { SrsCardState } from '../srs/types'
 import { isToday, startOfDay, addDays } from '../utils/date'
 
-
 export const useStats = () => {
-  const selectionRecord = useLiveQuery(() => db.deckSelections.get(DEFAULT_SELECTION_KEY), [], null)
+  const selectionRecord = useLiveQuery(
+    () => db.deckSelections.get(DEFAULT_SELECTION_KEY),
+    [],
+    null,
+  )
   const storedCards = useLiveQuery(() => db.srsCards.toArray(), [], [])
 
   const selectedIds = selectionRecord?.selectedIds ?? []
 
   // Note that ts-fsrs data types are relied on for stats here
-  // This is inconsistent with SrsDeckManager which attempts to hide the 
+  // This is inconsistent with SrsDeckManager which attempts to hide the
   // details of the algorithm used from the rest of the app.
   // TODO: consider a better abstraction to conver the use case in this
   // file or remove the abstraction from SrsDeckManager and just use
@@ -24,7 +27,7 @@ export const useStats = () => {
       .filter((card) => selectedIds.includes(card.cardId))
       .map((card) => ({
         ...card,
-        stats: fsrsAlgorithm.deserializeStats(card.stats)
+        stats: fsrsAlgorithm.deserializeStats(card.stats),
       }))
   }, [storedCards, selectedIds])
 
@@ -55,7 +58,9 @@ export const useStats = () => {
     const charactersAllTime = allSrsCards?.length ?? 0
 
     const charactersLearned =
-      allSrsCards?.filter((card) => fsrsAlgorithm.getState(card.stats) == SrsCardState.Review).length ?? 0
+      allSrsCards?.filter(
+        (card) => fsrsAlgorithm.getState(card.stats) == SrsCardState.Review,
+      ).length ?? 0
 
     return {
       reviewsToday,
@@ -77,10 +82,10 @@ export const useStats = () => {
     const weekEnd = addDays(todayStart, 7)
 
     const buckets = {
-      today: 0,      // today (calendar day)
-      tomorrow: 0,   // tomorrow 
-      threeDays: 0,  // < 3 days
-      week: 0,       // 3-7days
+      today: 0, // today (calendar day)
+      tomorrow: 0, // tomorrow
+      threeDays: 0, // < 3 days
+      week: 0, // 3-7days
       later: 0,
     }
 

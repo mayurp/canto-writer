@@ -1,6 +1,10 @@
 import './styles/StrokeAnimator.css'
 import { useEffect, useMemo, useRef } from 'react'
-import HanziWriter, { type StrokeData, type QuizSummary, type CharacterData } from 'hanzi-writer'
+import HanziWriter, {
+  type StrokeData,
+  type QuizSummary,
+  type CharacterData,
+} from 'hanzi-writer'
 import type { StrokeShape } from '../types/stroke'
 import { pointsToPath, closePolyline } from '../utils/strokePath'
 import { findMainCharacterGroup } from '../utils/hanziWriterDom'
@@ -34,7 +38,11 @@ export function StrokeAnimator({
   const mainCharacterGroupRef = useRef<SVGGElement | null>(null)
 
   // Stroke morph animation hook
-  const { StrokeMorphOverlay, start: startMorphAnimation, reset: stopMorphAnimation } = useStrokeMorphAnimation({ mainCharacterGroupRef })
+  const {
+    StrokeMorphOverlay,
+    start: startMorphAnimation,
+    reset: stopMorphAnimation,
+  } = useStrokeMorphAnimation({ mainCharacterGroupRef })
 
   // Stroke guide dot animation hook
   const {
@@ -45,7 +53,10 @@ export function StrokeAnimator({
   } = useStrokeGuideAnimation({ strokeShapesRef })
 
   // Styles
-  const style = useMemo(() => ({ width: `${size}px`, height: `${size}px` }), [size])
+  const style = useMemo(
+    () => ({ width: `${size}px`, height: `${size}px` }),
+    [size],
+  )
   const overlayTransformStyle = useMemo(
     () => ({ transform: 'scale(1, -1)', transformOrigin: '50% 50%' }),
     [],
@@ -79,7 +90,9 @@ export function StrokeAnimator({
       if (disposed || !targetShape || !drawnPath?.points?.length) return
 
       // Prepare drawn stroke path (closed for Flubber)
-      const closedPoints = closePolyline(drawnPath.points.map((point) => ({ x: point.x, y: point.y })))
+      const closedPoints = closePolyline(
+        drawnPath.points.map((point) => ({ x: point.x, y: point.y })),
+      )
       const sourcePath = pointsToPath(closedPoints)
 
       // Trigger morph animation
@@ -122,7 +135,9 @@ export function StrokeAnimator({
         strokeShapesRef.current = character.strokes.map((stroke) => ({
           path: stroke.path,
           guidePath: pointsToPath(
-            (stroke.points ?? []).map((pt) => (Array.isArray(pt) ? { x: pt[0], y: pt[1] } : { x: pt.x, y: pt.y })),
+            (stroke.points ?? []).map((pt) =>
+              Array.isArray(pt) ? { x: pt[0], y: pt[1] } : { x: pt.x, y: pt.y },
+            ),
           ),
         }))
         mainCharacterGroupRef.current = findMainCharacterGroup(container)

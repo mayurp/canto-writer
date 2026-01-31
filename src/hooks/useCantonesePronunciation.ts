@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-const getIsSupported = () => typeof window !== 'undefined' && 'speechSynthesis' in window
+const getIsSupported = () =>
+  typeof window !== 'undefined' && 'speechSynthesis' in window
 
 const selectVoice = (voices: SpeechSynthesisVoice[]) => {
   const lower = (lang?: string) => lang?.toLowerCase() ?? ''
@@ -36,8 +37,7 @@ export const useCantonesePronunciation = () => {
 
     // Defensive check for older browsers
     const supportsVoicesChanged: boolean = 'onvoiceschanged' in synth
-    if (supportsVoicesChanged)
-    {
+    if (supportsVoicesChanged) {
       synth.addEventListener('voiceschanged', hydrateVoices)
 
       return () => {

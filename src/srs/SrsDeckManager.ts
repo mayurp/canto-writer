@@ -27,11 +27,16 @@ export class SrsDeckManager<Stats> {
     this.algorithm = algorithm
   }
 
-  hydrate(definitions: FlashcardDefinition[], storedCards?: SrsCardRecord[]): ScheduledCard<Stats>[] {
+  hydrate(
+    definitions: FlashcardDefinition[],
+    storedCards?: SrsCardRecord[],
+  ): ScheduledCard<Stats>[] {
     return definitions.map((card) => {
       const saved = storedCards?.find((entry) => entry.cardId === card.id)
       const stats =
-        saved?.stats !== undefined ? this.algorithm.deserializeStats(saved.stats) : this.algorithm.defaultStats()
+        saved?.stats !== undefined
+          ? this.algorithm.deserializeStats(saved.stats)
+          : this.algorithm.defaultStats()
       return {
         ...card,
         stats,
@@ -43,7 +48,11 @@ export class SrsDeckManager<Stats> {
     })
   }
 
-  gradeCard(cards: ScheduledCard<Stats>[], cardId: string, grading: GradingInfo) {
+  gradeCard(
+    cards: ScheduledCard<Stats>[],
+    cardId: string,
+    grading: GradingInfo,
+  ) {
     return cards.map((card) => {
       if (card.id !== cardId) return card
       const stats = this.algorithm.computeNextStats(card.stats, grading.rating)

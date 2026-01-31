@@ -3,7 +3,8 @@ import HanziWriter from 'hanzi-writer'
 const prefetched = new Set<string>()
 
 const fetchStrokeData = (character: string) =>
-  (HanziWriter.loadCharacterData?.(character) ??
+  (
+    HanziWriter.loadCharacterData?.(character) ??
     Promise.reject(new Error('loadCharacterData is not defined on HanziWriter'))
   ).catch((error) => {
     console.warn(`Failed to prefetch stroke data for ${character}`, error)

@@ -1,5 +1,5 @@
-import { useStats } from "../hooks/useStats";
-import "./styles/StatsView.css";
+import { useStats } from '../hooks/useStats'
+import './styles/StatsView.css'
 
 // Recharts imports
 import {
@@ -10,20 +10,20 @@ import {
   Tooltip,
   ResponsiveContainer,
   Cell,
-} from "recharts";
+} from 'recharts'
 
 export const StatsView = () => {
-  const { summary, dueBuckets } = useStats();
+  const { summary, dueBuckets } = useStats()
 
   // Transform dueBuckets into chart data
   const chartData = dueBuckets
     ? [
-      { label: "Today", value: dueBuckets.today, color: "#b91c1c" },    // deep muted red
-      { label: "Tomorrow", value: dueBuckets.tomorrow, color: "#d97706" }, // warm amber
-      { label: "3 days", value: dueBuckets.threeDays, color: "#eab308" }, // soft yellow
-      { label: "1 week", value: dueBuckets.week, color: "#3b82f6" },   // calm blue
-      { label: "Later", value: dueBuckets.later, color: "#16a34a" }, // muted green
-    ]
+        { label: 'Today', value: dueBuckets.today, color: '#b91c1c' }, // deep muted red
+        { label: 'Tomorrow', value: dueBuckets.tomorrow, color: '#d97706' }, // warm amber
+        { label: '3 days', value: dueBuckets.threeDays, color: '#eab308' }, // soft yellow
+        { label: '1 week', value: dueBuckets.week, color: '#3b82f6' }, // calm blue
+        { label: 'Later', value: dueBuckets.later, color: '#16a34a' }, // muted green
+      ]
     : []
 
   return (
@@ -73,10 +73,7 @@ export const StatsView = () => {
               <Tooltip />
               <Bar dataKey="value">
                 {chartData.map((entry) => (
-                  <Cell
-                    key={entry.label}
-                    fill={entry.color}
-                  />
+                  <Cell key={entry.label} fill={entry.color} />
                 ))}
               </Bar>
             </BarChart>
@@ -84,5 +81,5 @@ export const StatsView = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}

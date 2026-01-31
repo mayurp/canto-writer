@@ -23,6 +23,4 @@ export const startOfDay = (d: Date) =>
 export const addDays = (d: Date, days: number) =>
   new Date(d.getFullYear(), d.getMonth(), d.getDate() + days)
 
-export const endOfDay = (d: Date) =>
-  addDays(startOfDay(d), 1)
-
+export const endOfDay = (d: Date) => addDays(startOfDay(d), 1)

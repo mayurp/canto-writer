@@ -15,11 +15,23 @@ export function AudioButton({
   speaking = false,
   variant = 'default',
 }: AudioButtonProps) {
-  const className = variant === 'small' ? 'audio-button audio-button--small' : 'audio-button'
+  const className =
+    variant === 'small' ? 'audio-button audio-button--small' : 'audio-button'
 
   return (
-    <button type="button" className={className} onClick={onClick} disabled={disabled} aria-label={ariaLabel}>
-      <svg className="audio-glyph" viewBox="0 0 64 64" role="presentation" aria-hidden="true">
+    <button
+      type="button"
+      className={className}
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={ariaLabel}
+    >
+      <svg
+        className="audio-glyph"
+        viewBox="0 0 64 64"
+        role="presentation"
+        aria-hidden="true"
+      >
         <path
           d="M16 28h10l12-10v28l-12-10H16z"
           fill="none"

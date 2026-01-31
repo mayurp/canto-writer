@@ -11,8 +11,7 @@ export const usePlayableDeck = (
     if (!deck.length) return deck
     if (orderMode === 'rth') {
       return [...deck].sort((a, b) => a.rthOrder - b.rthOrder)
-    }
-    else {
+    } else {
       return [...deck].sort((a, b) => a.order - b.order)
     }
   }, [deck, orderMode])

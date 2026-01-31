@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import type { FlashcardDefinition } from '../types/cards'
 import { parseCsv } from '../utils/csv'
 
-const deckCsvUrl = new URL('../data/optimized_remembering_the_hanzi_rth_only.csv', import.meta.url)
+const deckCsvUrl = new URL(
+  '../data/optimized_remembering_the_hanzi_rth_only.csv',
+  import.meta.url,
+)
 
 type DeckState = {
   deck: FlashcardDefinition[]
@@ -31,7 +34,7 @@ const buildDeck = (rows: Record<string, string>[]): FlashcardDefinition[] => {
         rthOrder,
         character,
         meaning,
-        story
+        story,
       }
 
       return card

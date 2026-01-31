@@ -16,31 +16,49 @@ type LibraryViewProps = {
 
 type LibrarySortColumn = 'order' | 'character' | 'keyword' | 'example'
 
-export function LibraryView({ deck, selectedIds, addCards, removeCard }: LibraryViewProps) {
+export function LibraryView({
+  deck,
+  selectedIds,
+  addCards,
+  removeCard,
+}: LibraryViewProps) {
   const { settings } = useSettingsContext()
   const { isUnlocked: parentModeUnlocked } = useParentModeContext()
   const { examples, loading, error } = useVocabExamplesContext()
   const [showAdded, setShowAdded] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const { sortColumn, sortDirection, handleSort } = useSortableTable<LibrarySortColumn>('order')
+  const { sortColumn, sortDirection, handleSort } =
+    useSortableTable<LibrarySortColumn>('order')
   const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds])
   const showRthColumn = settings.debug || settings.orderMode === 'rth'
   const showOptColumn = settings.debug || settings.orderMode === 'opt'
 
-  const curatedDeck = useMemo(() => deck.filter((card) => Boolean(examples[card.character])), [deck, examples])
+  const curatedDeck = useMemo(
+    () => deck.filter((card) => Boolean(examples[card.character])),
+    [deck, examples],
+  )
 
   const sortedLibrary = useMemo(() => {
     const byOrder = [...curatedDeck]
     byOrder.sort((a, b) => {
       switch (sortColumn) {
         case 'character':
-          return a.character.localeCompare(b.character) * (sortDirection === 'asc' ? 1 : -1)
+          return (
+            a.character.localeCompare(b.character) *
+            (sortDirection === 'asc' ? 1 : -1)
+          )
         case 'keyword':
-          return a.meaning.localeCompare(b.meaning) * (sortDirection === 'asc' ? 1 : -1)
+          return (
+            a.meaning.localeCompare(b.meaning) *
+            (sortDirection === 'asc' ? 1 : -1)
+          )
         case 'example': {
           const exampleA = examples[a.character]?.[0] ?? ''
           const exampleB = examples[b.character]?.[0] ?? ''
-          return exampleA.localeCompare(exampleB) * (sortDirection === 'asc' ? 1 : -1)
+          return (
+            exampleA.localeCompare(exampleB) *
+            (sortDirection === 'asc' ? 1 : -1)
+          )
         }
         case 'order':
         default: {
@@ -57,23 +75,41 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
   const normalizedQuery = searchQuery.trim().toLowerCase()
 
   const visibleCards = useMemo(() => {
-    const baseList = showAdded ? sortedLibrary : sortedLibrary.filter((card) => !selectedSet.has(card.id))
+    const baseList = showAdded
+      ? sortedLibrary
+      : sortedLibrary.filter((card) => !selectedSet.has(card.id))
     if (!normalizedQuery) return baseList
     return baseList.filter((card) => {
-      const rthNumber = (settings.orderMode === 'rth' ? card.rthOrder : card.order)?.toString() ?? ''
+      const rthNumber =
+        (settings.orderMode === 'rth'
+          ? card.rthOrder
+          : card.order
+        )?.toString() ?? ''
       const rthMatch = rthNumber.includes(normalizedQuery)
       const keywordMatch = card.meaning.toLowerCase().includes(normalizedQuery)
       const characterMatch = card.character.includes(searchQuery)
-      const exampleMatch = examples[card.character]?.some((item) => item.toLowerCase().includes(normalizedQuery))
+      const exampleMatch = examples[card.character]?.some((item) =>
+        item.toLowerCase().includes(normalizedQuery),
+      )
       return keywordMatch || characterMatch || !!exampleMatch || rthMatch
     })
-  }, [examples, normalizedQuery, searchQuery, selectedSet, settings.orderMode, showAdded, sortedLibrary])
+  }, [
+    examples,
+    normalizedQuery,
+    searchQuery,
+    selectedSet,
+    settings.orderMode,
+    showAdded,
+    sortedLibrary,
+  ])
 
   if (!parentModeUnlocked) {
     return (
       <section className="manager-panel">
         <div className="manager-card">
-          <p className="parent-mode-hint">Enable parent mode to add or remove cards from the deck.</p>
+          <p className="parent-mode-hint">
+            Enable parent mode to add or remove cards from the deck.
+          </p>
         </div>
       </section>
     )
@@ -118,7 +154,11 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
             onChange={(event) => setSearchQuery(event.target.value)}
           />
           <label className="library-toggle">
-            <input type="checkbox" checked={showAdded} onChange={(event) => setShowAdded(event.target.checked)} />
+            <input
+              type="checkbox"
+              checked={showAdded}
+              onChange={(event) => setShowAdded(event.target.checked)}
+            />
             Show cards in deck
           </label>
         </div>
@@ -133,14 +173,44 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
               <thead>
                 <tr>
                   {showRthColumn && (
-                    <SortableHeader column="order" label="RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                    <SortableHeader
+                      column="order"
+                      label="RTH #"
+                      currentColumn={sortColumn}
+                      direction={sortDirection}
+                      onSort={handleSort}
+                    />
                   )}
                   {showOptColumn && (
-                    <SortableHeader column="order" label="Opt RTH #" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                    <SortableHeader
+                      column="order"
+                      label="Opt RTH #"
+                      currentColumn={sortColumn}
+                      direction={sortDirection}
+                      onSort={handleSort}
+                    />
                   )}
-                  <SortableHeader column="character" label="Character" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
-                  <SortableHeader column="keyword" label="Keyword" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
-                  <SortableHeader column="example" label="Example" currentColumn={sortColumn} direction={sortDirection} onSort={handleSort} />
+                  <SortableHeader
+                    column="character"
+                    label="Character"
+                    currentColumn={sortColumn}
+                    direction={sortDirection}
+                    onSort={handleSort}
+                  />
+                  <SortableHeader
+                    column="keyword"
+                    label="Keyword"
+                    currentColumn={sortColumn}
+                    direction={sortDirection}
+                    onSort={handleSort}
+                  />
+                  <SortableHeader
+                    column="example"
+                    label="Example"
+                    currentColumn={sortColumn}
+                    direction={sortDirection}
+                    onSort={handleSort}
+                  />
                   <th aria-label="Actions" />
                 </tr>
               </thead>
@@ -157,12 +227,18 @@ export function LibraryView({ deck, selectedIds, addCards, removeCard }: Library
                       <td>
                         {inDeck ? (
                           showAdded && (
-                            <button className="selected-remove" onClick={() => removeCard(card.id)}>
+                            <button
+                              className="selected-remove"
+                              onClick={() => removeCard(card.id)}
+                            >
                               Remove
                             </button>
                           )
                         ) : (
-                          <button className="selected-add" onClick={() => addCards([card.id])}>
+                          <button
+                            className="selected-add"
+                            onClick={() => addCards([card.id])}
+                          >
                             Add
                           </button>
                         )}

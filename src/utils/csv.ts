@@ -11,7 +11,9 @@ export const parseCsv = (text: string): CsvRow[] => {
 
   if (errors.length > 0) {
     const firstError = errors[0]
-    throw new Error(`CSV parse error${typeof firstError.row === 'number' ? ` at row ${firstError.row}` : ''}: ${firstError.message}`)
+    throw new Error(
+      `CSV parse error${typeof firstError.row === 'number' ? ` at row ${firstError.row}` : ''}: ${firstError.message}`,
+    )
   }
 
   return data

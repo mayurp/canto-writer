@@ -1,58 +1,58 @@
 /* Common / Shared Styles */
 
 .session-meta {
-    background: rgba(56, 189, 248, 0.12);
-    border-radius: 999px;
-    padding: 0.35rem 0.75rem;
-    color: #0369a1;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
+  background: rgba(56, 189, 248, 0.12);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  color: #0369a1;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .session-meta strong {
-    font-size: 1.1rem;
-    line-height: 1;
-    font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .session-meta .total {
-    font-size: 0.85rem;
-    color: #0f172a;
+  font-size: 0.85rem;
+  color: #0f172a;
 }
 
 .empty-state {
-    margin: 4rem auto;
-    padding: 3rem;
-    max-width: 500px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: var(--panel-border-radius);
-    text-align: center;
-    color: #475569;
+  margin: 4rem auto;
+  padding: 3rem;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--panel-border-radius);
+  text-align: center;
+  color: #475569;
 }
 
 .empty-state .error-detail {
-    margin-top: 0.5rem;
-    color: #b91c1c;
+  margin-top: 0.5rem;
+  color: #b91c1c;
 }
 
 .eyebrow {
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.14em;
-    color: #38bdf8;
-    margin: 0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: #38bdf8;
+  margin: 0;
 }
 
 .tagline {
-    margin: 0.4rem 0 0;
-    color: #475569;
-    max-width: 36ch;
+  margin: 0.4rem 0 0;
+  color: #475569;
+  max-width: 36ch;
 }
 
 .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

@@ -16,7 +16,10 @@ export type SchedulerValue = {
 
 export const SchedulerContext = createContext<SchedulerValue | null>(null)
 
-export function SchedulerProvider({ deck, children }: {
+export function SchedulerProvider({
+  deck,
+  children,
+}: {
   deck: FlashcardDefinition[]
   children: ReactNode
 }) {

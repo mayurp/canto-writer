@@ -24,7 +24,9 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
             max={speedLabels.length - 1}
             step={1}
             value={settings.ttsSpeed}
-            onChange={(event) => updateSetting('ttsSpeed', Number(event.target.value))}
+            onChange={(event) =>
+              updateSetting('ttsSpeed', Number(event.target.value))
+            }
           />
           <div className="speed-label">{speedLabels[settings.ttsSpeed]}</div>
         </div>
@@ -33,10 +35,12 @@ export function SettingsPanel({ open, onClose }: SettingsPanelProps) {
       <div className="settings-section">
         <p className="settings-label">Initial deck order</p>
         <div className="order-choice">
-          {([
-            { label: 'Original RTH', value: 'rth' },
-            { label: 'Optimized RTH', value: 'opt' },
-          ] as const).map((option) => (
+          {(
+            [
+              { label: 'Original RTH', value: 'rth' },
+              { label: 'Optimized RTH', value: 'opt' },
+            ] as const
+          ).map((option) => (
             <label key={option.value}>
               <input
                 type="radio"

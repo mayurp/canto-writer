@@ -10,7 +10,8 @@ type UserPanelProps = {
 
 export function UserPanel({ open, onClose }: UserPanelProps) {
   const { user, login, logout } = useCloudUser()
-  const { isUnlocked, unlockParentMode, lockParentMode, error, clearError } = useParentModeContext()
+  const { isUnlocked, unlockParentMode, lockParentMode, error, clearError } =
+    useParentModeContext()
 
   const isLoggedIn = Boolean(user?.isLoggedIn)
 
@@ -24,14 +25,18 @@ export function UserPanel({ open, onClose }: UserPanelProps) {
           </div>
 
           <div className="settings-section">
-            <p className="user-warning">Warning: Logging out will remove all local data.</p>
+            <p className="user-warning">
+              Warning: Logging out will remove all local data.
+            </p>
           </div>
           <div className="settings-section user-actions">
             <button
               type="button"
               className="custom-tts-button"
               onClick={() => {
-                const confirmed = window.confirm('Are you sure you want to log out? This will remove all local data.')
+                const confirmed = window.confirm(
+                  'Are you sure you want to log out? This will remove all local data.',
+                )
                 if (confirmed) {
                   void logout()
                 }
@@ -44,7 +49,9 @@ export function UserPanel({ open, onClose }: UserPanelProps) {
       ) : (
         <>
           <div className="settings-section">
-            <p className="user-warning">Not logged in. Log in to sync your progress.</p>
+            <p className="user-warning">
+              Not logged in. Log in to sync your progress.
+            </p>
           </div>
           <div className="settings-section user-actions">
             <button type="button" className="custom-tts-button" onClick={login}>
@@ -58,7 +65,11 @@ export function UserPanel({ open, onClose }: UserPanelProps) {
         <p className="settings-label">Parent mode</p>
         <div className="user-actions">
           {isUnlocked ? (
-            <button type="button" className="custom-tts-button" onClick={lockParentMode}>
+            <button
+              type="button"
+              className="custom-tts-button"
+              onClick={lockParentMode}
+            >
               Lock
             </button>
           ) : (

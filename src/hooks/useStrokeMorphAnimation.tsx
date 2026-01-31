@@ -27,162 +27,180 @@ type StartParams = {
 }
 
 type UseMorphAnimationOptions = {
-    mainCharacterGroupRef: React.RefObject<SVGGElement | null>
+  mainCharacterGroupRef: React.RefObject<SVGGElement | null>
 }
 
 /**
  * Hook that manages the stroke morph animation overlay.
  * Animates user's drawn stroke morphing into the correct target stroke.
  */
-export function useStrokeMorphAnimation({ mainCharacterGroupRef }: UseMorphAnimationOptions) {
-    // State
-    const [morphState, setMorphState] = useState<MorphState | null>(null)
-    const [pathData, setPathData] = useState('')
+export function useStrokeMorphAnimation({
+  mainCharacterGroupRef,
+}: UseMorphAnimationOptions) {
+  // State
+  const [morphState, setMorphState] = useState<MorphState | null>(null)
+  const [pathData, setPathData] = useState('')
 
-    // Refs
-    const morphStateRef = useRef<MorphState | null>(null)
-    const morphInterpolatorRef = useRef<((t: number) => string) | null>(null)
-    const visibilityRestoreRef = useRef<(() => void) | null>(null)
-    const progressControlsRef = useRef<AnimationPlaybackControls | null>(null)
-    const opacityControlsRef = useRef<AnimationPlaybackControls | null>(null)
-    const scaleControlsRef = useRef<AnimationPlaybackControls | null>(null)
+  // Refs
+  const morphStateRef = useRef<MorphState | null>(null)
+  const morphInterpolatorRef = useRef<((t: number) => string) | null>(null)
+  const visibilityRestoreRef = useRef<(() => void) | null>(null)
+  const progressControlsRef = useRef<AnimationPlaybackControls | null>(null)
+  const opacityControlsRef = useRef<AnimationPlaybackControls | null>(null)
+  const scaleControlsRef = useRef<AnimationPlaybackControls | null>(null)
 
-    // Motion values
-    const progress = useMotionValue(0)
-    const overlayOpacity = useMotionValue(0)
-    const overlayScale = useMotionValue(1)
+  // Motion values
+  const progress = useMotionValue(0)
+  const overlayOpacity = useMotionValue(0)
+  const overlayScale = useMotionValue(1)
 
-    // Keep ref in sync with state
-    morphStateRef.current = morphState
+  // Keep ref in sync with state
+  morphStateRef.current = morphState
 
-    const stopAllAnimations = useCallback(() => {
-        progressControlsRef.current?.stop()
-        opacityControlsRef.current?.stop()
-        scaleControlsRef.current?.stop()
-        progressControlsRef.current = null
-        opacityControlsRef.current = null
-        scaleControlsRef.current = null
-    }, [])
+  const stopAllAnimations = useCallback(() => {
+    progressControlsRef.current?.stop()
+    opacityControlsRef.current?.stop()
+    scaleControlsRef.current?.stop()
+    progressControlsRef.current = null
+    opacityControlsRef.current = null
+    scaleControlsRef.current = null
+  }, [])
 
-    const restoreHiddenStroke = useCallback(() => {
-        if (DEBUG_SHOW_ACTUAL_STROKES) {
-            visibilityRestoreRef.current = null
-            return
-        }
-        if (visibilityRestoreRef.current) {
-            visibilityRestoreRef.current()
-            visibilityRestoreRef.current = null
-        }
-    }, [])
-
-    const reset = useCallback(() => {
-        stopAllAnimations()
-        restoreHiddenStroke()
-        morphStateRef.current = null
-        morphInterpolatorRef.current = null
-        setMorphState(null)
-        setPathData('')
-        overlayOpacity.set(0)
-        overlayScale.set(1)
-    }, [overlayOpacity, overlayScale, restoreHiddenStroke, stopAllAnimations])
-
-    const start = useCallback(
-        ({ sourcePath, targetPath, strokeIndex, id }: StartParams) => {
-            // Cleanup previous animation
-            reset()
-
-            // Hide the actual stroke in HanziWriter's DOM
-            if (!DEBUG_SHOW_ACTUAL_STROKES) {
-                const restoreVisibility = hideStrokeElement(mainCharacterGroupRef.current, strokeIndex)
-                if (restoreVisibility) {
-                    visibilityRestoreRef.current = restoreVisibility
-                }
-            }
-
-            // Create morph state
-            const state: MorphState = {
-                id: id ?? `morph-${strokeIndex}-${Date.now()}`,
-                sourcePath,
-                targetPath,
-            }
-
-            // Set up animation
-            setMorphState(state)
-            setPathData(sourcePath)
-            morphInterpolatorRef.current = interpolate(sourcePath, targetPath, { maxSegmentLength: 30 })
-            progress.set(0)
-            overlayOpacity.set(1)
-            overlayScale.set(1)
-
-            // Animation sequence callbacks
-            const runFadeOut = () => {
-                restoreHiddenStroke()
-                if (DEBUG_SHOW_ACTUAL_STROKES) return
-                opacityControlsRef.current = animate(overlayOpacity, 0, {
-                    duration: MORPH_FADE_DURATION / 1000,
-                    onComplete: reset,
-                })
-            }
-
-            const runScaleOvershoot = () => {
-                const settle = () => {
-                    scaleControlsRef.current = animate(overlayScale, 1, {
-                        type: 'spring',
-                        bounce: 0,
-                        stiffness: SCALE_SPRING_STIFFNESS,
-                        damping: SCALE_SPRING_DAMPING,
-                        onComplete: runFadeOut,
-                    })
-                }
-                scaleControlsRef.current = animate(overlayScale, 1 + SCALE_OVERSHOOT, {
-                    duration: SCALE_OVERSHOOT_DURATION / 1000,
-                    ease: 'easeOut',
-                    onComplete: settle,
-                })
-            }
-
-            // Listen for progress changes to update path
-            const unsubscribe = progress.on('change', (value) => {
-                const interpolator = morphInterpolatorRef.current
-                if (interpolator) {
-                    setPathData(interpolator(value))
-                }
-            })
-
-            // Start morph animation
-            progressControlsRef.current = animate(progress, 1, {
-                duration: MORPH_DURATION / 1000,
-                ease: 'easeOut',
-                onComplete: () => {
-                    unsubscribe()
-                    runScaleOvershoot()
-                },
-            })
-        },
-        [mainCharacterGroupRef, overlayOpacity, overlayScale, progress, reset, restoreHiddenStroke],
-    )
-
-    // MorphOverlay component rendered inside an SVG
-    const StrokeMorphOverlay = useCallback(() => {
-        if (!morphState || !pathData) return null
-
-        return (
-            <motion.path
-                key={morphState.id}
-                d={pathData}
-                fill={OVERLAY_FILL_COLOR}
-                stroke={OVERLAY_STROKE_COLOR}
-                strokeWidth={OVERLAY_OUTLINE_WIDTH}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ opacity: overlayOpacity, scale: overlayScale, transformOrigin: '50% 50%' }}
-            />
-        )
-    }, [morphState, pathData, overlayOpacity, overlayScale])
-
-    return {
-        StrokeMorphOverlay,
-        start,
-        reset,
+  const restoreHiddenStroke = useCallback(() => {
+    if (DEBUG_SHOW_ACTUAL_STROKES) {
+      visibilityRestoreRef.current = null
+      return
     }
+    if (visibilityRestoreRef.current) {
+      visibilityRestoreRef.current()
+      visibilityRestoreRef.current = null
+    }
+  }, [])
+
+  const reset = useCallback(() => {
+    stopAllAnimations()
+    restoreHiddenStroke()
+    morphStateRef.current = null
+    morphInterpolatorRef.current = null
+    setMorphState(null)
+    setPathData('')
+    overlayOpacity.set(0)
+    overlayScale.set(1)
+  }, [overlayOpacity, overlayScale, restoreHiddenStroke, stopAllAnimations])
+
+  const start = useCallback(
+    ({ sourcePath, targetPath, strokeIndex, id }: StartParams) => {
+      // Cleanup previous animation
+      reset()
+
+      // Hide the actual stroke in HanziWriter's DOM
+      if (!DEBUG_SHOW_ACTUAL_STROKES) {
+        const restoreVisibility = hideStrokeElement(
+          mainCharacterGroupRef.current,
+          strokeIndex,
+        )
+        if (restoreVisibility) {
+          visibilityRestoreRef.current = restoreVisibility
+        }
+      }
+
+      // Create morph state
+      const state: MorphState = {
+        id: id ?? `morph-${strokeIndex}-${Date.now()}`,
+        sourcePath,
+        targetPath,
+      }
+
+      // Set up animation
+      setMorphState(state)
+      setPathData(sourcePath)
+      morphInterpolatorRef.current = interpolate(sourcePath, targetPath, {
+        maxSegmentLength: 30,
+      })
+      progress.set(0)
+      overlayOpacity.set(1)
+      overlayScale.set(1)
+
+      // Animation sequence callbacks
+      const runFadeOut = () => {
+        restoreHiddenStroke()
+        if (DEBUG_SHOW_ACTUAL_STROKES) return
+        opacityControlsRef.current = animate(overlayOpacity, 0, {
+          duration: MORPH_FADE_DURATION / 1000,
+          onComplete: reset,
+        })
+      }
+
+      const runScaleOvershoot = () => {
+        const settle = () => {
+          scaleControlsRef.current = animate(overlayScale, 1, {
+            type: 'spring',
+            bounce: 0,
+            stiffness: SCALE_SPRING_STIFFNESS,
+            damping: SCALE_SPRING_DAMPING,
+            onComplete: runFadeOut,
+          })
+        }
+        scaleControlsRef.current = animate(overlayScale, 1 + SCALE_OVERSHOOT, {
+          duration: SCALE_OVERSHOOT_DURATION / 1000,
+          ease: 'easeOut',
+          onComplete: settle,
+        })
+      }
+
+      // Listen for progress changes to update path
+      const unsubscribe = progress.on('change', (value) => {
+        const interpolator = morphInterpolatorRef.current
+        if (interpolator) {
+          setPathData(interpolator(value))
+        }
+      })
+
+      // Start morph animation
+      progressControlsRef.current = animate(progress, 1, {
+        duration: MORPH_DURATION / 1000,
+        ease: 'easeOut',
+        onComplete: () => {
+          unsubscribe()
+          runScaleOvershoot()
+        },
+      })
+    },
+    [
+      mainCharacterGroupRef,
+      overlayOpacity,
+      overlayScale,
+      progress,
+      reset,
+      restoreHiddenStroke,
+    ],
+  )
+
+  // MorphOverlay component rendered inside an SVG
+  const StrokeMorphOverlay = useCallback(() => {
+    if (!morphState || !pathData) return null
+
+    return (
+      <motion.path
+        key={morphState.id}
+        d={pathData}
+        fill={OVERLAY_FILL_COLOR}
+        stroke={OVERLAY_STROKE_COLOR}
+        strokeWidth={OVERLAY_OUTLINE_WIDTH}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{
+          opacity: overlayOpacity,
+          scale: overlayScale,
+          transformOrigin: '50% 50%',
+        }}
+      />
+    )
+  }, [morphState, pathData, overlayOpacity, overlayScale])
+
+  return {
+    StrokeMorphOverlay,
+    start,
+    reset,
+  }
 }

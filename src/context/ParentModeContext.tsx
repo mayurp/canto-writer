@@ -1,4 +1,11 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react'
 
 type ParentModeContextValue = {
   isUnlocked: boolean
@@ -46,13 +53,19 @@ export const ParentModeProvider = ({ children }: { children: ReactNode }) => {
     [error, isUnlocked, lockParentModeInternal, unlockParentModeInternal],
   )
 
-  return <ParentModeContext.Provider value={value}>{children}</ParentModeContext.Provider>
+  return (
+    <ParentModeContext.Provider value={value}>
+      {children}
+    </ParentModeContext.Provider>
+  )
 }
 
 export const useParentModeContext = () => {
   const ctx = useContext(ParentModeContext)
   if (!ctx) {
-    throw new Error('useParentModeContext must be used within ParentModeProvider')
+    throw new Error(
+      'useParentModeContext must be used within ParentModeProvider',
+    )
   }
   return ctx
 }

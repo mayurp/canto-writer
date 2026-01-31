@@ -17,25 +17,34 @@ export const useDeckSelection = (deck: FlashcardDefinition[]) => {
   )
   const selectedIds = selectionRecord?.selectedIds ?? []
 
-  const updateSelection = useCallback((updater: (prev: string[]) => string[]) => {
-    const next = updater(selectedIds)
-    void writeSelection(next).catch((error) => {
-      console.error('Failed to save deck selection', error)
-    })
-  }, [selectedIds])
+  const updateSelection = useCallback(
+    (updater: (prev: string[]) => string[]) => {
+      const next = updater(selectedIds)
+      void writeSelection(next).catch((error) => {
+        console.error('Failed to save deck selection', error)
+      })
+    },
+    [selectedIds],
+  )
 
-  const addCards = useCallback((ids: string[]) => {
-    if (ids.length === 0) return
-    const newIds = ids.filter((id) => !selectedIds.includes(id))
-    if (newIds.length > 0) {
-      prefetchStrokeData(newIds)
-    }
-    updateSelection((prev) => Array.from(new Set([...prev, ...ids])))
-  }, [selectedIds, updateSelection])
+  const addCards = useCallback(
+    (ids: string[]) => {
+      if (ids.length === 0) return
+      const newIds = ids.filter((id) => !selectedIds.includes(id))
+      if (newIds.length > 0) {
+        prefetchStrokeData(newIds)
+      }
+      updateSelection((prev) => Array.from(new Set([...prev, ...ids])))
+    },
+    [selectedIds, updateSelection],
+  )
 
-  const removeCard = useCallback((id: string) => {
-    updateSelection((prev) => prev.filter((existing) => existing !== id))
-  }, [updateSelection])
+  const removeCard = useCallback(
+    (id: string) => {
+      updateSelection((prev) => prev.filter((existing) => existing !== id))
+    },
+    [updateSelection],
+  )
 
   const clearAll = useCallback(() => {
     updateSelection(() => [])

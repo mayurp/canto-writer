@@ -12,7 +12,10 @@ import { useRememberingDeck } from './hooks/useRememberingDeck'
 import { useCantonesePronunciation } from './hooks/useCantonesePronunciation'
 import { ttsSpeedSteps } from './hooks/useSettings'
 import { SettingsProvider, useSettingsContext } from './context/SettingsContext'
-import { ParentModeProvider, useParentModeContext } from './context/ParentModeContext'
+import {
+  ParentModeProvider,
+  useParentModeContext,
+} from './context/ParentModeContext'
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { usePlayableDeck } from './hooks/usePlayableDeck'
 import { VocabExamplesProvider } from './context/VocabExamplesContext'
@@ -36,35 +39,61 @@ function AppContent() {
   const { deck, loading, error } = useRememberingDeck()
   const { settings } = useSettingsContext()
   const { selectedIds, addCards, removeCard } = useDeckSelection(deck)
-  const { playableDeck } = usePlayableDeck(deck, selectedIds, settings.orderMode)
+  const { playableDeck } = usePlayableDeck(
+    deck,
+    selectedIds,
+    settings.orderMode,
+  )
   const debugEnabled = import.meta.env.DEV && settings.debug
   const [view, setView] = useState<AppView>('learn')
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [userPanelOpen, setUserPanelOpen] = useState(false)
-  const { playPronunciation, speaking, isSupported } = useCantonesePronunciation()
+  const { playPronunciation, speaking, isSupported } =
+    useCantonesePronunciation()
   const { isUnlocked: parentModeUnlocked } = useParentModeContext()
   const voiceRate = ttsSpeedSteps[settings.ttsSpeed] ?? ttsSpeedSteps[2]
 
-  const navClass = (target: AppView) => `nav-tab${view === target ? ' is-active' : ''}`
+  const navClass = (target: AppView) =>
+    `nav-tab${view === target ? ' is-active' : ''}`
 
   const NavTabs = () => (
     <div className="nav-tabs">
-      <button type="button" className={navClass('learn')} onClick={() => setView('learn')}>
+      <button
+        type="button"
+        className={navClass('learn')}
+        onClick={() => setView('learn')}
+      >
         Learn
       </button>
-      <button type="button" className={navClass('deck')} onClick={() => setView('deck')}>
+      <button
+        type="button"
+        className={navClass('deck')}
+        onClick={() => setView('deck')}
+      >
         Deck
       </button>
-      <button type="button" className={navClass('stats')} onClick={() => setView('stats')}>
+      <button
+        type="button"
+        className={navClass('stats')}
+        onClick={() => setView('stats')}
+      >
         Stats
       </button>
       {parentModeUnlocked && (
-        <button type="button" className={navClass('library')} onClick={() => setView('library')}>
+        <button
+          type="button"
+          className={navClass('library')}
+          onClick={() => setView('library')}
+        >
           Library
         </button>
       )}
       {debugEnabled && (
-        <button type="button" className={navClass('test')} onClick={() => setView('test')}>
+        <button
+          type="button"
+          className={navClass('test')}
+          onClick={() => setView('test')}
+        >
           Test
         </button>
       )}
@@ -75,7 +104,13 @@ function AppContent() {
     <header className="app-header">
       <div className="header-row">
         <div className="brand-mark">
-          <img src="icon-192.png" alt="Canto Writer" width={20} height={20} style={{ borderRadius: '4px' }} />
+          <img
+            src="icon-192.png"
+            alt="Canto Writer"
+            width={20}
+            height={20}
+            style={{ borderRadius: '4px' }}
+          />
           <p className="eyebrow">Canto Writer</p>
         </div>
         <div className="header-actions">
@@ -136,7 +171,9 @@ function AppContent() {
     bodyContent = (
       <DeckView
         selectedIds={selectedIds}
-        playPronunciation={(text) => playPronunciation(text, { rate: voiceRate })}
+        playPronunciation={(text) =>
+          playPronunciation(text, { rate: voiceRate })
+        }
         isSpeechSupported={isSupported}
       />
     )
@@ -162,13 +199,21 @@ function AppContent() {
   } else if (playableDeck.length === 0) {
     bodyContent = (
       <div className="empty-state">
-        <p>Your study deck is empty. Add characters from the Library to begin.</p>
+        <p>
+          Your study deck is empty. Add characters from the Library to begin.
+        </p>
         {parentModeUnlocked ? (
-          <button type="button" className="clear-link" onClick={() => setView('library')}>
+          <button
+            type="button"
+            className="clear-link"
+            onClick={() => setView('library')}
+          >
             Open library
           </button>
         ) : (
-          <p className="parent-mode-hint">Unlock parent mode to add more cards.</p>
+          <p className="parent-mode-hint">
+            Unlock parent mode to add more cards.
+          </p>
         )}
       </div>
     )
@@ -185,13 +230,16 @@ function AppContent() {
 
   return (
     <SchedulerProvider deck={playableDeck}>
-      <main className={`app-shell${view === 'learn' ? ' is-practice-view' : ''}`}>
+      <main
+        className={`app-shell${view === 'learn' ? ' is-practice-view' : ''}`}
+      >
         <AppHeader />
-        <div className="app-body">
-          {bodyContent}
-        </div>
+        <div className="app-body">{bodyContent}</div>
       </main>
-      <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <SettingsPanel
+        open={settingsOpen}
+        onClose={() => setSettingsOpen(false)}
+      />
       <UserPanel open={userPanelOpen} onClose={() => setUserPanelOpen(false)} />
     </SchedulerProvider>
   )
