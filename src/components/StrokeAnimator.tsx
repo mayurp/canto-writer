@@ -41,7 +41,7 @@ export function StrokeAnimator({
   const {
     StrokeMorphOverlay,
     start: startMorphAnimation,
-    reset: stopMorphAnimation,
+    stop: stopMorphAnimation,
   } = useStrokeMorphAnimation({ mainCharacterGroupRef })
 
   // Stroke guide dot animation hook
@@ -165,13 +165,13 @@ export function StrokeAnimator({
     character,
     size,
     sessionKey,
-    onQuizComplete,
-    stopMorphAnimation,
-    startMorphAnimation,
     showOutline,
+    strokeGuideIndexRef,
+    onQuizComplete,
+    startMorphAnimation,
+    stopMorphAnimation,
     startStrokeGuideAnimation,
     stopStrokeGuideAnimation,
-    strokeGuideIndexRef,
   ])
 
   return (

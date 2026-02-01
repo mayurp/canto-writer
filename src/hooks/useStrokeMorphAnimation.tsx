@@ -77,7 +77,7 @@ export function useStrokeMorphAnimation({
     }
   }, [])
 
-  const reset = useCallback(() => {
+  const stop = useCallback(() => {
     stopAllAnimations()
     restoreHiddenStroke()
     morphStateRef.current = null
@@ -91,7 +91,7 @@ export function useStrokeMorphAnimation({
   const start = useCallback(
     ({ sourcePath, targetPath, strokeIndex, id }: StartParams) => {
       // Cleanup previous animation
-      reset()
+      stop()
 
       // Hide the actual stroke in HanziWriter's DOM
       if (!DEBUG_SHOW_ACTUAL_STROKES) {
@@ -127,7 +127,7 @@ export function useStrokeMorphAnimation({
         if (DEBUG_SHOW_ACTUAL_STROKES) return
         opacityControlsRef.current = animate(overlayOpacity, 0, {
           duration: MORPH_FADE_DURATION / 1000,
-          onComplete: reset,
+          onComplete: stop,
         })
       }
 
@@ -171,7 +171,7 @@ export function useStrokeMorphAnimation({
       overlayOpacity,
       overlayScale,
       progress,
-      reset,
+      stop,
       restoreHiddenStroke,
     ],
   )
@@ -201,6 +201,6 @@ export function useStrokeMorphAnimation({
   return {
     StrokeMorphOverlay,
     start,
-    reset,
+    stop,
   }
 }
