@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import './styles/common.css'
 import App from './App.tsx'
-import './utils/simplify-debugging'
+import './utils/simplifyDebugging.ts'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {
