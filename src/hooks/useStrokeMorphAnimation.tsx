@@ -42,7 +42,6 @@ export function useStrokeMorphAnimation({
   const [pathData, setPathData] = useState('')
 
   // Refs
-  const morphStateRef = useRef<MorphState | null>(null)
   const morphInterpolatorRef = useRef<((t: number) => string) | null>(null)
   const visibilityRestoreRef = useRef<(() => void) | null>(null)
   const progressControlsRef = useRef<AnimationPlaybackControls | null>(null)
@@ -54,8 +53,6 @@ export function useStrokeMorphAnimation({
   const overlayOpacity = useMotionValue(0)
   const overlayScale = useMotionValue(1)
 
-  // Keep ref in sync with state
-  morphStateRef.current = morphState
 
   const stopAllAnimations = useCallback(() => {
     progressControlsRef.current?.stop()
@@ -80,7 +77,6 @@ export function useStrokeMorphAnimation({
   const stop = useCallback(() => {
     stopAllAnimations()
     restoreHiddenStroke()
-    morphStateRef.current = null
     morphInterpolatorRef.current = null
     setMorphState(null)
     setPathData('')
