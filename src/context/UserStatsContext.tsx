@@ -15,9 +15,12 @@ import {
   type UserStats,
 } from '../models/UserStats'
 
+import { PointsSoundVariant } from '../utils/pointsSound'
+
 type PointsAnimation = {
   id: string
   amount: number
+  variant: PointsSoundVariant
 }
 
 type UserStatsContextValue = {
@@ -26,7 +29,7 @@ type UserStatsContextValue = {
     pending: PointsAnimation[]
     isGlowing: boolean
     pillRef: RefObject<HTMLDivElement | null>
-    trigger: (amount: number) => void
+    trigger: (amount: number, variant?: PointsSoundVariant) => void
     complete: (id: string, amount: number) => void
   }
 }
@@ -49,10 +52,16 @@ export function UserStatsProvider({ children }: { children: ReactNode }) {
   const [isGlowing, setIsGlowing] = useState(false)
   const pillRef = useRef<HTMLDivElement | null>(null)
 
-  const triggerPointsAnimation = useCallback((amount: number) => {
-    const id = `points-${Date.now()}-${Math.random().toString(36).slice(2)}`
-    setPendingAnimations((prev) => [...prev, { id, amount }])
-  }, [])
+  const triggerPointsAnimation = useCallback(
+    (
+      amount: number,
+      variant: PointsSoundVariant = PointsSoundVariant.Standard,
+    ) => {
+      const id = `points-${Date.now()}-${Math.random().toString(36).slice(2)}`
+      setPendingAnimations((prev) => [...prev, { id, amount, variant }])
+    },
+    [],
+  )
 
   const completeAnimation = useCallback(
     (id: string, amount: number) => {

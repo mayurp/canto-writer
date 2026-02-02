@@ -53,8 +53,9 @@ export function PointsAnimationLayer() {
     }
     // Play sound when a new animation is added
     if (pendingAnimations.length > lastAnimationCount.current) {
+      const latestAnim = pendingAnimations[pendingAnimations.length - 1]
       import('../utils/pointsSound').then(({ playPointsSound }) =>
-        playPointsSound(),
+        playPointsSound(latestAnim?.variant),
       )
     }
     lastAnimationCount.current = pendingAnimations.length

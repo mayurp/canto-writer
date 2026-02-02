@@ -14,6 +14,7 @@ import { useUserStatsContext } from '../context/UserStatsContext'
 import { PointsAnimationLayer } from './PointsAnimation'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
+import { PointsSoundVariant } from '../utils/pointsSound'
 
 const ratingLabels: Record<ReviewRatingType, string> = {
   [ReviewRating.Again]: 'Again',
@@ -35,12 +36,12 @@ const ratingFromMistakes = (
 }
 
 const POINTS_BASE = 10
-const POINTS_GUIDED_BONUS = 20
+const POINTS_GUIDED_BONUS = 10
 const POINTS_RATING_BONUS: Record<ReviewRatingType, number> = {
   [ReviewRating.Again]: 0,
-  [ReviewRating.Hard]: 5,
-  [ReviewRating.Good]: 10,
-  [ReviewRating.Easy]: 20,
+  [ReviewRating.Hard]: 10,
+  [ReviewRating.Good]: 20,
+  [ReviewRating.Easy]: 50,
 }
 
 const computePoints = (input: {
@@ -55,6 +56,13 @@ const computePoints = (input: {
     points += POINTS_RATING_BONUS[input.rating]
   }
   return points
+}
+
+const getSoundVariant = (points: number): PointsSoundVariant => {
+  if (points >= 35) return PointsSoundVariant.Perfect
+  if (points >= 30) return PointsSoundVariant.Great
+  if (points >= 20) return PointsSoundVariant.Good
+  return PointsSoundVariant.Standard
 }
 
 const DEFAULT_WRITER_SIZE = 220
@@ -182,8 +190,9 @@ export function PracticeView({
       })
 
       setCardCompleted(true)
+      const soundVariant = getSoundVariant(points)
       setPendingGrading({ rating, learnedOutline })
-      triggerPointsAnimation(points)
+      triggerPointsAnimation(points, soundVariant)
     },
     [showStrokeOutline, triggerPointsAnimation],
   )
