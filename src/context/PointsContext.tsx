@@ -7,6 +7,13 @@ import {
   type ReactNode,
   type RefObject,
 } from 'react'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { db } from '../models/db'
+import {
+  DEFAULT_USER_STATS_KEY,
+  defaultUserStats,
+  type UserStats,
+} from '../models/UserStats'
 
 type PointsAnimation = {
   id: string
@@ -25,7 +32,15 @@ type PointsContextValue = {
 const PointsContext = createContext<PointsContextValue | null>(null)
 
 export function PointsProvider({ children }: { children: ReactNode }) {
-  const [points, setPoints] = useState(0)
+  const record = useLiveQuery(
+    () => db.userStats.get(DEFAULT_USER_STATS_KEY),
+    [],
+    null,
+  )
+  const stats: UserStats = record
+    ? { ...defaultUserStats, ...record }
+    : defaultUserStats
+
   const [pendingAnimations, setPendingAnimations] = useState<PointsAnimation[]>(
     [],
   )
@@ -37,17 +52,30 @@ export function PointsProvider({ children }: { children: ReactNode }) {
     setPendingAnimations((prev) => [...prev, { id, amount }])
   }, [])
 
-  const completeAnimation = useCallback((id: string, amount: number) => {
-    setPendingAnimations((prev) => prev.filter((a) => a.id !== id))
-    setPoints((prev) => prev + amount)
-    setIsGlowing(true)
-    setTimeout(() => setIsGlowing(false), 400)
-  }, [])
+  const completeAnimation = useCallback(
+    (id: string, amount: number) => {
+      setPendingAnimations((prev) => prev.filter((a) => a.id !== id))
+      setIsGlowing(true)
+      setTimeout(() => setIsGlowing(false), 400)
+
+      // Persist to DB
+      const updatedStats: UserStats = {
+        ...stats,
+        totalPoints: stats.totalPoints + amount,
+      }
+      void db.userStats
+        .put({ ...updatedStats, id: DEFAULT_USER_STATS_KEY })
+        .catch((error) => {
+          console.error('Failed to save user stats', error)
+        })
+    },
+    [stats],
+  )
 
   return (
     <PointsContext.Provider
       value={{
-        points,
+        points: stats.totalPoints,
         pendingAnimations,
         isGlowing,
         pillRef,
