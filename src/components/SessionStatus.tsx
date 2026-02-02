@@ -1,9 +1,13 @@
 import { useSchedulerContext } from '../context/SchedulerContext'
-import { usePointsContext } from '../context/PointsContext'
+import { useUserStatsContext } from '../context/UserStatsContext'
 
 export function SessionStatus() {
   const { dueCount } = useSchedulerContext()
-  const { points, isGlowing, pillRef } = usePointsContext()
+  const { stats, animationState } = useUserStatsContext()
+
+  const { totalPoints } = stats
+  const { isGlowing, pillRef } = animationState
+
   return (
     <div className="session-status-container">
       <div
@@ -12,7 +16,7 @@ export function SessionStatus() {
         aria-live="polite"
       >
         <span>💎</span>
-        <strong>{points}</strong>
+        <strong>{totalPoints}</strong>
       </div>
       <div className="session-meta" aria-live="polite">
         <span>Due</span>

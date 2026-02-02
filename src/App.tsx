@@ -19,18 +19,18 @@ import {
 import { useDeckSelection } from './hooks/useDeckSelection'
 import { usePlayableDeck } from './hooks/usePlayableDeck'
 import { VocabExamplesProvider } from './context/VocabExamplesContext'
-import { PointsProvider } from './context/PointsContext'
+import { UserStatsProvider } from './context/UserStatsContext'
 import { StatsView } from './components/StatsView'
 
 function App() {
   return (
     <SettingsProvider>
       <ParentModeProvider>
-        <PointsProvider>
+        <UserStatsProvider>
           <VocabExamplesProvider>
             <AppContent />
           </VocabExamplesProvider>
-        </PointsProvider>
+        </UserStatsProvider>
       </ParentModeProvider>
     </SettingsProvider>
   )

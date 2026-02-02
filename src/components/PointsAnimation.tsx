@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { usePointsContext } from '../context/PointsContext'
+import { useUserStatsContext } from '../context/UserStatsContext'
 import { useEffect, useRef, useState } from 'react'
 import './styles/PointsAnimation.css'
 
@@ -37,7 +37,13 @@ function FlyingPoints({
 }
 
 export function PointsAnimationLayer() {
-  const { pendingAnimations, completeAnimation, pillRef } = usePointsContext()
+  const { animationState } = useUserStatsContext()
+  const {
+    pending: pendingAnimations,
+    complete: completeAnimation,
+    pillRef,
+  } = animationState
+
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null)
   const lastAnimationCount = useRef(0)
 

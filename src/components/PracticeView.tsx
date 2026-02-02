@@ -10,7 +10,7 @@ import { StrokeAnimator } from './StrokeAnimator'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamplesContext } from '../context/VocabExamplesContext'
-import { usePointsContext } from '../context/PointsContext'
+import { useUserStatsContext } from '../context/UserStatsContext'
 import { PointsAnimationLayer } from './PointsAnimation'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
@@ -93,7 +93,8 @@ export function PracticeView({
     useSchedulerContext()
   const { settings } = useSettingsContext()
   const { examples } = useVocabExamplesContext()
-  const { triggerPointsAnimation } = usePointsContext()
+  const { animationState } = useUserStatsContext()
+  const triggerPointsAnimation = animationState.trigger
   const [writerSize, setWriterSize] = useState(DEFAULT_WRITER_SIZE)
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)

@@ -20,18 +20,20 @@ type PointsAnimation = {
   amount: number
 }
 
-type PointsContextValue = {
-  points: number
-  pendingAnimations: PointsAnimation[]
-  isGlowing: boolean
-  pillRef: RefObject<HTMLDivElement | null>
-  triggerPointsAnimation: (amount: number) => void
-  completeAnimation: (id: string, amount: number) => void
+type UserStatsContextValue = {
+  stats: UserStats
+  animationState: {
+    pending: PointsAnimation[]
+    isGlowing: boolean
+    pillRef: RefObject<HTMLDivElement | null>
+    trigger: (amount: number) => void
+    complete: (id: string, amount: number) => void
+  }
 }
 
-const PointsContext = createContext<PointsContextValue | null>(null)
+const UserStatsContext = createContext<UserStatsContextValue | null>(null)
 
-export function PointsProvider({ children }: { children: ReactNode }) {
+export function UserStatsProvider({ children }: { children: ReactNode }) {
   const record = useLiveQuery(
     () => db.userStats.get(DEFAULT_USER_STATS_KEY),
     [],
@@ -73,25 +75,27 @@ export function PointsProvider({ children }: { children: ReactNode }) {
   )
 
   return (
-    <PointsContext.Provider
+    <UserStatsContext.Provider
       value={{
-        points: stats.totalPoints,
-        pendingAnimations,
-        isGlowing,
-        pillRef,
-        triggerPointsAnimation,
-        completeAnimation,
+        stats,
+        animationState: {
+          pending: pendingAnimations,
+          isGlowing,
+          pillRef,
+          trigger: triggerPointsAnimation,
+          complete: completeAnimation,
+        },
       }}
     >
       {children}
-    </PointsContext.Provider>
+    </UserStatsContext.Provider>
   )
 }
 
-export function usePointsContext() {
-  const value = useContext(PointsContext)
+export function useUserStatsContext() {
+  const value = useContext(UserStatsContext)
   if (!value) {
-    throw new Error('usePointsContext must be used within PointsProvider')
+    throw new Error('useUserStatsContext must be used within UserStatsProvider')
   }
   return value
 }
