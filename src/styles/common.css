@@ -1,5 +1,32 @@
 /* Common / Shared Styles */
 
+.session-status-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.points-pill {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.15),
+    rgba(147, 51, 234, 0.15)
+  );
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  color: #7c3aed;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.points-pill strong {
+  font-size: 1.1rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
 .session-meta {
   background: rgba(56, 189, 248, 0.12);
   border-radius: 999px;

@@ -10,6 +10,8 @@ import { StrokeAnimator } from './StrokeAnimator'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamplesContext } from '../context/VocabExamplesContext'
+import { usePointsContext } from '../context/PointsContext'
+import { PointsAnimationLayer } from './PointsAnimation'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
 
@@ -30,6 +32,29 @@ const ratingFromMistakes = (
   if (count <= 2) return ReviewRating.Good
   if (count <= 4) return ReviewRating.Hard
   return ReviewRating.Again
+}
+
+const POINTS_BASE = 10
+const POINTS_GUIDED_BONUS = 20
+const POINTS_RATING_BONUS: Record<ReviewRatingType, number> = {
+  [ReviewRating.Again]: 0,
+  [ReviewRating.Hard]: 5,
+  [ReviewRating.Good]: 10,
+  [ReviewRating.Easy]: 20,
+}
+
+const computePoints = (input: {
+  guidedMode: boolean
+  learnedOutline: boolean
+  rating: ReviewRatingType
+}): number => {
+  let points = POINTS_BASE
+  if (input.guidedMode) {
+    if (input.learnedOutline) points += POINTS_GUIDED_BONUS
+  } else {
+    points += POINTS_RATING_BONUS[input.rating]
+  }
+  return points
 }
 
 const DEFAULT_WRITER_SIZE = 220
@@ -68,6 +93,7 @@ export function PracticeView({
     useSchedulerContext()
   const { settings } = useSettingsContext()
   const { examples } = useVocabExamplesContext()
+  const { triggerPointsAnimation } = usePointsContext()
   const [writerSize, setWriterSize] = useState(DEFAULT_WRITER_SIZE)
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
@@ -148,10 +174,17 @@ export function PracticeView({
         ? (summary.totalMistakes ?? 0) === 0
         : rating === ReviewRating.Good || rating === ReviewRating.Easy
 
+      const points = computePoints({
+        guidedMode: guidedRun,
+        learnedOutline,
+        rating,
+      })
+
       setCardCompleted(true)
       setPendingGrading({ rating, learnedOutline })
+      triggerPointsAnimation(points)
     },
-    [showStrokeOutline],
+    [showStrokeOutline, triggerPointsAnimation],
   )
 
   const handleRating = useCallback(
@@ -245,6 +278,7 @@ export function PracticeView({
             onQuizComplete={handleQuizComplete}
             onClearStrokes={handleStrokeReset}
           />
+          <PointsAnimationLayer />
         </div>
 
         <div className="card-actions">
