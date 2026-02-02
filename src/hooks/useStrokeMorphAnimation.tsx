@@ -53,7 +53,6 @@ export function useStrokeMorphAnimation({
   const overlayOpacity = useMotionValue(0)
   const overlayScale = useMotionValue(1)
 
-
   const stopAllAnimations = useCallback(() => {
     progressControlsRef.current?.stop()
     opacityControlsRef.current?.stop()
