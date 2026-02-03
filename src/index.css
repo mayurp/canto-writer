@@ -14,6 +14,20 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Theme Variables */
+  --primary: #38bdf8;
+  --primary-light: rgba(56, 189, 248, 0.3);
+  --on-primary: #0f172a;
+
+  --surface-1: #ffffff;
+  --surface-2: #f1f5f9;
+  --surface-3: #cbd5e1;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+
+  --panel-border-radius: 16px;
 }
 
 *,

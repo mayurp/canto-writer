@@ -23,7 +23,7 @@ export const ParentModeProvider = ({ children }: { children: ReactNode }) => {
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const unlockParentModeInternal = useCallback((pin: string) => {
+  const unlockParentMode = useCallback((pin: string) => {
     if (pin === PARENT_PIN) {
       setIsUnlocked(true)
       setError(null)
@@ -33,24 +33,22 @@ export const ParentModeProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [])
 
-  const lockParentModeInternal = useCallback(() => {
+  const lockParentMode = useCallback(() => {
+    setError(null)
     setIsUnlocked(false)
   }, [])
+
+  const clearError = useCallback(() => setError(null), [])
 
   const value = useMemo<ParentModeContextValue>(
     () => ({
       isUnlocked,
       error,
-      unlockParentMode: (pin: string) => {
-        unlockParentModeInternal(pin)
-      },
-      lockParentMode: () => {
-        setError(null)
-        lockParentModeInternal()
-      },
-      clearError: () => setError(null),
+      unlockParentMode,
+      lockParentMode,
+      clearError,
     }),
-    [error, isUnlocked, lockParentModeInternal, unlockParentModeInternal],
+    [isUnlocked, error, unlockParentMode, lockParentMode, clearError],
   )
 
   return (

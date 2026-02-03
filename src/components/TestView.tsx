@@ -46,25 +46,17 @@ export function TestView({
           />
           <button
             type="button"
-            className="custom-tts-button"
+            className="pill-button"
             onClick={handlePlayback}
             disabled={!isSupported || customTts.trim().length === 0}
           >
             Play
           </button>
         </div>
-        <button
-          type="button"
-          className="custom-tts-button"
-          onClick={handleClearSrs}
-        >
+        <button type="button" className="pill-button" onClick={handleClearSrs}>
           Clear SRS Records
         </button>
-        <button
-          type="button"
-          className="custom-tts-button"
-          onClick={handleClearAll}
-        >
+        <button type="button" className="pill-button" onClick={handleClearAll}>
           Clear All Local Data
         </button>
         {!isSupported && (

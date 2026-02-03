@@ -5,13 +5,24 @@ type ModalProps = {
   onClose: () => void
   title: string
   children: ReactNode
+  className?: string
 }
 
-export function Modal({ open, onClose, title, children }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  title,
+  children,
+  className,
+}: ModalProps) {
   if (!open) return null
 
   return (
-    <div className="settings-overlay" role="dialog" aria-modal="true">
+    <div
+      className={`settings-overlay ${className || ''}`}
+      role="dialog"
+      aria-modal="true"
+    >
       <div className="settings-card">
         <div className="settings-header">
           <h2>{title}</h2>

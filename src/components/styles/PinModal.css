@@ -1,0 +1,84 @@
+/* PinModal styles - Top-aligned Modal */
+.pin-modal-overlay {
+  align-items: flex-start !important;
+  align-items: flex-start !important;
+  padding-top: 3rem !important; /* Move higher up (approx status bar + gap) */
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .pin-modal-overlay {
+    padding-top: 0 !important;
+    align-items: flex-start !important;
+    overflow-y: auto; /* Allow scrolling if really tight */
+  }
+
+  .pin-modal-overlay .settings-card {
+    border-radius: 0 0 16px 16px; /* Top corners flat against screen edge */
+    margin-top: 0;
+  }
+}
+
+/* Ensure header is centered for PIN entry */
+.pin-modal-overlay .settings-header {
+  justify-content: center;
+  position: relative;
+}
+
+.pin-modal-overlay .settings-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Position close button standardly but ensure it doesn't conflict with centered title */
+.pin-modal-overlay .settings-close {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.pin-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  cursor: text;
+}
+
+.pin-box {
+  width: 3.5rem;
+  height: 4.5rem;
+  border: 2px solid var(--surface-3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  background: var(--surface-2);
+  transition: all 0.2s ease;
+  color: var(--text-primary);
+}
+
+.pin-boxes.is-focused .pin-box.is-active,
+.pin-boxes.is-focused .pin-box:not(:empty) {
+  border-color: var(--primary);
+  background: var(--surface-1);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.pin-hidden-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  /* pointer-events: none; - Removing this to ensures focus works reliably on some touch devices */
+}
+
+/* Ensure error state overrides active/focused states */
+.pin-boxes.is-focused .pin-box.is-error,
+.pin-box.is-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+  background: var(--surface-2) !important;
+}
