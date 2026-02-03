@@ -107,8 +107,10 @@ export function PracticeView({
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
-  const [showStrokeOutline, setShowStrokeOutline] = useState(false)
   const currentCardId = currentCard?.id ?? null
+  const showStrokeOutline = currentCardId
+    ? shouldShowOutline(currentCardId)
+    : false
   const strokeWrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -139,10 +141,7 @@ export function PracticeView({
     setCardCompleted(false)
     setPendingGrading(null)
     setStrokeSession((s) => s + 1)
-    if (currentCardId) {
-      setShowStrokeOutline(shouldShowOutline(currentCardId))
-    }
-  }, [currentCard, currentCardId, shouldShowOutline])
+  }, [currentCard, currentCardId])
 
   const currentCharacter = currentCard?.character
 
