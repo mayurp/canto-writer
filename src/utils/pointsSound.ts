@@ -1,11 +1,18 @@
 // Synthesized points collection sound using Web Audio API
 let audioContext: AudioContext | null = null
 
-function getAudioContext(): AudioContext {
+export function getAudioContext(): AudioContext {
   if (!audioContext) {
     audioContext = new AudioContext()
   }
   return audioContext
+}
+
+export const initAudio = () => {
+  const ctx = getAudioContext()
+  if (ctx.state === 'suspended') {
+    void ctx.resume()
+  }
 }
 
 // Output variants for consumers
