@@ -22,6 +22,7 @@ import { VocabExamplesProvider } from './context/VocabExamplesContext'
 import { UserStatsProvider } from './context/UserStatsContext'
 import { StatsView } from './components/StatsView'
 import { useAudioUnlock } from './hooks/useAudioUnlock'
+import { CharacterDataProvider } from './context/CharacterDataContext'
 
 function App() {
   return (
@@ -29,7 +30,9 @@ function App() {
       <ParentModeProvider>
         <UserStatsProvider>
           <VocabExamplesProvider>
-            <AppContent />
+            <CharacterDataProvider>
+              <AppContent />
+            </CharacterDataProvider>
           </VocabExamplesProvider>
         </UserStatsProvider>
       </ParentModeProvider>

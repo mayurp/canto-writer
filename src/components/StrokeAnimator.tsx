@@ -1,5 +1,5 @@
 import './styles/StrokeAnimator.css'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import HanziWriter, {
   type StrokeData,
   type QuizSummary,
@@ -10,6 +10,7 @@ import { pointsToPath, closePolyline } from '../utils/strokePath'
 import { findMainCharacterGroup } from '../utils/hanziWriterDom'
 import { useStrokeMorphAnimation } from '../hooks/useStrokeMorphAnimation'
 import { useStrokeGuideAnimation } from '../hooks/useStrokeGuideAnimation'
+import { useStrokeColorAnimation } from '../hooks/useStrokeColorAnimation'
 
 const CHARACTER_VIEWBOX = '0 -124 1024 1024'
 const STROKE_COLOR = '#000'
@@ -22,6 +23,8 @@ type StrokeAnimatorProps = {
   onQuizComplete?: (summary: QuizSummary) => void
   showOutline?: boolean
   onClearStrokes?: () => void
+  staticColors?: boolean
+  onIntroComplete?: () => void
 }
 
 export function StrokeAnimator({
@@ -31,11 +34,25 @@ export function StrokeAnimator({
   onQuizComplete,
   showOutline = false,
   onClearStrokes,
+  staticColors = false,
+  onIntroComplete,
 }: StrokeAnimatorProps) {
   // Refs for HanziWriter and stroke data
   const writerContainerRef = useRef<HTMLDivElement | null>(null)
   const strokeShapesRef = useRef<StrokeShape[]>([])
   const mainCharacterGroupRef = useRef<SVGGElement | null>(null)
+
+  // Internal state to track if the color learning intro is currently playing
+  const [isIntroPlaying, setIsIntroPlaying] = useState(
+    () => showOutline && !staticColors,
+  )
+
+  // Colored stroke animation hook
+  const {
+    StrokeColorOverlay,
+    start: startStrokeColorAnimation,
+    stop: stopStrokeColorAnimation,
+  } = useStrokeColorAnimation({ character })
 
   // Stroke morph animation hook
   const {
@@ -130,9 +147,9 @@ export function StrokeAnimator({
 
     writer
       .getCharacterData()
-      .then((character: CharacterData) => {
+      .then((charData: CharacterData) => {
         if (disposed) return
-        strokeShapesRef.current = character.strokes.map((stroke) => ({
+        strokeShapesRef.current = charData.strokes.map((stroke) => ({
           path: stroke.path,
           guidePath: pointsToPath(
             (stroke.points ?? []).map((pt) =>
@@ -141,12 +158,9 @@ export function StrokeAnimator({
           ),
         }))
         mainCharacterGroupRef.current = findMainCharacterGroup(container)
-        if (showOutline && strokeShapesRef.current.length > 0) {
-          const initialIndex = strokeGuideIndexRef.current
-          if (initialIndex < strokeShapesRef.current.length) {
-            startStrokeGuideAnimation(initialIndex)
-          }
-        }
+
+        // Generate colored paths immediately when character data resolves
+        startStrokeColorAnimation({ characterStrokeData: charData })
       })
       .catch((error: unknown) => {
         console.error('Failed to load character data', error)
@@ -156,6 +170,7 @@ export function StrokeAnimator({
       disposed = true
       stopMorphAnimation()
       stopStrokeGuideAnimation()
+      stopStrokeColorAnimation()
       writer.showCharacter()
       container.replaceChildren()
       strokeShapesRef.current = []
@@ -172,6 +187,23 @@ export function StrokeAnimator({
     stopMorphAnimation,
     startStrokeGuideAnimation,
     stopStrokeGuideAnimation,
+    startStrokeColorAnimation,
+    stopStrokeColorAnimation,
+  ])
+
+  // Effect to handle mode transitions without resetting the writer
+  useEffect(() => {
+    if (!isIntroPlaying && showOutline && strokeShapesRef.current.length > 0) {
+      const initialIndex = strokeGuideIndexRef.current
+      if (initialIndex < strokeShapesRef.current.length) {
+        startStrokeGuideAnimation(initialIndex)
+      }
+    }
+  }, [
+    isIntroPlaying,
+    showOutline,
+    startStrokeGuideAnimation,
+    strokeGuideIndexRef,
   ])
 
   return (
@@ -201,7 +233,17 @@ export function StrokeAnimator({
         aria-hidden="true"
       >
         <StrokeMorphOverlay />
-        {showOutline && <StrokeGuideOverlay />}
+        {isIntroPlaying || staticColors ? (
+          <StrokeColorOverlay
+            staticColors={staticColors}
+            onComplete={() => {
+              setIsIntroPlaying(false)
+              onIntroComplete?.()
+            }}
+          />
+        ) : (
+          showOutline && <StrokeGuideOverlay />
+        )}
       </svg>
     </div>
   )

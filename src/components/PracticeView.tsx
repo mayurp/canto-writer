@@ -11,7 +11,10 @@ import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
 import { useVocabExamplesContext } from '../context/VocabExamplesContext'
 import { useUserStatsContext } from '../context/UserStatsContext'
+import { useCharacterDataContext } from '../context/CharacterDataContext'
 import { PointsAnimationLayer } from './PointsAnimation'
+import { ComponentCards } from './ComponentCards'
+import { CharacterSearch } from './CharacterSearch'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
 import { PointsSoundVariant } from '../utils/pointsSound'
@@ -102,16 +105,28 @@ export function PracticeView({
   const { settings } = useSettingsContext()
   const { examples } = useVocabExamplesContext()
   const { animationState } = useUserStatsContext()
+  const { characterData } = useCharacterDataContext()
   const triggerPointsAnimation = animationState.trigger
   const [writerSize, setWriterSize] = useState(DEFAULT_WRITER_SIZE)
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
+  const [debugCharacterOverride, setDebugCharacterOverride] = useState<
+    string | null
+  >(null)
+
   const currentCardId = currentCard?.id ?? null
   const showStrokeOutline = currentCardId
     ? shouldShowOutline(currentCardId)
     : false
+  const [showComponentCards, setShowComponentCards] =
+    useState(showStrokeOutline)
   const strokeWrapperRef = useRef<HTMLDivElement>(null)
+
+  // Reset component cards visibility when card changes
+  useEffect(() => {
+    setShowComponentCards(showStrokeOutline)
+  }, [currentCardId, showStrokeOutline])
 
   useEffect(() => {
     if (!strokeWrapperRef.current || typeof ResizeObserver === 'undefined')
@@ -137,30 +152,30 @@ export function PracticeView({
     return () => observer.disconnect()
   }, [currentCardId])
 
-  useEffect(() => {
-    setCardCompleted(false)
-    setPendingGrading(null)
-    setStrokeSession((s) => s + 1)
-  }, [currentCard, currentCardId])
-
   const currentCharacter = currentCard?.character
+  const isDebugOverride = debugCharacterOverride !== null
+  const displayCharacter = debugCharacterOverride || currentCharacter
+  const displayMeaning =
+    isDebugOverride && displayCharacter && characterData
+      ? characterData.getKeyword(displayCharacter, true)
+      : currentCard?.meaning
 
   useEffect(() => {
     // This is triggered twice, once on intialization (examples empty) and 2nd time
     // when examples finishing loading. We early out to prevent audio playing twice
     // and also so we have the example text for buildPronunciationUtterance
     const loadedExamples = Object.keys(examples).length > 0
-    if (!isSupported || !currentCharacter || !loadedExamples) return
+    if (!isSupported || !displayCharacter || !loadedExamples) return
     const timer = window.setTimeout(() => {
       playPronunciation(
-        buildPronunciationUtterance(currentCharacter, examples),
+        buildPronunciationUtterance(displayCharacter, examples),
         { rate: voiceRate },
       )
     }, PRONUNCIATION_DELAY_MS)
     return () => window.clearTimeout(timer)
   }, [
     currentCard,
-    currentCharacter,
+    displayCharacter,
     examples,
     isSupported,
     playPronunciation,
@@ -168,11 +183,11 @@ export function PracticeView({
   ])
 
   const handleCardPronunciation = useCallback(() => {
-    if (!isSupported || !currentCharacter) return
-    playPronunciation(buildPronunciationUtterance(currentCharacter, examples), {
+    if (!isSupported || !displayCharacter) return
+    playPronunciation(buildPronunciationUtterance(displayCharacter, examples), {
       rate: voiceRate,
     })
-  }, [currentCharacter, examples, isSupported, playPronunciation, voiceRate])
+  }, [displayCharacter, examples, isSupported, playPronunciation, voiceRate])
 
   const handleQuizComplete = useCallback(
     (summary: QuizSummary) => {
@@ -205,7 +220,7 @@ export function PracticeView({
       }))
       setCardCompleted(true)
     },
-    [currentCard?.learnedOutline],
+    [currentCard],
   )
 
   const handleStrokeReset = useCallback(() => {
@@ -219,6 +234,7 @@ export function PracticeView({
     gradeCard(currentCardId, pendingGrading)
     setPendingGrading(null)
     setCardCompleted(false)
+    setDebugCharacterOverride(null)
   }, [currentCardId, gradeCard, pendingGrading])
 
   const displayOrder = useMemo(() => {
@@ -248,9 +264,17 @@ export function PracticeView({
 
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
 
+  // PointsAnimationLayer is outside the keyed card div so that animation and
+  // sounds in flight aren't destroyed and restarted if the user presses 'Next'
+  // part way through.
+
   return (
     <section className="card-stage">
-      <div className="study-card">
+      <PointsAnimationLayer />
+      <div
+        className={`study-card ${settings.debug ? 'has-debug' : ''}`}
+        key={currentCard.id}
+      >
         <div className="audio-button-container">
           <AudioButton
             onClick={handleCardPronunciation}
@@ -265,7 +289,7 @@ export function PracticeView({
         <div className="card-top">
           <div className="card-info">
             <div className="card-character" aria-label="Keyword meaning">
-              {currentCard.meaning}
+              {displayMeaning}
             </div>
             <p className="card-order">
               {orderLabel} #{displayOrder}
@@ -276,18 +300,29 @@ export function PracticeView({
               </div>
             )}
           </div>
+
+          <div className="component-cards-wrapper">
+            {/* TODO: investigate — displayCharacter can theoretically be undefined here,
+                passing '' may cause unexpected rendering in ComponentCards */}
+            <ComponentCards
+              character={displayCharacter ?? ''}
+              visible={isDebugOverride || showComponentCards}
+            />
+          </div>
         </div>
 
         <div ref={strokeWrapperRef} className="stroke-wrapper">
+          {/* TODO: investigate — passing '' to HanziWriter when displayCharacter is undefined */}
           <StrokeAnimator
-            character={currentCard.character}
+            character={displayCharacter ?? ''}
             size={writerSize}
             sessionKey={strokeSession}
-            showOutline={showStrokeOutline}
+            showOutline={isDebugOverride || showStrokeOutline}
+            staticColors={isDebugOverride}
             onQuizComplete={handleQuizComplete}
             onClearStrokes={handleStrokeReset}
+            onIntroComplete={() => setShowComponentCards(false)}
           />
-          <PointsAnimationLayer />
         </div>
 
         <div className="card-actions">
@@ -318,6 +353,16 @@ export function PracticeView({
           )}
         </div>
       </div>
+
+      {settings.debug && (
+        <div className="debug-search-wrapper">
+          <CharacterSearch
+            initialCharacter={displayCharacter}
+            onSearch={setDebugCharacterOverride}
+            showSlider={true}
+          />
+        </div>
+      )}
     </section>
   )
 }

@@ -15,10 +15,25 @@
   box-shadow: var(--panel-shadow);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: clamp(0.75rem, 2vw, 1.25rem);
   position: relative;
   overflow: hidden;
   flex: 1;
+}
+
+.card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.25rem;
+  overflow: hidden; /* Force scaling instead of scrolling */
+  scrollbar-width: none;
+  min-height: 0;
+  order: 1;
+}
+.card-top::-webkit-scrollbar {
+  display: none;
 }
 
 .audio-button-container {
@@ -28,18 +43,20 @@
   z-index: 5;
 }
 
-.card-top {
+.stroke-wrapper {
+  order: 2;
+  flex: 1;
+  min-height: 0;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  flex-wrap: wrap;
 }
 
 .card-info {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
+  flex-shrink: 0; /* Keep the character and text legible */
 }
 
 .card-story {
@@ -103,12 +120,36 @@
 }
 
 .card-actions {
-  margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   align-items: center;
   justify-content: center;
+  order: 3;
+}
+
+.component-cards-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  container-type: inline-size;
+  container-name: cards-container;
+}
+
+.debug-search-wrapper {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  width: 320px;
+  background: var(--surface-1);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--surface-3);
+  z-index: 50;
+  max-height: calc(100% - 2rem);
+  overflow-y: auto;
 }
 
 .next-button-container {
@@ -200,6 +241,7 @@
     justify-content: space-between;
     gap: 2rem;
     padding: 2rem;
+    flex-wrap: wrap;
   }
 
   .card-top {
@@ -210,6 +252,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     overflow-y: auto;
+    padding-bottom: 5rem; /* Prevents scrolling content from overlapping the absolute positioned Next button */
   }
 
   .card-info {
@@ -221,6 +264,17 @@
     flex: 1.2;
     max-width: 600px;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .component-cards-wrapper {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: flex-start;
+    min-height: 0;
   }
 
   .card-actions {
@@ -237,25 +291,49 @@
   .study-card {
     display: grid;
     grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    grid-template-rows: minmax(0, 1fr) auto;
     grid-template-areas:
       'strokes card-info'
       'strokes card-actions';
-    align-items: center;
     gap: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .card-top {
+    min-height: 0;
+    overflow: hidden;
+    padding-right: 1rem;
+    padding-bottom: 0; /* Overrides landscape absolute padding */
   }
 
   .stroke-wrapper {
     grid-area: strokes;
     min-height: 0;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .component-cards-wrapper {
+    /* Flow naturally within the card-info column instead of grid-area */
+    grid-area: auto;
+    min-height: 0;
   }
 
   .card-top {
     grid-area: card-info;
+    align-self: stretch; /* Stretches to the full grid row height to enable scrolling without cropping */
   }
 
   .card-actions {
     grid-area: card-actions;
-    align-self: end;
+    align-self: flex-end;
     width: 100%;
+    position: static; /* Overrides absolute positioning from landscape mode */
+  }
+
+  .debug-search-wrapper {
+    grid-column: 1 / -1;
+    margin-top: 1rem;
   }
 }
