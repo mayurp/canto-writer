@@ -119,14 +119,7 @@ export function PracticeView({
   const showStrokeOutline = currentCardId
     ? shouldShowOutline(currentCardId)
     : false
-  const [showComponentCards, setShowComponentCards] =
-    useState(showStrokeOutline)
   const strokeWrapperRef = useRef<HTMLDivElement>(null)
-
-  // Reset component cards visibility when card changes
-  useEffect(() => {
-    setShowComponentCards(showStrokeOutline)
-  }, [currentCardId, showStrokeOutline])
 
   useEffect(() => {
     if (!strokeWrapperRef.current || typeof ResizeObserver === 'undefined')
@@ -300,15 +293,15 @@ export function PracticeView({
               </div>
             )}
           </div>
+        </div>
 
-          <div className="component-cards-wrapper">
-            {/* TODO: investigate — displayCharacter can theoretically be undefined here,
-                passing '' may cause unexpected rendering in ComponentCards */}
-            <ComponentCards
-              character={displayCharacter ?? ''}
-              visible={isDebugOverride || showComponentCards}
-            />
-          </div>
+        <div className="component-cards-wrapper">
+          {/* TODO: investigate — displayCharacter can theoretically be undefined here,
+              passing '' may cause unexpected rendering in ComponentCards */}
+          <ComponentCards
+            character={displayCharacter ?? ''}
+            visible={isDebugOverride || showStrokeOutline}
+          />
         </div>
 
         <div ref={strokeWrapperRef} className="stroke-wrapper">
@@ -321,7 +314,6 @@ export function PracticeView({
             staticColors={isDebugOverride}
             onQuizComplete={handleQuizComplete}
             onClearStrokes={handleStrokeReset}
-            onIntroComplete={() => setShowComponentCards(false)}
           />
         </div>
 

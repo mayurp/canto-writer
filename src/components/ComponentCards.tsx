@@ -50,11 +50,6 @@ export function ComponentCards({
                         <div className="component-card-canonical-char cjk-stroke">
                           {canonical}
                         </div>
-                        {canonical !== comp && (
-                          <div className="component-card-original-char cjk-stroke">
-                            ({comp})
-                          </div>
-                        )}
                       </div>
                     )}
                     <div className="component-card-keyword">
