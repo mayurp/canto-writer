@@ -111,6 +111,7 @@ export function PracticeView({
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
+  const [hintTrigger, setHintTrigger] = useState(0)
   const [debugCharacterOverride, setDebugCharacterOverride] = useState<
     string | null
   >(null)
@@ -302,6 +303,7 @@ export function PracticeView({
           <ComponentCards
             character={displayCharacter ?? ''}
             visible={isDebugOverride || showStrokeOutline}
+            onClick={() => setHintTrigger((c) => c + 1)}
           />
         </div>
 
@@ -315,6 +317,7 @@ export function PracticeView({
             staticColors={isDebugOverride}
             onQuizComplete={handleQuizComplete}
             onClearStrokes={handleStrokeReset}
+            hintTrigger={hintTrigger}
           />
         </div>
 

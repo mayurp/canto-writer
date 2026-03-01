@@ -25,6 +25,7 @@ type StrokeAnimatorProps = {
   onClearStrokes?: () => void
   staticColors?: boolean
   onIntroComplete?: () => void
+  hintTrigger?: number
 }
 
 export function StrokeAnimator({
@@ -36,6 +37,7 @@ export function StrokeAnimator({
   onClearStrokes,
   staticColors = false,
   onIntroComplete,
+  hintTrigger,
 }: StrokeAnimatorProps) {
   // Refs for HanziWriter and stroke data
   const writerContainerRef = useRef<HTMLDivElement | null>(null)
@@ -68,6 +70,20 @@ export function StrokeAnimator({
     stop: stopStrokeGuideAnimation,
     currentIndex: strokeGuideIndexRef,
   } = useStrokeGuideAnimation({ strokeShapesRef })
+
+  // Trigger hint intro when hintTrigger changes
+  const prevHintTriggerRef = useRef(hintTrigger)
+  useEffect(() => {
+    if (
+      hintTrigger !== undefined &&
+      hintTrigger !== prevHintTriggerRef.current
+    ) {
+      if (!staticColors) {
+        setIsIntroPlaying(true)
+      }
+      prevHintTriggerRef.current = hintTrigger
+    }
+  }, [hintTrigger, staticColors])
 
   // Styles
   const style = useMemo(

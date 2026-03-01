@@ -5,11 +5,13 @@ import './styles/ComponentCards.css'
 type ComponentCardsProps = {
   character: string
   visible?: boolean // Default to true if not provided
+  onClick?: () => void
 }
 
 export function ComponentCards({
   character,
   visible = true,
+  onClick,
 }: ComponentCardsProps) {
   const { characterData } = useCharacterDataContext()
   const decomposition = characterData?.getDecomposition(character)
@@ -39,7 +41,11 @@ export function ComponentCards({
                   <div
                     key={`${comp}-${pathKey}`}
                     className="component-card"
-                    style={{ borderBottomColor: color }}
+                    style={{
+                      borderBottomColor: color,
+                      ...(onClick ? { cursor: 'pointer' } : {}),
+                    }}
+                    onClick={onClick}
                   >
                     {isBracketed ? (
                       <div className="component-card-bracketed-char cjk-stroke">
@@ -62,7 +68,11 @@ export function ComponentCards({
           )}
 
           {decomposition && !componentsList.length && (
-            <div className="component-cards-raw-decomp cjk-stroke">
+            <div
+              className="component-cards-raw-decomp cjk-stroke"
+              style={onClick ? { cursor: 'pointer' } : {}}
+              onClick={onClick}
+            >
               <div className="component-cards-raw-decomp-label">
                 Raw Decomposition
               </div>
