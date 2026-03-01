@@ -17,7 +17,7 @@ import { ComponentCards } from './ComponentCards'
 import { CharacterSearch } from './CharacterSearch'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
-import { PointsSoundVariant } from '../utils/pointsSound'
+import { PointsSoundVariant, playPointsSound } from '../utils/pointsSound'
 
 const ratingLabels: Record<ReviewRatingType, string> = {
   [ReviewRating.Again]: 'Again',
@@ -199,7 +199,8 @@ export function PracticeView({
       setCardCompleted(true)
       const soundVariant = getSoundVariant(points)
       setPendingGrading({ rating, learnedOutline })
-      triggerPointsAnimation(points, soundVariant)
+      triggerPointsAnimation(points)
+      playPointsSound(soundVariant)
     },
     [showStrokeOutline, triggerPointsAnimation],
   )

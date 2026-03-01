@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useUserStatsContext } from '../context/UserStatsContext'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles/PointsAnimation.css'
 
 function FlyingPoints({
@@ -45,21 +45,12 @@ export function PointsAnimationLayer() {
   } = animationState
 
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null)
-  const lastAnimationCount = useRef(0)
 
   useEffect(() => {
     if (pillRef.current) {
       setTargetRect(pillRef.current.getBoundingClientRect())
     }
-    // Play sound when a new animation is added
-    if (pendingAnimations.length > lastAnimationCount.current) {
-      const latestAnim = pendingAnimations[pendingAnimations.length - 1]
-      import('../utils/pointsSound').then(({ playPointsSound }) =>
-        playPointsSound(latestAnim?.variant),
-      )
-    }
-    lastAnimationCount.current = pendingAnimations.length
-  }, [pillRef, pendingAnimations])
+  }, [pillRef, pendingAnimations.length])
 
   return createPortal(
     <div className="points-animation-portal">

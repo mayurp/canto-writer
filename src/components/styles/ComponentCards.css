@@ -4,7 +4,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  --card-scale: 1.30;
+  --card-scale: 1.3;
   gap: calc(0.75rem * var(--card-scale));
 }
 
@@ -16,7 +16,7 @@
 }
 @container cards-container (max-width: 300px) {
   .component-cards-container {
-    --card-scale: 1.0;
+    --card-scale: 1;
   }
 }
 

@@ -8,13 +8,6 @@ export function getAudioContext(): AudioContext {
   return audioContext
 }
 
-export const initAudio = () => {
-  const ctx = getAudioContext()
-  if (ctx.state === 'suspended') {
-    void ctx.resume()
-  }
-}
-
 // Output variants for consumers
 export const PointsSoundVariant = {
   Standard: 'standard',

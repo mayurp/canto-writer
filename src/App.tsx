@@ -21,7 +21,6 @@ import { usePlayableDeck } from './hooks/usePlayableDeck'
 import { VocabExamplesProvider } from './context/VocabExamplesContext'
 import { UserStatsProvider } from './context/UserStatsContext'
 import { StatsView } from './components/StatsView'
-import { useAudioUnlock } from './hooks/useAudioUnlock'
 import { CharacterDataProvider } from './context/CharacterDataContext'
 
 function App() {
@@ -43,7 +42,6 @@ function App() {
 type AppView = 'learn' | 'deck' | 'library' | 'stats' | 'test'
 
 function AppContent() {
-  useAudioUnlock()
   const { deck, loading, error } = useRememberingDeck()
   const { settings } = useSettingsContext()
   const { selectedIds, addCards, removeCard } = useDeckSelection(deck)
