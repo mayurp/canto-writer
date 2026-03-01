@@ -14,7 +14,6 @@ export function ComponentCards({
   onClick,
 }: ComponentCardsProps) {
   const { characterData } = useCharacterDataContext()
-  const decomposition = characterData?.getDecomposition(character)
   const colorInfo = characterData?.getCharacterColorInfo(character)
   const componentsList = colorInfo?.components || []
 
@@ -67,18 +66,6 @@ export function ComponentCards({
             </div>
           )}
 
-          {decomposition && !componentsList.length && (
-            <div
-              className="component-cards-raw-decomp cjk-stroke"
-              style={onClick ? { cursor: 'pointer' } : {}}
-              onClick={onClick}
-            >
-              <div className="component-cards-raw-decomp-label">
-                Raw Decomposition
-              </div>
-              {decomposition}
-            </div>
-          )}
         </motion.div>
       )}
     </AnimatePresence>
