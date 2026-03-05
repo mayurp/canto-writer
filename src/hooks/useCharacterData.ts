@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react'
 import { CharacterData } from '../utils/CharacterData'
 
 // Use dynamic import URL resolution for Vite
-const dictionaryUrl = new URL('../data/dictionary.jsonl', import.meta.url).href
-const dictionaryOverridesUrl = new URL(
-  '../data_generated/dictionary_overrides_auto.jsonl',
+const dictionaryUrl = new URL(
+  '../data_generated/dictionary_all.jsonl',
   import.meta.url,
 ).href
 const rthListUrl = new URL(
@@ -12,15 +11,11 @@ const rthListUrl = new URL(
   import.meta.url,
 ).href
 const componentKeywordsUrl = new URL(
-  '../data_generated/hanzihero_component_keywords.jsonl',
+  '../data_generated/hanzi_hero_component_decomposition.jsonl',
   import.meta.url,
 ).href
 const characterKeywordsUrl = new URL(
-  '../data_generated/hanzihero_character_keywords.jsonl',
-  import.meta.url,
-).href
-const componentVariantsUrl = new URL(
-  '../data_generated/component_variants.json',
+  '../data_generated/hanzi_hero_character_decomposition.jsonl',
   import.meta.url,
 ).href
 
@@ -39,35 +34,27 @@ export function useCharacterData() {
         setLoading(true)
         const [
           dictRes,
-          overrideRes,
           rthRes,
           compKeywordsRes,
           charKeywordsRes,
-          compVariantsRes,
           // No fetch for colors
         ] = await Promise.all([
           fetch(dictionaryUrl),
-          fetch(dictionaryOverridesUrl),
           fetch(rthListUrl),
           fetch(componentKeywordsUrl),
           fetch(characterKeywordsUrl),
-          fetch(componentVariantsUrl),
         ])
 
         if (!dictRes.ok)
           throw new Error(`Dictionary fetch failed: ${dictRes.statusText}`)
 
         // Optional files
-        const overrideText = overrideRes.ok ? await overrideRes.text() : ''
         const rthText = rthRes.ok ? await rthRes.text() : ''
         const compKeywordsText = compKeywordsRes.ok
           ? await compKeywordsRes.text()
           : ''
         const charKeywordsText = charKeywordsRes.ok
           ? await charKeywordsRes.text()
-          : ''
-        const compVariantsText = compVariantsRes.ok
-          ? await compVariantsRes.text()
           : ''
 
         const dictText = await dictRes.text()
@@ -77,11 +64,9 @@ export function useCharacterData() {
         const data = new CharacterData()
         data.parse(
           dictText,
-          overrideText,
           rthText,
           compKeywordsText,
           charKeywordsText,
-          compVariantsText,
           ComponentColors,
         )
 

@@ -4,16 +4,13 @@ export class CharacterData {
   private rthList: string[] = []
   private componentKeywords = new Map<string, string>()
   private characterKeywords = new Map<string, string>()
-  private componentVariants = new Map<string, string>()
   private componentColors = new Map<string, string>() // Map<component, hexColor>
 
   public parse(
     jsonlContent: string,
-    overrideContent: string,
     rthContent: string,
     componentKeywordsContent: string,
     characterKeywordsContent: string,
-    componentVariantsContent: string,
     componentColors: {
       groups: Record<string, { color: string; components?: string[] }>
     } | null,
@@ -64,11 +61,6 @@ export class CharacterData {
 
     parseJsonl(jsonlContent)
 
-    // Apply overrides (takes precedence)
-    if (overrideContent) {
-      parseJsonl(overrideContent)
-    }
-
     // Parse keywords
     const parseKeywords = (content: string, map: Map<string, string>) => {
       const lines = content.split('\n')
@@ -107,20 +99,6 @@ export class CharacterData {
 
     if (characterKeywordsContent) {
       parseKeywords(characterKeywordsContent, this.characterKeywords)
-    }
-
-    // Parse component variants
-    if (componentVariantsContent) {
-      try {
-        const variants = JSON.parse(componentVariantsContent)
-        for (const [key, value] of Object.entries(variants)) {
-          if (typeof value === 'string') {
-            this.componentVariants.set(key, value)
-          }
-        }
-      } catch (e) {
-        console.warn('Failed to parse component variants', e)
-      }
     }
 
     // Parse component colors
@@ -270,15 +248,7 @@ export class CharacterData {
   }
 
   public getSemanticColor(componentKey: string): string | undefined {
-    let semanticColor = this.componentColors.get(componentKey)
-
-    // If not found, check canonical component
-    if (!semanticColor) {
-      const canonical = this.getCanonicalComponent(componentKey)
-      semanticColor = this.componentColors.get(canonical)
-    }
-
-    return semanticColor
+    return this.componentColors.get(componentKey)
   }
 
   public assignColors(components: string[]): string[] {
@@ -653,22 +623,11 @@ export class CharacterData {
       if (inner) return inner
     }
 
-    // 3. Try component variants
-    const variant = this.componentVariants.get(character)
-    if (variant) {
-      // Recursive lookup for the variant
-      return this.getKeyword(variant, preferCharacter)
-    }
-
     return undefined
   }
 
   public getCanonicalComponent(component: string): string {
-    // If the component itself is a valid HH component (has a keyword), don't remap it
-    if (this.componentKeywords.has(component)) {
-      return component
-    }
-    return this.componentVariants.get(component) || component
+    return component
   }
 
   public getComponents(character: string): string[] {

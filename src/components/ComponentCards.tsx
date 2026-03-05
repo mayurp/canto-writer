@@ -30,9 +30,7 @@ export function ComponentCards({
           {componentsList.length > 0 && (
             <div className="component-cards-grid">
               {componentsList.map(({ component: comp, color, pathKey }) => {
-                const canonical =
-                  characterData?.getCanonicalComponent(comp) || comp
-                const compKeyword = characterData?.getKeyword(canonical)
+                const compKeyword = characterData?.getKeyword(comp)
                 const isBracketed = comp.startsWith('[') && comp.endsWith(']')
                 const displayChar = isBracketed ? comp.slice(1, -1) : comp
 
@@ -53,7 +51,7 @@ export function ComponentCards({
                     ) : (
                       <div className="component-card-char-container">
                         <div className="component-card-canonical-char cjk-stroke">
-                          {canonical}
+                          {comp}
                         </div>
                       </div>
                     )}
