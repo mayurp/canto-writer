@@ -6,10 +6,8 @@ const rthListUrl = new URL(
   '../data/optimized_remembering_the_hanzi_rth_only.csv',
   import.meta.url,
 ).href
-const dictionaryUrl = new URL(
-  '../data/dictionary_all.jsonl',
-  import.meta.url,
-).href
+const dictionaryUrl = new URL('../data/dictionary_all.jsonl', import.meta.url)
+  .href
 const componentKeywordsUrl = new URL(
   '../data/component_keywords.jsonl',
   import.meta.url,

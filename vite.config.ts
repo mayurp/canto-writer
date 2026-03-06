@@ -30,7 +30,7 @@ export default defineConfig({
       workbox: {
         // Enable for caching logs
         //mode: 'development',
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,csv}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,csv,jsonl}'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/docs\.google\.com\/spreadsheets.*output=csv/i,

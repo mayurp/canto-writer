@@ -68,7 +68,6 @@ const getSoundVariant = (points: number): PointsSoundVariant => {
   return PointsSoundVariant.Standard
 }
 
-const DEFAULT_WRITER_SIZE = 220
 const PRONUNCIATION_DELAY_MS = 500
 
 const calculateWriterSize = (width: number, height: number) => {
@@ -107,7 +106,7 @@ export function PracticeView({
   const { animationState } = useUserStatsContext()
   const { characterData } = useCharacterDataContext()
   const triggerPointsAnimation = animationState.trigger
-  const [writerSize, setWriterSize] = useState(DEFAULT_WRITER_SIZE)
+  const [writerSize, setWriterSize] = useState<number | null>(null)
   const [strokeSession, setStrokeSession] = useState(0)
   const [cardCompleted, setCardCompleted] = useState(false)
   const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
@@ -136,7 +135,7 @@ export function PracticeView({
           setWriterSize((prev) => {
             const next = calculateWriterSize(width, height)
             // Only update if change is significant (> 2px) to avoid minor jitter
-            return Math.abs(prev - next) > 2 ? next : prev
+            return prev === null || Math.abs(prev - next) > 2 ? next : prev
           })
         }
       }
@@ -309,16 +308,18 @@ export function PracticeView({
 
         <div ref={strokeWrapperRef} className="stroke-wrapper">
           {/* TODO: investigate — passing '' to HanziWriter when displayCharacter is undefined */}
-          <StrokeAnimator
-            character={displayCharacter ?? ''}
-            size={writerSize}
-            sessionKey={strokeSession}
-            showOutline={isDebugOverride || showStrokeOutline}
-            staticColors={isDebugOverride}
-            onQuizComplete={handleQuizComplete}
-            onClearStrokes={handleStrokeReset}
-            hintTrigger={hintTrigger}
-          />
+          {writerSize !== null && (
+            <StrokeAnimator
+              character={displayCharacter ?? ''}
+              size={writerSize}
+              sessionKey={strokeSession}
+              showOutline={isDebugOverride || showStrokeOutline}
+              staticColors={isDebugOverride}
+              onQuizComplete={handleQuizComplete}
+              onClearStrokes={handleStrokeReset}
+              hintTrigger={hintTrigger}
+            />
+          )}
         </div>
 
         <div className="card-actions">

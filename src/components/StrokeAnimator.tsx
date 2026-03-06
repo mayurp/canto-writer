@@ -44,6 +44,13 @@ export function StrokeAnimator({
   const strokeShapesRef = useRef<StrokeShape[]>([])
   const mainCharacterGroupRef = useRef<SVGGElement | null>(null)
 
+  // Stable ref for onQuizComplete to avoid re-triggering HanziWriter effect
+  const onQuizCompleteRef = useRef(onQuizComplete)
+  onQuizCompleteRef.current = onQuizComplete
+
+  // Reactive signal for when stroke data is available (ref changes aren't reactive)
+  const [strokesReady, setStrokesReady] = useState(false)
+
   // Internal state to track if the color learning intro is currently playing
   const [isIntroPlaying, setIsIntroPlaying] = useState(
     () => showOutline && !staticColors,
@@ -156,7 +163,7 @@ export function StrokeAnimator({
       onCorrectStroke: handleCorrectStroke,
       onComplete: (summary) => {
         if (summary) {
-          onQuizComplete?.(summary)
+          onQuizCompleteRef.current?.(summary)
         }
       },
     })
@@ -164,7 +171,9 @@ export function StrokeAnimator({
     writer
       .getCharacterData()
       .then((charData: CharacterData) => {
-        if (disposed) return
+        if (disposed) {
+          return
+        }
         strokeShapesRef.current = charData.strokes.map((stroke) => ({
           path: stroke.path,
           guidePath: pointsToPath(
@@ -174,6 +183,7 @@ export function StrokeAnimator({
           ),
         }))
         mainCharacterGroupRef.current = findMainCharacterGroup(container)
+        setStrokesReady(true)
 
         // Generate colored paths immediately when character data resolves
         startStrokeColorAnimation({ characterStrokeData: charData })
@@ -191,6 +201,7 @@ export function StrokeAnimator({
       container.replaceChildren()
       strokeShapesRef.current = []
       mainCharacterGroupRef.current = null
+      setStrokesReady(false)
     }
   }, [
     character,
@@ -198,7 +209,7 @@ export function StrokeAnimator({
     sessionKey,
     showOutline,
     strokeGuideIndexRef,
-    onQuizComplete,
+    // onQuizComplete intentionally omitted — accessed via onQuizCompleteRef
     startMorphAnimation,
     stopMorphAnimation,
     startStrokeGuideAnimation,
@@ -209,7 +220,12 @@ export function StrokeAnimator({
 
   // Effect to handle mode transitions without resetting the writer
   useEffect(() => {
-    if (!isIntroPlaying && showOutline && strokeShapesRef.current.length > 0) {
+    if (
+      !isIntroPlaying &&
+      showOutline &&
+      strokesReady &&
+      strokeShapesRef.current.length > 0
+    ) {
       const initialIndex = strokeGuideIndexRef.current
       if (initialIndex < strokeShapesRef.current.length) {
         startStrokeGuideAnimation(initialIndex)
@@ -218,6 +234,7 @@ export function StrokeAnimator({
   }, [
     isIntroPlaying,
     showOutline,
+    strokesReady,
     startStrokeGuideAnimation,
     strokeGuideIndexRef,
   ])
