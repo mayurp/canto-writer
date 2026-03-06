@@ -63,7 +63,6 @@ export function ComponentCards({
               })}
             </div>
           )}
-
         </motion.div>
       )}
     </AnimatePresence>

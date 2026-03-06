@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react'
 import { CharacterData } from '../utils/CharacterData'
 
 // Use dynamic import URL resolution for Vite
-const dictionaryUrl = new URL(
-  '../data_generated/dictionary_all.jsonl',
-  import.meta.url,
-).href
 const rthListUrl = new URL(
   '../data/optimized_remembering_the_hanzi_rth_only.csv',
   import.meta.url,
 ).href
+const dictionaryUrl = new URL(
+  '../data/dictionary_all.jsonl',
+  import.meta.url,
+).href
 const componentKeywordsUrl = new URL(
-  '../data_generated/hanzi_hero_component_decomposition.jsonl',
+  '../data/component_keywords.jsonl',
   import.meta.url,
 ).href
 const characterKeywordsUrl = new URL(
-  '../data_generated/hanzi_hero_character_decomposition.jsonl',
+  '../data/character_keywords.jsonl',
   import.meta.url,
 ).href
 

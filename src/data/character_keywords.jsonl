@@ -1,0 +1,3034 @@
+{"character": "一", "keyword": "one"}
+{"character": "二", "keyword": "two"}
+{"character": "三", "keyword": "three"}
+{"character": "四", "keyword": "four"}
+{"character": "五", "keyword": "five"}
+{"character": "六", "keyword": "six"}
+{"character": "七", "keyword": "seven"}
+{"character": "八", "keyword": "eight"}
+{"character": "九", "keyword": "nine"}
+{"character": "十", "keyword": "ten"}
+{"character": "口", "keyword": "mouth"}
+{"character": "日", "keyword": "day"}
+{"character": "月", "keyword": "month"}
+{"character": "田", "keyword": "rice field"}
+{"character": "目", "keyword": "eye"}
+{"character": "古", "keyword": "ancient"}
+{"character": "胡", "keyword": "recklessly"}
+{"character": "吾", "keyword": "me"}
+{"character": "朋", "keyword": "companion"}
+{"character": "明", "keyword": "bright"}
+{"character": "唱", "keyword": "to sing"}
+{"character": "晶", "keyword": "crystal"}
+{"character": "品", "keyword": "goods"}
+{"character": "昌", "keyword": "prosperous"}
+{"character": "早", "keyword": "early"}
+{"character": "旭", "keyword": "rising sun"}
+{"character": "世", "keyword": "generation"}
+{"character": "胃", "keyword": "stomach"}
+{"character": "旦", "keyword": "daybreak"}
+{"character": "凹", "keyword": "concave"}
+{"character": "凸", "keyword": "convex"}
+{"character": "自", "keyword": "self"}
+{"character": "白", "keyword": "white"}
+{"character": "百", "keyword": "hundred"}
+{"character": "皂", "keyword": "soap"}
+{"character": "中", "keyword": "middle"}
+{"character": "千", "keyword": "thousand"}
+{"character": "舌", "keyword": "tongue"}
+{"character": "升", "keyword": "to rise"}
+{"character": "昇", "keyword": "rise up"}
+{"character": "丸", "keyword": "pill"}
+{"character": "卜", "keyword": "divination"}
+{"character": "占", "keyword": "fortune"}
+{"character": "上", "keyword": "above"}
+{"character": "下", "keyword": "below"}
+{"character": "卡", "keyword": "card"}
+{"character": "卓", "keyword": "outstanding"}
+{"character": "朝", "keyword": "dynasty"}
+{"character": "嘲", "keyword": "to ridicule"}
+{"character": "只", "keyword": "only"}
+{"character": "貝", "keyword": "shellfish"}
+{"character": "貼", "keyword": "to paste"}
+{"character": "貞", "keyword": "loyal"}
+{"character": "員", "keyword": "member"}
+{"character": "見", "keyword": "to see"}
+{"character": "元", "keyword": "dollar"}
+{"character": "頁", "keyword": "page"}
+{"character": "頑", "keyword": "stubborn"}
+{"character": "凡", "keyword": "ordinary"}
+{"character": "肌", "keyword": "muscle"}
+{"character": "負", "keyword": "to carry on the back"}
+{"character": "勻", "keyword": "uniform"}
+{"character": "句", "keyword": "sentence"}
+{"character": "旬", "keyword": "group of ten"}
+{"character": "勺", "keyword": "ladle"}
+{"character": "的", "keyword": "possess"}
+{"character": "首", "keyword": "head"}
+{"character": "直", "keyword": "straight"}
+{"character": "置", "keyword": "to set up"}
+{"character": "具", "keyword": "tool"}
+{"character": "真", "keyword": "true"}
+{"character": "工", "keyword": "work"}
+{"character": "左", "keyword": "left"}
+{"character": "右", "keyword": "right"}
+{"character": "有", "keyword": "to possess"}
+{"character": "賄", "keyword": "to bribe"}
+{"character": "貢", "keyword": "to pay tribute"}
+{"character": "項", "keyword": "item"}
+{"character": "刀", "keyword": "sword"}
+{"character": "刃", "keyword": "blade"}
+{"character": "切", "keyword": "to cut"}
+{"character": "召", "keyword": "to summon"}
+{"character": "昭", "keyword": "evident"}
+{"character": "則", "keyword": "rule"}
+{"character": "副", "keyword": "deputy"}
+{"character": "丁", "keyword": "fourth"}
+{"character": "叮", "keyword": "to sting"}
+{"character": "可", "keyword": "can"}
+{"character": "哥", "keyword": "older brother"}
+{"character": "頂", "keyword": "top"}
+{"character": "乙", "keyword": "second"}
+{"character": "子", "keyword": "child"}
+{"character": "孔", "keyword": "hole"}
+{"character": "吼", "keyword": "to roar"}
+{"character": "了", "keyword": "did"}
+{"character": "女", "keyword": "woman"}
+{"character": "好", "keyword": "good"}
+{"character": "如", "keyword": "to be like"}
+{"character": "母", "keyword": "mother"}
+{"character": "貫", "keyword": "to pierce"}
+{"character": "兄", "keyword": "elder brother"}
+{"character": "克", "keyword": "to overcome"}
+{"character": "小", "keyword": "small"}
+{"character": "少", "keyword": "few"}
+{"character": "吵", "keyword": "noisy"}
+{"character": "大", "keyword": "big"}
+{"character": "尖", "keyword": "tip"}
+{"character": "夕", "keyword": "evening"}
+{"character": "多", "keyword": "many"}
+{"character": "夠", "keyword": "enough"}
+{"character": "外", "keyword": "outside"}
+{"character": "名", "keyword": "name"}
+{"character": "厚", "keyword": "thick"}
+{"character": "石", "keyword": "stone"}
+{"character": "砂", "keyword": "gravel"}
+{"character": "妙", "keyword": "wonderful"}
+{"character": "肖", "keyword": "to resemble"}
+{"character": "削", "keyword": "to pare"}
+{"character": "光", "keyword": "ray"}
+{"character": "太", "keyword": "excessively"}
+{"character": "省", "keyword": "to economize"}
+{"character": "奇", "keyword": "strange"}
+{"character": "川", "keyword": "stream"}
+{"character": "州", "keyword": "state"}
+{"character": "順", "keyword": "smooth"}
+{"character": "水", "keyword": "water"}
+{"character": "永", "keyword": "eternity"}
+{"character": "求", "keyword": "to request"}
+{"character": "泉", "keyword": "spring"}
+{"character": "原", "keyword": "original"}
+{"character": "願", "keyword": "to wish"}
+{"character": "沖", "keyword": "wash away"}
+{"character": "泳", "keyword": "to swim"}
+{"character": "洲", "keyword": "continent"}
+{"character": "沼", "keyword": "marsh"}
+{"character": "沙", "keyword": "sand"}
+{"character": "江", "keyword": "river"}
+{"character": "汁", "keyword": "juice"}
+{"character": "潮", "keyword": "tide"}
+{"character": "源", "keyword": "source"}
+{"character": "活", "keyword": "to live"}
+{"character": "消", "keyword": "to disappear"}
+{"character": "況", "keyword": "situation"}
+{"character": "河", "keyword": "river"}
+{"character": "湖", "keyword": "lake"}
+{"character": "測", "keyword": "to measure"}
+{"character": "土", "keyword": "soil"}
+{"character": "均", "keyword": "equal"}
+{"character": "肚", "keyword": "belly"}
+{"character": "填", "keyword": "to fill in"}
+{"character": "吐", "keyword": "to spit"}
+{"character": "哇", "keyword": "wah"}
+{"character": "寸", "keyword": "Chinese inch"}
+{"character": "封", "keyword": "to seal"}
+{"character": "寺", "keyword": "Buddhist temple"}
+{"character": "時", "keyword": "time"}
+{"character": "火", "keyword": "fire"}
+{"character": "灰", "keyword": "ashes"}
+{"character": "煩", "keyword": "annoyed"}
+{"character": "炎", "keyword": "inflammation"}
+{"character": "淡", "keyword": "mild"}
+{"character": "災", "keyword": "disaster"}
+{"character": "照", "keyword": "to illuminate"}
+{"character": "魚", "keyword": "fish"}
+{"character": "漁", "keyword": "fishing"}
+{"character": "堯", "keyword": "sage king"}
+{"character": "燒", "keyword": "to burn"}
+{"character": "曉", "keyword": "dawn"}
+{"character": "里", "keyword": "Chinese mile"}
+{"character": "量", "keyword": "quantity"}
+{"character": "埋", "keyword": "to bury"}
+{"character": "黑", "keyword": "black"}
+{"character": "點", "keyword": "spot"}
+{"character": "墨", "keyword": "black ink"}
+{"character": "冒", "keyword": "to risk"}
+{"character": "同", "keyword": "same"}
+{"character": "洞", "keyword": "cave"}
+{"character": "向", "keyword": "orientation"}
+{"character": "尚", "keyword": "to esteem"}
+{"character": "字", "keyword": "character"}
+{"character": "守", "keyword": "to guard"}
+{"character": "完", "keyword": "to finish"}
+{"character": "實", "keyword": "reality"}
+{"character": "宣", "keyword": "to proclaim"}
+{"character": "宵", "keyword": "night"}
+{"character": "安", "keyword": "peaceful"}
+{"character": "宴", "keyword": "banquet"}
+{"character": "寄", "keyword": "to mail"}
+{"character": "富", "keyword": "wealthy"}
+{"character": "貯", "keyword": "to store"}
+{"character": "木", "keyword": "tree"}
+{"character": "林", "keyword": "woods"}
+{"character": "森", "keyword": "forest"}
+{"character": "植", "keyword": "plant"}
+{"character": "杏", "keyword": "apricot"}
+{"character": "呆", "keyword": "fool"}
+{"character": "枯", "keyword": "withered"}
+{"character": "村", "keyword": "village"}
+{"character": "相", "keyword": "one another"}
+{"character": "本", "keyword": "notebook"}
+{"character": "案", "keyword": "case"}
+{"character": "未", "keyword": "not yet"}
+{"character": "末", "keyword": "last"}
+{"character": "沫", "keyword": "foam"}
+{"character": "味", "keyword": "flavor"}
+{"character": "妹", "keyword": "younger sister"}
+{"character": "查", "keyword": "to investigate"}
+{"character": "渣", "keyword": "residue"}
+{"character": "染", "keyword": "to dye"}
+{"character": "李", "keyword": "plum"}
+{"character": "桌", "keyword": "table"}
+{"character": "若", "keyword": "as if"}
+{"character": "草", "keyword": "grass"}
+{"character": "苦", "keyword": "bitter"}
+{"character": "寬", "keyword": "wide"}
+{"character": "葉", "keyword": "leaf"}
+{"character": "莫", "keyword": "nobody"}
+{"character": "模", "keyword": "to imitate"}
+{"character": "漠", "keyword": "desert"}
+{"character": "墓", "keyword": "grave"}
+{"character": "苗", "keyword": "seedling"}
+{"character": "瞄", "keyword": "to take aim"}
+{"character": "兆", "keyword": "omen"}
+{"character": "桃", "keyword": "peach"}
+{"character": "犬", "keyword": "dog"}
+{"character": "尤", "keyword": "remarkable"}
+{"character": "默", "keyword": "silent"}
+{"character": "然", "keyword": "so"}
+{"character": "哭", "keyword": "to cry"}
+{"character": "器", "keyword": "utensil"}
+{"character": "臭", "keyword": "stench"}
+{"character": "狗", "keyword": "dog"}
+{"character": "厭", "keyword": "to detest"}
+{"character": "壓", "keyword": "pressure"}
+{"character": "牛", "keyword": "cow"}
+{"character": "特", "keyword": "special"}
+{"character": "告", "keyword": "to declare"}
+{"character": "浩", "keyword": "vast"}
+{"character": "先", "keyword": "before"}
+{"character": "洗", "keyword": "to wash"}
+{"character": "介", "keyword": "to introduce"}
+{"character": "界", "keyword": "world"}
+{"character": "茶", "keyword": "tea"}
+{"character": "會", "keyword": "meeting"}
+{"character": "合", "keyword": "to fit"}
+{"character": "哈", "keyword": "haha"}
+{"character": "塔", "keyword": "pagoda"}
+{"character": "王", "keyword": "king"}
+{"character": "玉", "keyword": "jade"}
+{"character": "球", "keyword": "ball"}
+{"character": "現", "keyword": "present"}
+{"character": "玩", "keyword": "to play"}
+{"character": "狂", "keyword": "crazy"}
+{"character": "皇", "keyword": "emperor"}
+{"character": "煌", "keyword": "brilliant"}
+{"character": "呈", "keyword": "submit"}
+{"character": "全", "keyword": "whole"}
+{"character": "理", "keyword": "logic"}
+{"character": "主", "keyword": "master"}
+{"character": "注", "keyword": "to pour"}
+{"character": "金", "keyword": "gold"}
+{"character": "銅", "keyword": "copper"}
+{"character": "釣", "keyword": "angling"}
+{"character": "針", "keyword": "needle"}
+{"character": "釘", "keyword": "nail"}
+{"character": "銘", "keyword": "inscription"}
+{"character": "鎮", "keyword": "at ease"}
+{"character": "道", "keyword": "way"}
+{"character": "導", "keyword": "to guide"}
+{"character": "迅", "keyword": "rapid"}
+{"character": "造", "keyword": "to create"}
+{"character": "巡", "keyword": "patrol"}
+{"character": "逛", "keyword": "to stroll"}
+{"character": "車", "keyword": "car"}
+{"character": "連", "keyword": "one after another"}
+{"character": "蓮", "keyword": "lotus"}
+{"character": "前", "keyword": "in front"}
+{"character": "剪", "keyword": "scissors"}
+{"character": "輸", "keyword": "to transport"}
+{"character": "逾", "keyword": "to exceed"}
+{"character": "各", "keyword": "each"}
+{"character": "格", "keyword": "pattern"}
+{"character": "客", "keyword": "guest"}
+{"character": "額", "keyword": "forehead"}
+{"character": "夏", "keyword": "summer"}
+{"character": "洛", "keyword": "Los Angeles"}
+{"character": "落", "keyword": "to fall"}
+{"character": "冗", "keyword": "superfluous"}
+{"character": "沉", "keyword": "to sink"}
+{"character": "軍", "keyword": "army"}
+{"character": "輝", "keyword": "radiant"}
+{"character": "運", "keyword": "to carry"}
+{"character": "冠", "keyword": "crown"}
+{"character": "夢", "keyword": "dream"}
+{"character": "坑", "keyword": "pit"}
+{"character": "高", "keyword": "tall"}
+{"character": "享", "keyword": "to enjoy"}
+{"character": "熟", "keyword": "ripe"}
+{"character": "亭", "keyword": "kiosk"}
+{"character": "亮", "keyword": "shiny"}
+{"character": "京", "keyword": "capital"}
+{"character": "涼", "keyword": "cool"}
+{"character": "景", "keyword": "scenery"}
+{"character": "就", "keyword": "at once"}
+{"character": "周", "keyword": "lap"}
+{"character": "週", "keyword": "week"}
+{"character": "士", "keyword": "soldier"}
+{"character": "吉", "keyword": "lucky"}
+{"character": "買", "keyword": "to buy"}
+{"character": "賣", "keyword": "to sell"}
+{"character": "書", "keyword": "book"}
+{"character": "畫", "keyword": "drawing"}
+{"character": "劃", "keyword": "to divide"}
+{"character": "攻", "keyword": "to attack"}
+{"character": "敗", "keyword": "to fail"}
+{"character": "故", "keyword": "deliberately"}
+{"character": "救", "keyword": "to rescue"}
+{"character": "敬", "keyword": "to respect"}
+{"character": "敞", "keyword": "spacious"}
+{"character": "言", "keyword": "words"}
+{"character": "警", "keyword": "police"}
+{"character": "計", "keyword": "to calculate"}
+{"character": "獄", "keyword": "prison"}
+{"character": "討", "keyword": "to discuss"}
+{"character": "訓", "keyword": "instruction"}
+{"character": "話", "keyword": "talk"}
+{"character": "詩", "keyword": "poem"}
+{"character": "語", "keyword": "language"}
+{"character": "讀", "keyword": "to read"}
+{"character": "調", "keyword": "tune"}
+{"character": "談", "keyword": "to discuss"}
+{"character": "這", "keyword": "this"}
+{"character": "式", "keyword": "style"}
+{"character": "試", "keyword": "test"}
+{"character": "戈", "keyword": "halberd"}
+{"character": "或", "keyword": "or"}
+{"character": "賊", "keyword": "thief"}
+{"character": "載", "keyword": "to carry"}
+{"character": "鐵", "keyword": "iron"}
+{"character": "茂", "keyword": "lush"}
+{"character": "成", "keyword": "to turn into"}
+{"character": "城", "keyword": "city"}
+{"character": "誠", "keyword": "sincere"}
+{"character": "威", "keyword": "might"}
+{"character": "滅", "keyword": "to extinguish"}
+{"character": "咸", "keyword": "everybody"}
+{"character": "減", "keyword": "to reduce"}
+{"character": "單", "keyword": "list"}
+{"character": "戰", "keyword": "war"}
+{"character": "錢", "keyword": "coin"}
+{"character": "淺", "keyword": "shallow"}
+{"character": "賤", "keyword": "cheap"}
+{"character": "止", "keyword": "to stop"}
+{"character": "步", "keyword": "footstep"}
+{"character": "涉", "keyword": "to wade"}
+{"character": "頻", "keyword": "frequency"}
+{"character": "肯", "keyword": "to agree"}
+{"character": "企", "keyword": "to tiptoe"}
+{"character": "歲", "keyword": "years of age"}
+{"character": "武", "keyword": "military"}
+{"character": "賦", "keyword": "to levy"}
+{"character": "正", "keyword": "correct"}
+{"character": "政", "keyword": "politics"}
+{"character": "定", "keyword": "to set"}
+{"character": "走", "keyword": "walk"}
+{"character": "超", "keyword": "super"}
+{"character": "越", "keyword": "to pass"}
+{"character": "是", "keyword": "to be"}
+{"character": "題", "keyword": "topic"}
+{"character": "建", "keyword": "to build"}
+{"character": "延", "keyword": "to prolong"}
+{"character": "誕", "keyword": "birth"}
+{"character": "楚", "keyword": "clear"}
+{"character": "礎", "keyword": "foundation"}
+{"character": "衣", "keyword": "clothing"}
+{"character": "裡", "keyword": "inside"}
+{"character": "哀", "keyword": "grief"}
+{"character": "袁", "keyword": "cloak"}
+{"character": "遠", "keyword": "distant"}
+{"character": "壞", "keyword": "bad"}
+{"character": "初", "keyword": "beginning"}
+{"character": "巾", "keyword": "towel"}
+{"character": "布", "keyword": "cloth"}
+{"character": "帽", "keyword": "hat"}
+{"character": "幕", "keyword": "curtain"}
+{"character": "棉", "keyword": "cotton"}
+{"character": "幫", "keyword": "to help"}
+{"character": "市", "keyword": "market"}
+{"character": "肺", "keyword": "lungs"}
+{"character": "帶", "keyword": "sash"}
+{"character": "滯", "keyword": "stagnant"}
+{"character": "刺", "keyword": "thorn"}
+{"character": "制", "keyword": "system"}
+{"character": "製", "keyword": "manufacture"}
+{"character": "云", "keyword": "utter"}
+{"character": "雨", "keyword": "rain"}
+{"character": "雲", "keyword": "cloud"}
+{"character": "雷", "keyword": "thunder"}
+{"character": "電", "keyword": "electricity"}
+{"character": "霜", "keyword": "frost"}
+{"character": "冰", "keyword": "ice"}
+{"character": "冬", "keyword": "winter"}
+{"character": "天", "keyword": "heaven"}
+{"character": "夭", "keyword": "die young"}
+{"character": "喬", "keyword": "to disguise"}
+{"character": "橋", "keyword": "bridge"}
+{"character": "嬌", "keyword": "attractive"}
+{"character": "立", "keyword": "to stand"}
+{"character": "泣", "keyword": "to weep"}
+{"character": "站", "keyword": "station"}
+{"character": "章", "keyword": "chapter"}
+{"character": "競", "keyword": "to compete"}
+{"character": "帝", "keyword": "supreme ruler"}
+{"character": "童", "keyword": "child"}
+{"character": "鐘", "keyword": "bell"}
+{"character": "商", "keyword": "salesman"}
+{"character": "適", "keyword": "suitable"}
+{"character": "敵", "keyword": "enemy"}
+{"character": "匕", "keyword": "spoon"}
+{"character": "北", "keyword": "north"}
+{"character": "背", "keyword": "back"}
+{"character": "比", "keyword": "to compare"}
+{"character": "昆", "keyword": "descendants"}
+{"character": "混", "keyword": "to mix"}
+{"character": "皆", "keyword": "all"}
+{"character": "此", "keyword": "this"}
+{"character": "些", "keyword": "some"}
+{"character": "它", "keyword": "it"}
+{"character": "旨", "keyword": "purpose"}
+{"character": "脂", "keyword": "fat"}
+{"character": "每", "keyword": "every"}
+{"character": "梅", "keyword": "plum"}
+{"character": "海", "keyword": "sea"}
+{"character": "乞", "keyword": "to beg"}
+{"character": "吃", "keyword": "to eat"}
+{"character": "乾", "keyword": "dry"}
+{"character": "複", "keyword": "to duplicate"}
+{"character": "腹", "keyword": "abdomen"}
+{"character": "欠", "keyword": "to owe"}
+{"character": "吹", "keyword": "to blow"}
+{"character": "歌", "keyword": "song"}
+{"character": "軟", "keyword": "soft"}
+{"character": "次", "keyword": "occurrence"}
+{"character": "資", "keyword": "assets"}
+{"character": "姿", "keyword": "posture"}
+{"character": "諮", "keyword": "to consult"}
+{"character": "賠", "keyword": "to compensate"}
+{"character": "培", "keyword": "to cultivate"}
+{"character": "音", "keyword": "sound"}
+{"character": "暗", "keyword": "dark"}
+{"character": "韻", "keyword": "rhyme"}
+{"character": "識", "keyword": "knowledge"}
+{"character": "幟", "keyword": "banner"}
+{"character": "竟", "keyword": "actually"}
+{"character": "鏡", "keyword": "mirror"}
+{"character": "境", "keyword": "boundary"}
+{"character": "亡", "keyword": "death"}
+{"character": "盲", "keyword": "blind"}
+{"character": "妄", "keyword": "absurd"}
+{"character": "望", "keyword": "to expect"}
+{"character": "方", "keyword": "direction"}
+{"character": "妨", "keyword": "to hinder"}
+{"character": "放", "keyword": "to release"}
+{"character": "激", "keyword": "to excite"}
+{"character": "於", "keyword": "in"}
+{"character": "旁", "keyword": "side"}
+{"character": "兌", "keyword": "to convert"}
+{"character": "脫", "keyword": "to take off"}
+{"character": "說", "keyword": "to speak"}
+{"character": "曾", "keyword": "former"}
+{"character": "增", "keyword": "to increase"}
+{"character": "贈", "keyword": "to gift"}
+{"character": "東", "keyword": "east"}
+{"character": "棟", "keyword": "building"}
+{"character": "凍", "keyword": "to freeze"}
+{"character": "也", "keyword": "also"}
+{"character": "她", "keyword": "she"}
+{"character": "地", "keyword": "ground"}
+{"character": "池", "keyword": "pool"}
+{"character": "蟲", "keyword": "insects"}
+{"character": "蛇", "keyword": "serpent"}
+{"character": "蛋", "keyword": "egg"}
+{"character": "風", "keyword": "wind"}
+{"character": "諷", "keyword": "to mock"}
+{"character": "己", "keyword": "self"}
+{"character": "改", "keyword": "to alter"}
+{"character": "記", "keyword": "to remember"}
+{"character": "已", "keyword": "already"}
+{"character": "包", "keyword": "package"}
+{"character": "泡", "keyword": "bubble"}
+{"character": "起", "keyword": "to begin"}
+{"character": "家", "keyword": "house"}
+{"character": "場", "keyword": "site"}
+{"character": "湯", "keyword": "soup"}
+{"character": "羊", "keyword": "sheep"}
+{"character": "美", "keyword": "beautiful"}
+{"character": "洋", "keyword": "ocean"}
+{"character": "鮮", "keyword": "fresh"}
+{"character": "達", "keyword": "to attain"}
+{"character": "樣", "keyword": "appearance"}
+{"character": "差", "keyword": "to differ"}
+{"character": "集", "keyword": "to gather"}
+{"character": "進", "keyword": "to advance"}
+{"character": "準", "keyword": "standard"}
+{"character": "誰", "keyword": "who"}
+{"character": "售", "keyword": "to sell"}
+{"character": "雖", "keyword": "although"}
+{"character": "確", "keyword": "authentic"}
+{"character": "午", "keyword": "noon"}
+{"character": "許", "keyword": "to permit"}
+{"character": "羽", "keyword": "feathers"}
+{"character": "習", "keyword": "to learn"}
+{"character": "翔", "keyword": "to soar"}
+{"character": "困", "keyword": "trapped"}
+{"character": "固", "keyword": "solid"}
+{"character": "國", "keyword": "country"}
+{"character": "圓", "keyword": "round"}
+{"character": "因", "keyword": "cause"}
+{"character": "園", "keyword": "park"}
+{"character": "回", "keyword": "to return"}
+{"character": "迴", "keyword": "revolve"}
+{"character": "圖", "keyword": "picture"}
+{"character": "店", "keyword": "store"}
+{"character": "庫", "keyword": "warehouse"}
+{"character": "褲", "keyword": "trousers"}
+{"character": "廠", "keyword": "factory"}
+{"character": "床", "keyword": "bed"}
+{"character": "麻", "keyword": "hemp"}
+{"character": "心", "keyword": "heart"}
+{"character": "忘", "keyword": "to forget"}
+{"character": "忍", "keyword": "to endure"}
+{"character": "認", "keyword": "to recognize"}
+{"character": "志", "keyword": "aspiration"}
+{"character": "誌", "keyword": "annals"}
+{"character": "思", "keyword": "consider"}
+{"character": "意", "keyword": "idea"}
+{"character": "想", "keyword": "to think"}
+{"character": "息", "keyword": "breath"}
+{"character": "恐", "keyword": "to fear"}
+{"character": "感", "keyword": "to feel"}
+{"character": "憾", "keyword": "regret"}
+{"character": "憂", "keyword": "to worry"}
+{"character": "怕", "keyword": "to dread"}
+{"character": "忙", "keyword": "busy"}
+{"character": "慣", "keyword": "accustomed"}
+{"character": "懷", "keyword": "to cherish"}
+{"character": "必", "keyword": "certainly"}
+{"character": "手", "keyword": "hand"}
+{"character": "看", "keyword": "to look at"}
+{"character": "拿", "keyword": "to hold"}
+{"character": "我", "keyword": "I"}
+{"character": "義", "keyword": "justice"}
+{"character": "議", "keyword": "to discuss"}
+{"character": "蟻", "keyword": "ant"}
+{"character": "抱", "keyword": "to embrace"}
+{"character": "抗", "keyword": "to resist"}
+{"character": "批", "keyword": "to criticize"}
+{"character": "招", "keyword": "to beckon"}
+{"character": "打", "keyword": "to strike"}
+{"character": "指", "keyword": "finger"}
+{"character": "持", "keyword": "to support"}
+{"character": "括", "keyword": "to include"}
+{"character": "提", "keyword": "to bring up"}
+{"character": "揮", "keyword": "to brandish"}
+{"character": "推", "keyword": "to push"}
+{"character": "接", "keyword": "to welcome"}
+{"character": "掛", "keyword": "to hang"}
+{"character": "按", "keyword": "to press"}
+{"character": "掉", "keyword": "to drop"}
+{"character": "拉", "keyword": "to pull"}
+{"character": "啦", "keyword": "exclamation"}
+{"character": "找", "keyword": "to look for"}
+{"character": "研", "keyword": "to research"}
+{"character": "弄", "keyword": "to play with"}
+{"character": "鼻", "keyword": "nose"}
+{"character": "刑", "keyword": "punishment"}
+{"character": "型", "keyword": "mold"}
+{"character": "才", "keyword": "genius"}
+{"character": "財", "keyword": "riches"}
+{"character": "存", "keyword": "to exist"}
+{"character": "在", "keyword": "at"}
+{"character": "乃", "keyword": "to be"}
+{"character": "奶", "keyword": "milk"}
+{"character": "及", "keyword": "to reach"}
+{"character": "吸", "keyword": "to inhale"}
+{"character": "史", "keyword": "history"}
+{"character": "更", "keyword": "more"}
+{"character": "硬", "keyword": "hard"}
+{"character": "又", "keyword": "again"}
+{"character": "友", "keyword": "friend"}
+{"character": "雙", "keyword": "pair"}
+{"character": "隻", "keyword": "one of a pair"}
+{"character": "護", "keyword": "to protect"}
+{"character": "獲", "keyword": "to seize"}
+{"character": "觀", "keyword": "to observe"}
+{"character": "歡", "keyword": "joyous"}
+{"character": "投", "keyword": "to throw"}
+{"character": "沒", "keyword": "to not have"}
+{"character": "設", "keyword": "to establish"}
+{"character": "股", "keyword": "thigh"}
+{"character": "支", "keyword": "branch"}
+{"character": "技", "keyword": "skill"}
+{"character": "枝", "keyword": "branch"}
+{"character": "叔", "keyword": "uncle"}
+{"character": "督", "keyword": "to superintend"}
+{"character": "寂", "keyword": "silent"}
+{"character": "反", "keyword": "opposite"}
+{"character": "板", "keyword": "board"}
+{"character": "返", "keyword": "to go back"}
+{"character": "派", "keyword": "faction"}
+{"character": "脈", "keyword": "blood vessels"}
+{"character": "爪", "keyword": "claw"}
+{"character": "抓", "keyword": "to grab"}
+{"character": "采", "keyword": "pluck"}
+{"character": "採", "keyword": "to pick"}
+{"character": "菜", "keyword": "vegetable"}
+{"character": "受", "keyword": "to accept"}
+{"character": "授", "keyword": "to confer"}
+{"character": "愛", "keyword": "love"}
+{"character": "雄", "keyword": "grand"}
+{"character": "台", "keyword": "platform"}
+{"character": "治", "keyword": "to govern"}
+{"character": "始", "keyword": "to start"}
+{"character": "去", "keyword": "to go"}
+{"character": "法", "keyword": "method"}
+{"character": "至", "keyword": "until"}
+{"character": "室", "keyword": "room"}
+{"character": "到", "keyword": "to arrive"}
+{"character": "互", "keyword": "mutual"}
+{"character": "育", "keyword": "education"}
+{"character": "流", "keyword": "to flow"}
+{"character": "梳", "keyword": "comb"}
+{"character": "山", "keyword": "mountain"}
+{"character": "出", "keyword": "to exit"}
+{"character": "擊", "keyword": "to beat"}
+{"character": "密", "keyword": "secret"}
+{"character": "入", "keyword": "to enter"}
+{"character": "內", "keyword": "within"}
+{"character": "吶", "keyword": "to shout"}
+{"character": "分", "keyword": "part"}
+{"character": "貧", "keyword": "impoverished"}
+{"character": "公", "keyword": "public"}
+{"character": "松", "keyword": "pine"}
+{"character": "谷", "keyword": "valley"}
+{"character": "浴", "keyword": "to bathe"}
+{"character": "欲", "keyword": "desire"}
+{"character": "慾", "keyword": "lust"}
+{"character": "容", "keyword": "to contain"}
+{"character": "溶", "keyword": "to dissolve"}
+{"character": "當", "keyword": "to work as"}
+{"character": "檔", "keyword": "files"}
+{"character": "黨", "keyword": "political party"}
+{"character": "常", "keyword": "often"}
+{"character": "堂", "keyword": "hall"}
+{"character": "波", "keyword": "waves"}
+{"character": "婆", "keyword": "old woman"}
+{"character": "破", "keyword": "to break"}
+{"character": "被", "keyword": "quilt"}
+{"character": "歹", "keyword": "evil"}
+{"character": "列", "keyword": "to line up"}
+{"character": "烈", "keyword": "intense"}
+{"character": "死", "keyword": "death"}
+{"character": "葬", "keyword": "to bury"}
+{"character": "耳", "keyword": "ear"}
+{"character": "取", "keyword": "to take"}
+{"character": "趣", "keyword": "interest"}
+{"character": "最", "keyword": "most"}
+{"character": "職", "keyword": "job"}
+{"character": "聖", "keyword": "holy"}
+{"character": "敢", "keyword": "to dare"}
+{"character": "嚴", "keyword": "strict"}
+{"character": "曼", "keyword": "prolong"}
+{"character": "慢", "keyword": "slow"}
+{"character": "漫", "keyword": "to overflow"}
+{"character": "環", "keyword": "ring"}
+{"character": "還", "keyword": "to return"}
+{"character": "夫", "keyword": "husband"}
+{"character": "規", "keyword": "regulations"}
+{"character": "替", "keyword": "to replace"}
+{"character": "失", "keyword": "to lose"}
+{"character": "臣", "keyword": "feudal subject"}
+{"character": "臨", "keyword": "to overlook"}
+{"character": "賢", "keyword": "worthy"}
+{"character": "堅", "keyword": "firm"}
+{"character": "力", "keyword": "power"}
+{"character": "另", "keyword": "another"}
+{"character": "別", "keyword": "don't"}
+{"character": "拐", "keyword": "to turn"}
+{"character": "男", "keyword": "male"}
+{"character": "功", "keyword": "achievement"}
+{"character": "奴", "keyword": "slave"}
+{"character": "努", "keyword": "to toil"}
+{"character": "加", "keyword": "to add"}
+{"character": "賀", "keyword": "to congratulate"}
+{"character": "架", "keyword": "shelf"}
+{"character": "協", "keyword": "to cooperate"}
+{"character": "行", "keyword": "OK"}
+{"character": "律", "keyword": "law"}
+{"character": "復", "keyword": "to return"}
+{"character": "得", "keyword": "to obtain"}
+{"character": "待", "keyword": "to treat"}
+{"character": "往", "keyword": "toward"}
+{"character": "微", "keyword": "tiny"}
+{"character": "街", "keyword": "street"}
+{"character": "德", "keyword": "morals"}
+{"character": "聽", "keyword": "to listen"}
+{"character": "廳", "keyword": "hall"}
+{"character": "禾", "keyword": "grain"}
+{"character": "程", "keyword": "procedure"}
+{"character": "和", "keyword": "harmony"}
+{"character": "移", "keyword": "to shift"}
+{"character": "秋", "keyword": "autumn"}
+{"character": "愁", "keyword": "to worry"}
+{"character": "利", "keyword": "profit"}
+{"character": "香", "keyword": "fragrant"}
+{"character": "季", "keyword": "season"}
+{"character": "委", "keyword": "committee"}
+{"character": "秀", "keyword": "elegant"}
+{"character": "透", "keyword": "to penetrate"}
+{"character": "誘", "keyword": "to entice"}
+{"character": "歷", "keyword": "to experience"}
+{"character": "米", "keyword": "rice"}
+{"character": "迷", "keyword": "lost"}
+{"character": "謎", "keyword": "riddle"}
+{"character": "類", "keyword": "kind"}
+{"character": "竹", "keyword": "bamboo"}
+{"character": "笑", "keyword": "to laugh"}
+{"character": "箱", "keyword": "box"}
+{"character": "筆", "keyword": "pen"}
+{"character": "等", "keyword": "etc"}
+{"character": "算", "keyword": "to calculate"}
+{"character": "答", "keyword": "to answer"}
+{"character": "策", "keyword": "strategy"}
+{"character": "人", "keyword": "person"}
+{"character": "囚", "keyword": "prisoner"}
+{"character": "份", "keyword": "portion"}
+{"character": "佔", "keyword": "occupy"}
+{"character": "傢", "keyword": "furniture"}
+{"character": "你", "keyword": "you"}
+{"character": "您", "keyword": "thou"}
+{"character": "什", "keyword": "what"}
+{"character": "條", "keyword": "strip"}
+{"character": "值", "keyword": "value"}
+{"character": "做", "keyword": "to make"}
+{"character": "但", "keyword": "however"}
+{"character": "住", "keyword": "to dwell"}
+{"character": "位", "keyword": "position"}
+{"character": "件", "keyword": "piece"}
+{"character": "仍", "keyword": "still"}
+{"character": "他", "keyword": "he"}
+{"character": "休", "keyword": "to rest"}
+{"character": "信", "keyword": "faith"}
+{"character": "依", "keyword": "to depend on"}
+{"character": "例", "keyword": "example"}
+{"character": "個", "keyword": "individual"}
+{"character": "健", "keyword": "healthy"}
+{"character": "停", "keyword": "to halt"}
+{"character": "倒", "keyword": "to topple"}
+{"character": "仁", "keyword": "benevolence"}
+{"character": "優", "keyword": "excellent"}
+{"character": "傷", "keyword": "wound"}
+{"character": "保", "keyword": "to protect"}
+{"character": "堡", "keyword": "fort"}
+{"character": "付", "keyword": "to pay"}
+{"character": "府", "keyword": "government office"}
+{"character": "俯", "keyword": "to bow"}
+{"character": "代", "keyword": "substitute"}
+{"character": "袋", "keyword": "bag"}
+{"character": "化", "keyword": "to transform"}
+{"character": "花", "keyword": "flowers"}
+{"character": "貨", "keyword": "commodities"}
+{"character": "何", "keyword": "what"}
+{"character": "便", "keyword": "convenient"}
+{"character": "丈", "keyword": "Chinese yard"}
+{"character": "使", "keyword": "to use"}
+{"character": "久", "keyword": "long time"}
+{"character": "畝", "keyword": "Chinese acre"}
+{"character": "丙", "keyword": "third"}
+{"character": "柄", "keyword": "handle"}
+{"character": "肉", "keyword": "meat"}
+{"character": "腐", "keyword": "rotten"}
+{"character": "眾", "keyword": "crowd"}
+{"character": "坐", "keyword": "to sit"}
+{"character": "座", "keyword": "seat"}
+{"character": "檢", "keyword": "to examine"}
+{"character": "臉", "keyword": "face"}
+{"character": "來", "keyword": "to come"}
+{"character": "麥", "keyword": "wheat"}
+{"character": "喝", "keyword": "to drink"}
+{"character": "渴", "keyword": "thirsty"}
+{"character": "任", "keyword": "to appoint"}
+{"character": "廷", "keyword": "royal court"}
+{"character": "庭", "keyword": "courtyard"}
+{"character": "以", "keyword": "to use"}
+{"character": "似", "keyword": "similar"}
+{"character": "併", "keyword": "to combine"}
+{"character": "拼", "keyword": "to piece together"}
+{"character": "呂", "keyword": "spine"}
+{"character": "侶", "keyword": "associate"}
+{"character": "榮", "keyword": "glory"}
+{"character": "勞", "keyword": "labor"}
+{"character": "營", "keyword": "camp"}
+{"character": "善", "keyword": "virtuous"}
+{"character": "年", "keyword": "year"}
+{"character": "夜", "keyword": "night"}
+{"character": "液", "keyword": "liquid"}
+{"character": "喚", "keyword": "to call out"}
+{"character": "換", "keyword": "to exchange"}
+{"character": "旅", "keyword": "to travel"}
+{"character": "施", "keyword": "to carry out"}
+{"character": "游", "keyword": "to swim"}
+{"character": "遊", "keyword": "tour"}
+{"character": "勿", "keyword": "not"}
+{"character": "忽", "keyword": "to neglect"}
+{"character": "物", "keyword": "thing"}
+{"character": "易", "keyword": "easy"}
+{"character": "賜", "keyword": "to grant"}
+{"character": "屍", "keyword": "corpse"}
+{"character": "尼", "keyword": "nun"}
+{"character": "呢", "keyword": "how about"}
+{"character": "泥", "keyword": "mud"}
+{"character": "屋", "keyword": "house"}
+{"character": "握", "keyword": "to hold"}
+{"character": "居", "keyword": "to reside"}
+{"character": "鋸", "keyword": "saw"}
+{"character": "層", "keyword": "story"}
+{"character": "局", "keyword": "bureau"}
+{"character": "戶", "keyword": "door"}
+{"character": "房", "keyword": "house"}
+{"character": "雇", "keyword": "to hire"}
+{"character": "顧", "keyword": "to look back"}
+{"character": "示", "keyword": "to show"}
+{"character": "社", "keyword": "society"}
+{"character": "視", "keyword": "to look at"}
+{"character": "福", "keyword": "happiness"}
+{"character": "禁", "keyword": "to prohibit"}
+{"character": "襟", "keyword": "lapel"}
+{"character": "宗", "keyword": "religion"}
+{"character": "崇", "keyword": "worship"}
+{"character": "祭", "keyword": "to offer sacrifice"}
+{"character": "察", "keyword": "to examine"}
+{"character": "擦", "keyword": "to scrub"}
+{"character": "由", "keyword": "up to"}
+{"character": "抽", "keyword": "to take out"}
+{"character": "油", "keyword": "oil"}
+{"character": "甲", "keyword": "armor"}
+{"character": "押", "keyword": "to pawn"}
+{"character": "申", "keyword": "to express"}
+{"character": "伸", "keyword": "to extend"}
+{"character": "神", "keyword": "god"}
+{"character": "果", "keyword": "fruit"}
+{"character": "課", "keyword": "lesson"}
+{"character": "顆", "keyword": "grain"}
+{"character": "斤", "keyword": "Chinese pound"}
+{"character": "所", "keyword": "place"}
+{"character": "近", "keyword": "near"}
+{"character": "斬", "keyword": "to chop"}
+{"character": "暫", "keyword": "temporary"}
+{"character": "漸", "keyword": "gradually"}
+{"character": "質", "keyword": "quality"}
+{"character": "斥", "keyword": "to reprimand"}
+{"character": "訴", "keyword": "to accuse"}
+{"character": "乍", "keyword": "first"}
+{"character": "怎", "keyword": "how"}
+{"character": "昨", "keyword": "yesterday"}
+{"character": "作", "keyword": "to do"}
+{"character": "雪", "keyword": "snow"}
+{"character": "急", "keyword": "anxious"}
+{"character": "尋", "keyword": "to seek"}
+{"character": "婦", "keyword": "married woman"}
+{"character": "掃", "keyword": "to sweep"}
+{"character": "錄", "keyword": "to record"}
+{"character": "碌", "keyword": "commonplace"}
+{"character": "爭", "keyword": "to contend"}
+{"character": "淨", "keyword": "clean"}
+{"character": "事", "keyword": "matter"}
+{"character": "唐", "keyword": "Tang dynasty"}
+{"character": "糖", "keyword": "sugar"}
+{"character": "康", "keyword": "health"}
+{"character": "尹", "keyword": "oversee"}
+{"character": "伊", "keyword": "they"}
+{"character": "君", "keyword": "monarch"}
+{"character": "裙", "keyword": "skirt"}
+{"character": "群", "keyword": "crowd"}
+{"character": "而", "keyword": "and"}
+{"character": "需", "keyword": "to need"}
+{"character": "儒", "keyword": "Confucian"}
+{"character": "瑞", "keyword": "auspicious"}
+{"character": "端", "keyword": "upright"}
+{"character": "曲", "keyword": "bent"}
+{"character": "斗", "keyword": "measuring cup"}
+{"character": "料", "keyword": "material"}
+{"character": "科", "keyword": "academic discipline"}
+{"character": "用", "keyword": "to utilize"}
+{"character": "昔", "keyword": "the past"}
+{"character": "借", "keyword": "to borrow"}
+{"character": "錯", "keyword": "mistake"}
+{"character": "散", "keyword": "to disperse"}
+{"character": "撒", "keyword": "to let go"}
+{"character": "備", "keyword": "to prepare"}
+{"character": "廿", "keyword": "twenty"}
+{"character": "席", "keyword": "mat"}
+{"character": "度", "keyword": "degrees"}
+{"character": "渡", "keyword": "to ferry"}
+{"character": "半", "keyword": "half"}
+{"character": "伴", "keyword": "partner"}
+{"character": "胖", "keyword": "fat"}
+{"character": "判", "keyword": "to judge"}
+{"character": "眷", "keyword": "dependant"}
+{"character": "拳", "keyword": "fist"}
+{"character": "勝", "keyword": "victory"}
+{"character": "片", "keyword": "slice"}
+{"character": "版", "keyword": "printing plate"}
+{"character": "妝", "keyword": "makeup"}
+{"character": "壯", "keyword": "robust"}
+{"character": "莊", "keyword": "village"}
+{"character": "裝", "keyword": "attire"}
+{"character": "將", "keyword": "General"}
+{"character": "之", "keyword": "of"}
+{"character": "乏", "keyword": "to lack"}
+{"character": "眨", "keyword": "to blink"}
+{"character": "不", "keyword": "no"}
+{"character": "否", "keyword": "to negate"}
+{"character": "杯", "keyword": "cup"}
+{"character": "矢", "keyword": "dart"}
+{"character": "族", "keyword": "clan"}
+{"character": "知", "keyword": "to know"}
+{"character": "智", "keyword": "wisdom"}
+{"character": "矛", "keyword": "spear"}
+{"character": "柔", "keyword": "soft"}
+{"character": "揉", "keyword": "to knead"}
+{"character": "務", "keyword": "tasks"}
+{"character": "霧", "keyword": "fog"}
+{"character": "予", "keyword": "bestow"}
+{"character": "序", "keyword": "order"}
+{"character": "預", "keyword": "in advance"}
+{"character": "野", "keyword": "wild"}
+{"character": "班", "keyword": "class"}
+{"character": "弓", "keyword": "bow"}
+{"character": "引", "keyword": "to draw"}
+{"character": "強", "keyword": "strong"}
+{"character": "弱", "keyword": "weak"}
+{"character": "彈", "keyword": "bullet"}
+{"character": "佛", "keyword": "Buddha"}
+{"character": "費", "keyword": "expense"}
+{"character": "弟", "keyword": "younger brother"}
+{"character": "第", "keyword": "ordinal number"}
+{"character": "巧", "keyword": "skillful"}
+{"character": "身", "keyword": "body"}
+{"character": "射", "keyword": "to shoot"}
+{"character": "謝", "keyword": "to thank"}
+{"character": "老", "keyword": "old age"}
+{"character": "考", "keyword": "exam"}
+{"character": "烤", "keyword": "to roast"}
+{"character": "孝", "keyword": "filial piety"}
+{"character": "教", "keyword": "to teach"}
+{"character": "者", "keyword": "one who"}
+{"character": "著", "keyword": "to continue"}
+{"character": "豬", "keyword": "pig"}
+{"character": "追", "keyword": "to chase"}
+{"character": "帥", "keyword": "commander"}
+{"character": "師", "keyword": "teacher"}
+{"character": "獅", "keyword": "lion"}
+{"character": "官", "keyword": "bureaucrat"}
+{"character": "管", "keyword": "pipe"}
+{"character": "父", "keyword": "father"}
+{"character": "交", "keyword": "to mingle"}
+{"character": "效", "keyword": "effect"}
+{"character": "較", "keyword": "to compare"}
+{"character": "校", "keyword": "school"}
+{"character": "足", "keyword": "lower leg"}
+{"character": "跑", "keyword": "to run"}
+{"character": "跳", "keyword": "to jump"}
+{"character": "路", "keyword": "road"}
+{"character": "露", "keyword": "dew"}
+{"character": "骨", "keyword": "bone"}
+{"character": "滑", "keyword": "slippery"}
+{"character": "過", "keyword": "to pass"}
+{"character": "阿", "keyword": "pet name"}
+{"character": "啊", "keyword": "aah"}
+{"character": "際", "keyword": "border"}
+{"character": "險", "keyword": "dangerous"}
+{"character": "隨", "keyword": "to let"}
+{"character": "陽", "keyword": "positive"}
+{"character": "陳", "keyword": "to exhibit"}
+{"character": "防", "keyword": "to guard against"}
+{"character": "附", "keyword": "to attach"}
+{"character": "院", "keyword": "courtyard"}
+{"character": "陣", "keyword": "battle formation"}
+{"character": "隊", "keyword": "team"}
+{"character": "降", "keyword": "to descend"}
+{"character": "階", "keyword": "steps"}
+{"character": "穴", "keyword": "cave"}
+{"character": "究", "keyword": "to research"}
+{"character": "突", "keyword": "suddenly"}
+{"character": "空", "keyword": "empty"}
+{"character": "控", "keyword": "to control"}
+{"character": "邊", "keyword": "border"}
+{"character": "深", "keyword": "deep"}
+{"character": "探", "keyword": "to seek out"}
+{"character": "丘", "keyword": "mound"}
+{"character": "兵", "keyword": "troops"}
+{"character": "絲", "keyword": "silk"}
+{"character": "線", "keyword": "line"}
+{"character": "維", "keyword": "to maintain"}
+{"character": "羅", "keyword": "gauze"}
+{"character": "續", "keyword": "to continue"}
+{"character": "統", "keyword": "to unite"}
+{"character": "給", "keyword": "to give"}
+{"character": "結", "keyword": "to tie"}
+{"character": "終", "keyword": "end"}
+{"character": "級", "keyword": "rank"}
+{"character": "紀", "keyword": "era"}
+{"character": "紅", "keyword": "red"}
+{"character": "約", "keyword": "to make an appointment"}
+{"character": "細", "keyword": "fine"}
+{"character": "緊", "keyword": "tight"}
+{"character": "織", "keyword": "to weave"}
+{"character": "網", "keyword": "net"}
+{"character": "綠", "keyword": "green"}
+{"character": "彎", "keyword": "curved"}
+{"character": "灣", "keyword": "bay"}
+{"character": "戀", "keyword": "enamored"}
+{"character": "變", "keyword": "to change"}
+{"character": "經", "keyword": "to pass through"}
+{"character": "輕", "keyword": "light"}
+{"character": "後", "keyword": "behind"}
+{"character": "幾", "keyword": "several"}
+{"character": "機", "keyword": "machine"}
+{"character": "斷", "keyword": "to break"}
+{"character": "繼", "keyword": "to continue"}
+{"character": "顯", "keyword": "obvious"}
+{"character": "樂", "keyword": "music"}
+{"character": "藥", "keyword": "medicine"}
+{"character": "雞", "keyword": "chicken"}
+{"character": "麼", "keyword": "muh"}
+{"character": "系", "keyword": "department"}
+{"character": "係", "keyword": "relate"}
+{"character": "孫", "keyword": "grandchild"}
+{"character": "卻", "keyword": "to withdraw"}
+{"character": "腳", "keyword": "foot"}
+{"character": "服", "keyword": "apparel"}
+{"character": "命", "keyword": "life"}
+{"character": "留", "keyword": "to stay"}
+{"character": "溜", "keyword": "to glide"}
+{"character": "聊", "keyword": "to chat"}
+{"character": "柳", "keyword": "willow"}
+{"character": "令", "keyword": "orders"}
+{"character": "冷", "keyword": "cold"}
+{"character": "零", "keyword": "zero"}
+{"character": "領", "keyword": "collar"}
+{"character": "通", "keyword": "to communicate"}
+{"character": "勇", "keyword": "courageous"}
+{"character": "犯", "keyword": "criminal"}
+{"character": "危", "keyword": "danger"}
+{"character": "脆", "keyword": "brittle"}
+{"character": "印", "keyword": "to print"}
+{"character": "興", "keyword": "excitement"}
+{"character": "酒", "keyword": "alcohol"}
+{"character": "配", "keyword": "to distribute"}
+{"character": "酋", "keyword": "chieftain"}
+{"character": "尊", "keyword": "to respect"}
+{"character": "遵", "keyword": "to obey"}
+{"character": "豆", "keyword": "beans"}
+{"character": "頭", "keyword": "head"}
+{"character": "短", "keyword": "short"}
+{"character": "禮", "keyword": "ceremony"}
+{"character": "體", "keyword": "body"}
+{"character": "鼓", "keyword": "drum"}
+{"character": "喜", "keyword": "joy"}
+{"character": "廚", "keyword": "kitchen"}
+{"character": "樹", "keyword": "tree"}
+{"character": "血", "keyword": "blood"}
+{"character": "盡", "keyword": "to exhaust"}
+{"character": "儘", "keyword": "utmost"}
+{"character": "蓋", "keyword": "lid"}
+{"character": "溫", "keyword": "temperature"}
+{"character": "監", "keyword": "to supervise"}
+{"character": "籃", "keyword": "basket"}
+{"character": "藍", "keyword": "blue"}
+{"character": "銀", "keyword": "silver"}
+{"character": "跟", "keyword": "heel"}
+{"character": "很", "keyword": "very"}
+{"character": "根", "keyword": "root"}
+{"character": "即", "keyword": "immediately"}
+{"character": "節", "keyword": "festival"}
+{"character": "退", "keyword": "to retreat"}
+{"character": "腿", "keyword": "leg"}
+{"character": "限", "keyword": "limit"}
+{"character": "眼", "keyword": "eye"}
+{"character": "良", "keyword": "good"}
+{"character": "浪", "keyword": "wave"}
+{"character": "娘", "keyword": "mom"}
+{"character": "食", "keyword": "food"}
+{"character": "飯", "keyword": "meal"}
+{"character": "餐", "keyword": "meal"}
+{"character": "館", "keyword": "building"}
+{"character": "養", "keyword": "to raise"}
+{"character": "既", "keyword": "since"}
+{"character": "概", "keyword": "approximate"}
+{"character": "平", "keyword": "level"}
+{"character": "評", "keyword": "to criticize"}
+{"character": "坪", "keyword": "level ground"}
+{"character": "乎", "keyword": "oh"}
+{"character": "呼", "keyword": "to shout"}
+{"character": "希", "keyword": "to hope"}
+{"character": "稀", "keyword": "scarce"}
+{"character": "學", "keyword": "to study"}
+{"character": "覺", "keyword": "senses"}
+{"character": "攪", "keyword": "to stir"}
+{"character": "凶", "keyword": "sinister"}
+{"character": "兇", "keyword": "cruel"}
+{"character": "胸", "keyword": "chest"}
+{"character": "離", "keyword": "to leave"}
+{"character": "禽", "keyword": "fowl"}
+{"character": "辛", "keyword": "pungent"}
+{"character": "辦", "keyword": "to manage"}
+{"character": "辯", "keyword": "to dispute"}
+{"character": "壁", "keyword": "wall"}
+{"character": "避", "keyword": "to evade"}
+{"character": "新", "keyword": "new"}
+{"character": "薪", "keyword": "salary"}
+{"character": "親", "keyword": "relative"}
+{"character": "襯", "keyword": "lining"}
+{"character": "幸", "keyword": "fortunate"}
+{"character": "執", "keyword": "to clench"}
+{"character": "報", "keyword": "report"}
+{"character": "叫", "keyword": "to call"}
+{"character": "收", "keyword": "to receive"}
+{"character": "陸", "keyword": "land"}
+{"character": "勢", "keyword": "force"}
+{"character": "熱", "keyword": "hot"}
+{"character": "藝", "keyword": "art"}
+{"character": "亥", "keyword": "boar"}
+{"character": "核", "keyword": "nucleus"}
+{"character": "孩", "keyword": "child"}
+{"character": "刻", "keyword": "to carve"}
+{"character": "該", "keyword": "should"}
+{"character": "述", "keyword": "to narrate"}
+{"character": "術", "keyword": "art"}
+{"character": "殺", "keyword": "to kill"}
+{"character": "襄", "keyword": "aid"}
+{"character": "讓", "keyword": "to yield"}
+{"character": "壤", "keyword": "soil"}
+{"character": "寒", "keyword": "cold"}
+{"character": "賽", "keyword": "competition"}
+{"character": "毒", "keyword": "poison"}
+{"character": "素", "keyword": "vegetarian"}
+{"character": "青", "keyword": "green"}
+{"character": "精", "keyword": "essence"}
+{"character": "請", "keyword": "to invite"}
+{"character": "情", "keyword": "feeling"}
+{"character": "睛", "keyword": "eyeball"}
+{"character": "清", "keyword": "pure"}
+{"character": "靜", "keyword": "quiet"}
+{"character": "責", "keyword": "responsibility"}
+{"character": "績", "keyword": "accomplishment"}
+{"character": "積", "keyword": "to accumulate"}
+{"character": "表", "keyword": "surface"}
+{"character": "錶", "keyword": "watch"}
+{"character": "生", "keyword": "life"}
+{"character": "星", "keyword": "star"}
+{"character": "姓", "keyword": "surname"}
+{"character": "性", "keyword": "nature"}
+{"character": "害", "keyword": "to harm"}
+{"character": "割", "keyword": "to cut apart"}
+{"character": "慧", "keyword": "intelligent"}
+{"character": "豐", "keyword": "plentiful"}
+{"character": "春", "keyword": "springtime"}
+{"character": "泰", "keyword": "tranquil"}
+{"character": "奉", "keyword": "to offer"}
+{"character": "棒", "keyword": "club"}
+{"character": "勤", "keyword": "diligent"}
+{"character": "謹", "keyword": "careful"}
+{"character": "僅", "keyword": "merely"}
+{"character": "漢", "keyword": "Han"}
+{"character": "難", "keyword": "difficult"}
+{"character": "攤", "keyword": "stall"}
+{"character": "華", "keyword": "China"}
+{"character": "嘩", "keyword": "clamor"}
+{"character": "垂", "keyword": "to droop"}
+{"character": "錘", "keyword": "hammer"}
+{"character": "睡", "keyword": "to sleep"}
+{"character": "今", "keyword": "now"}
+{"character": "含", "keyword": "to keep"}
+{"character": "念", "keyword": "to miss"}
+{"character": "陰", "keyword": "negative"}
+{"character": "蔭", "keyword": "shade"}
+{"character": "西", "keyword": "west"}
+{"character": "要", "keyword": "to want"}
+{"character": "腰", "keyword": "waist"}
+{"character": "票", "keyword": "ticket"}
+{"character": "漂", "keyword": "to float"}
+{"character": "標", "keyword": "mark"}
+{"character": "賈", "keyword": "merchant"}
+{"character": "價", "keyword": "price"}
+{"character": "煙", "keyword": "smoke"}
+{"character": "南", "keyword": "south"}
+{"character": "門", "keyword": "entrance"}
+{"character": "們", "keyword": "plural"}
+{"character": "閒", "keyword": "leisure"}
+{"character": "問", "keyword": "to ask"}
+{"character": "間", "keyword": "interval"}
+{"character": "簡", "keyword": "simple"}
+{"character": "開", "keyword": "to open"}
+{"character": "聞", "keyword": "to hear"}
+{"character": "倉", "keyword": "storehouse"}
+{"character": "槍", "keyword": "gun"}
+{"character": "創", "keyword": "to create"}
+{"character": "非", "keyword": "non-"}
+{"character": "排", "keyword": "row"}
+{"character": "罪", "keyword": "guilt"}
+{"character": "靠", "keyword": "to lean on"}
+{"character": "侯", "keyword": "marquis"}
+{"character": "候", "keyword": "to wait"}
+{"character": "決", "keyword": "to decide"}
+{"character": "快", "keyword": "fast"}
+{"character": "筷", "keyword": "chopsticks"}
+{"character": "韋", "keyword": "tanned hide"}
+{"character": "圍", "keyword": "to surround"}
+{"character": "偉", "keyword": "great"}
+{"character": "衛", "keyword": "to defend"}
+{"character": "干", "keyword": "to offend"}
+{"character": "岸", "keyword": "shore"}
+{"character": "幹", "keyword": "trunk"}
+{"character": "旱", "keyword": "drought"}
+{"character": "趕", "keyword": "to hurry"}
+{"character": "于", "keyword": "in"}
+{"character": "宇", "keyword": "eaves"}
+{"character": "余", "keyword": "me"}
+{"character": "餘", "keyword": "surplus"}
+{"character": "除", "keyword": "to eliminate"}
+{"character": "途", "keyword": "route"}
+{"character": "束", "keyword": "bundle"}
+{"character": "速", "keyword": "quick"}
+{"character": "辣", "keyword": "spicy hot"}
+{"character": "整", "keyword": "entire"}
+{"character": "練", "keyword": "to practice"}
+{"character": "揀", "keyword": "to select"}
+{"character": "重", "keyword": "heavy"}
+{"character": "懂", "keyword": "to understand"}
+{"character": "動", "keyword": "to move"}
+{"character": "種", "keyword": "species"}
+{"character": "衝", "keyword": "to charge"}
+{"character": "病", "keyword": "illness"}
+{"character": "痛", "keyword": "to ache"}
+{"character": "瘋", "keyword": "insane"}
+{"character": "匹", "keyword": "to match"}
+{"character": "區", "keyword": "region"}
+{"character": "樞", "keyword": "hub"}
+{"character": "歐", "keyword": "Europe"}
+{"character": "醫", "keyword": "doctor"}
+{"character": "仰", "keyword": "to look up"}
+{"character": "迎", "keyword": "to greet"}
+{"character": "登", "keyword": "to mount"}
+{"character": "燈", "keyword": "lamp"}
+{"character": "證", "keyword": "evidence"}
+{"character": "發", "keyword": "to send out"}
+{"character": "廢", "keyword": "to discard"}
+{"character": "形", "keyword": "shape"}
+{"character": "影", "keyword": "shadow"}
+{"character": "彩", "keyword": "color"}
+{"character": "須", "keyword": "to have to"}
+{"character": "珍", "keyword": "precious"}
+{"character": "參", "keyword": "to participate"}
+{"character": "慘", "keyword": "miserable"}
+{"character": "修", "keyword": "to repair"}
+{"character": "文", "keyword": "literature"}
+{"character": "蚊", "keyword": "mosquito"}
+{"character": "彥", "keyword": "erudite"}
+{"character": "顏", "keyword": "countenance"}
+{"character": "產", "keyword": "products"}
+{"character": "率", "keyword": "rate"}
+{"character": "摔", "keyword": "to tumble"}
+{"character": "央", "keyword": "center"}
+{"character": "英", "keyword": "England"}
+{"character": "巴", "keyword": "crust"}
+{"character": "把", "keyword": "to grasp"}
+{"character": "爸", "keyword": "papa"}
+{"character": "吧", "keyword": "bar"}
+{"character": "色", "keyword": "color"}
+{"character": "絕", "keyword": "to cut off"}
+{"character": "甘", "keyword": "sweet"}
+{"character": "某", "keyword": "certain"}
+{"character": "其", "keyword": "theirs"}
+{"character": "期", "keyword": "period of time"}
+{"character": "基", "keyword": "base"}
+{"character": "斯", "keyword": "this"}
+{"character": "甚", "keyword": "tremendously"}
+{"character": "貴", "keyword": "expensive"}
+{"character": "遺", "keyword": "to leave behind"}
+{"character": "舞", "keyword": "dance"}
+{"character": "無", "keyword": "nothing"}
+{"character": "撫", "keyword": "to comfort"}
+{"character": "且", "keyword": "moreover"}
+{"character": "姐", "keyword": "older sister"}
+{"character": "組", "keyword": "group"}
+{"character": "祖", "keyword": "ancestor"}
+{"character": "助", "keyword": "to assist"}
+{"character": "並", "keyword": "side by side"}
+{"character": "普", "keyword": "universal"}
+{"character": "業", "keyword": "profession"}
+{"character": "對", "keyword": "correct"}
+{"character": "共", "keyword": "together"}
+{"character": "供", "keyword": "to supply"}
+{"character": "異", "keyword": "different"}
+{"character": "巷", "keyword": "alley"}
+{"character": "港", "keyword": "harbor"}
+{"character": "選", "keyword": "to choose"}
+{"character": "井", "keyword": "well"}
+{"character": "亞", "keyword": "Asia"}
+{"character": "惡", "keyword": "evil"}
+{"character": "角", "keyword": "horn"}
+{"character": "解", "keyword": "to untie"}
+{"character": "嘴", "keyword": "mouth"}
+{"character": "再", "keyword": "again"}
+{"character": "稱", "keyword": "name"}
+{"character": "講", "keyword": "to lecture"}
+{"character": "構", "keyword": "to construct"}
+{"character": "扁", "keyword": "flat"}
+{"character": "篇", "keyword": "piece of writing"}
+{"character": "編", "keyword": "to compile"}
+{"character": "論", "keyword": "theory"}
+{"character": "輪", "keyword": "wheel"}
+{"character": "典", "keyword": "canon"}
+{"character": "氏", "keyword": "family name"}
+{"character": "紙", "keyword": "paper"}
+{"character": "昏", "keyword": "dusk"}
+{"character": "婚", "keyword": "marriage"}
+{"character": "低", "keyword": "low"}
+{"character": "底", "keyword": "bottom"}
+{"character": "民", "keyword": "people"}
+{"character": "眠", "keyword": "sleep"}
+{"character": "甫", "keyword": "barely"}
+{"character": "補", "keyword": "to patch"}
+{"character": "博", "keyword": "well-informed"}
+{"character": "搏", "keyword": "to wrestle"}
+{"character": "都", "keyword": "all"}
+{"character": "部", "keyword": "part"}
+{"character": "郎", "keyword": "young man"}
+{"character": "鄉", "keyword": "countryside"}
+{"character": "響", "keyword": "echo"}
+{"character": "段", "keyword": "section"}
+{"character": "鍛", "keyword": "to forge"}
+{"character": "幻", "keyword": "unreal"}
+{"character": "司", "keyword": "to take charge of"}
+{"character": "詞", "keyword": "word"}
+{"character": "舟", "keyword": "boat"}
+{"character": "船", "keyword": "ship"}
+{"character": "般", "keyword": "sort"}
+{"character": "盤", "keyword": "tray"}
+{"character": "搬", "keyword": "to relocate"}
+{"character": "瓜", "keyword": "melon"}
+{"character": "孤", "keyword": "orphan"}
+{"character": "益", "keyword": "benefit"}
+{"character": "假", "keyword": "vacation"}
+{"character": "蝦", "keyword": "shrimp"}
+{"character": "氣", "keyword": "air"}
+{"character": "汽", "keyword": "steam"}
+{"character": "飛", "keyword": "to fly"}
+{"character": "面", "keyword": "face"}
+{"character": "麵", "keyword": "noodles"}
+{"character": "革", "keyword": "leather"}
+{"character": "鞋", "keyword": "shoes"}
+{"character": "馨", "keyword": "fragrance"}
+{"character": "聲", "keyword": "voice"}
+{"character": "吳", "keyword": "Wu"}
+{"character": "娛", "keyword": "amusement"}
+{"character": "誤", "keyword": "error"}
+{"character": "承", "keyword": "to undertake"}
+{"character": "蒸", "keyword": "to steam"}
+{"character": "牙", "keyword": "tooth"}
+{"character": "穿", "keyword": "to wear"}
+{"character": "呀", "keyword": "exclamation"}
+{"character": "釋", "keyword": "to explain"}
+{"character": "番", "keyword": "try"}
+{"character": "翻", "keyword": "to turn over"}
+{"character": "播", "keyword": "to broadcast"}
+{"character": "毛", "keyword": "fur"}
+{"character": "尾", "keyword": "tail"}
+{"character": "宅", "keyword": "dwelling"}
+{"character": "託", "keyword": "to entrust"}
+{"character": "為", "keyword": "act"}
+{"character": "偽", "keyword": "bogus"}
+{"character": "長", "keyword": "long"}
+{"character": "張", "keyword": "to stretch"}
+{"character": "漲", "keyword": "to rise"}
+{"character": "套", "keyword": "cover"}
+{"character": "髮", "keyword": "hair"}
+{"character": "展", "keyword": "to unfold"}
+{"character": "喪", "keyword": "to lose"}
+{"character": "雁", "keyword": "wild goose"}
+{"character": "應", "keyword": "should"}
+{"character": "鳥", "keyword": "bird"}
+{"character": "鷹", "keyword": "hawk"}
+{"character": "鴨", "keyword": "duck"}
+{"character": "島", "keyword": "island"}
+{"character": "遇", "keyword": "to encounter"}
+{"character": "萬", "keyword": "ten thousand"}
+{"character": "邁", "keyword": "to stride"}
+{"character": "岡", "keyword": "ridge"}
+{"character": "剛", "keyword": "just now"}
+{"character": "缺", "keyword": "to lack"}
+{"character": "寶", "keyword": "treasure"}
+{"character": "遙", "keyword": "remote"}
+{"character": "搖", "keyword": "to shake"}
+{"character": "兔", "keyword": "rabbit"}
+{"character": "逸", "keyword": "to escape"}
+{"character": "免", "keyword": "to avoid"}
+{"character": "晚", "keyword": "late"}
+{"character": "象", "keyword": "elephant"}
+{"character": "像", "keyword": "to resemble"}
+{"character": "馬", "keyword": "horse"}
+{"character": "媽", "keyword": "mama"}
+{"character": "罵", "keyword": "to scold"}
+{"character": "嗎", "keyword": "question"}
+{"character": "驗", "keyword": "to check"}
+{"character": "騎", "keyword": "to ride"}
+{"character": "驚", "keyword": "to startle"}
+{"character": "虎", "keyword": "tiger"}
+{"character": "慮", "keyword": "to ponder"}
+{"character": "處", "keyword": "location"}
+{"character": "戲", "keyword": "drama"}
+{"character": "劇", "keyword": "drama"}
+{"character": "據", "keyword": "evidence"}
+{"character": "鹿", "keyword": "deer"}
+{"character": "塵", "keyword": "dust"}
+{"character": "麗", "keyword": "beautiful"}
+{"character": "熊", "keyword": "bear"}
+{"character": "能", "keyword": "ability"}
+{"character": "態", "keyword": "attitude"}
+{"character": "寅", "keyword": "sign of the tiger"}
+{"character": "演", "keyword": "to perform"}
+{"character": "辰", "keyword": "sign of the dragon"}
+{"character": "晨", "keyword": "morning"}
+{"character": "農", "keyword": "agriculture"}
+{"character": "濃", "keyword": "concentrated"}
+{"character": "送", "keyword": "to deliver"}
+{"character": "鬼", "keyword": "ghost"}
+{"character": "魔", "keyword": "demon"}
+{"character": "塊", "keyword": "lump"}
+{"character": "龍", "keyword": "dragon"}
+{"character": "襲", "keyword": "to raid"}
+{"character": "兒", "keyword": "son"}
+{"character": "舊", "keyword": "old"}
+{"character": "寫", "keyword": "to write"}
+{"character": "瀉", "keyword": "diarrhea"}
+{"character": "兩", "keyword": "two"}
+{"character": "倆", "keyword": "duo"}
+{"character": "滿", "keyword": "full"}
+{"character": "爾", "keyword": "thus"}
+{"character": "彌", "keyword": "to fill"}
+{"character": "虛", "keyword": "void"}
+{"character": "聯", "keyword": "to unite"}
+{"character": "關", "keyword": "to shut"}
+{"character": "那", "keyword": "that"}
+{"character": "哪", "keyword": "which"}
+{"character": "巫", "keyword": "witch"}
+{"character": "靈", "keyword": "spirit"}
+{"character": "縣", "keyword": "county"}
+{"character": "懸", "keyword": "to suspend"}
+{"character": "與", "keyword": "offer"}
+{"character": "舉", "keyword": "to lift up"}
+{"character": "腦", "keyword": "brain"}
+{"character": "惱", "keyword": "annoyed"}
+{"character": "專", "keyword": "special"}
+{"character": "傳", "keyword": "to pass on"}
+{"character": "轉", "keyword": "to turn"}
+{"character": "團", "keyword": "group"}
+{"character": "黃", "keyword": "yellow"}
+{"character": "廣", "keyword": "extensive"}
+{"character": "橫", "keyword": "horizontal"}
+{"character": "窗", "keyword": "window"}
+{"character": "總", "keyword": "overall"}
+{"character": "詹", "keyword": "verbose"}
+{"character": "擔", "keyword": "to carry on the shoulder"}
+{"character": "數", "keyword": "number"}
+{"character": "樓", "keyword": "multistory building"}
+{"character": "獨", "keyword": "alone"}
+{"character": "屬", "keyword": "to belong to"}
+{"character": "爛", "keyword": "rotten"}
+{"character": "蘭", "keyword": "orchid"}
+{"character": "從", "keyword": "to follow"}
+{"character": "縱", "keyword": "vertical"}
+{"character": "齊", "keyword": "neat"}
+{"character": "濟", "keyword": "to aid"}
+{"character": "丑", "keyword": "clown"}
+{"character": "扭", "keyword": "to twist"}
+{"character": "卑", "keyword": "inferior"}
+{"character": "牌", "keyword": "brand"}
+{"character": "號", "keyword": "number"}
+{"character": "怪", "keyword": "strange"}
+{"character": "赤", "keyword": "crimson"}
+{"character": "亦", "keyword": "also"}
+{"character": "極", "keyword": "extreme"}
+{"character": "雜", "keyword": "miscellaneous"}
+{"character": "曰", "keyword": "to say"}
+{"character": "亂", "keyword": "chaos"}
+{"character": "叭", "keyword": "horn"}
+{"character": "咕", "keyword": "mutter"}
+{"character": "咱", "keyword": "we"}
+{"character": "串", "keyword": "skewer"}
+{"character": "罩", "keyword": "to cover"}
+{"character": "囂", "keyword": "hubbub"}
+{"character": "顛", "keyword": "invert"}
+{"character": "叨", "keyword": "to chatter"}
+{"character": "刮", "keyword": "to scrape"}
+{"character": "盯", "keyword": "to stare at"}
+{"character": "呵", "keyword": "to berate"}
+{"character": "姦", "keyword": "adultery"}
+{"character": "嬰", "keyword": "baby"}
+{"character": "姑", "keyword": "paternal aunt"}
+{"character": "姆", "keyword": "nanny"}
+{"character": "兢", "keyword": "cautious"}
+{"character": "碩", "keyword": "big"}
+{"character": "砌", "keyword": "to lay brick"}
+{"character": "哨", "keyword": "whistle"}
+{"character": "晃", "keyword": "to sway"}
+{"character": "泊", "keyword": "to moor"}
+{"character": "汰", "keyword": "to eliminate"}
+{"character": "沾", "keyword": "to moisten"}
+{"character": "渺", "keyword": "insignificant"}
+{"character": "腺", "keyword": "gland"}
+{"character": "坦", "keyword": "level"}
+{"character": "娃", "keyword": "newborn"}
+{"character": "涯", "keyword": "bank"}
+{"character": "吋", "keyword": "English inch"}
+{"character": "肘", "keyword": "elbow"}
+{"character": "灼", "keyword": "to scorch"}
+{"character": "炒", "keyword": "to stir-fry"}
+{"character": "澆", "keyword": "to water"}
+{"character": "哩", "keyword": "English mile"}
+{"character": "鯉", "keyword": "carp"}
+{"character": "嘿", "keyword": "hey"}
+{"character": "丹", "keyword": "red"}
+{"character": "喧", "keyword": "noisy"}
+{"character": "賓", "keyword": "visitor"}
+{"character": "濱", "keyword": "water's edge"}
+{"character": "寡", "keyword": "widow"}
+{"character": "棚", "keyword": "shed"}
+{"character": "柏", "keyword": "cypress"}
+{"character": "槓", "keyword": "thick stick"}
+{"character": "朵", "keyword": "earlobe"}
+{"character": "杜", "keyword": "to prevent"}
+{"character": "桂", "keyword": "cinnamon"}
+{"character": "椅", "keyword": "chair"}
+{"character": "杰", "keyword": "hero"}
+{"character": "櫻", "keyword": "cherry"}
+{"character": "梢", "keyword": "treetop"}
+{"character": "桐", "keyword": "paulownia"}
+{"character": "宋", "keyword": "Song Dynasty"}
+{"character": "淋", "keyword": "to drench"}
+{"character": "焚", "keyword": "to burn"}
+{"character": "昧", "keyword": "dim"}
+{"character": "朱", "keyword": "vermilion"}
+{"character": "株", "keyword": "tree stump"}
+{"character": "樑", "keyword": "roof beam"}
+{"character": "碟", "keyword": "saucer"}
+{"character": "萌", "keyword": "to sprout"}
+{"character": "苛", "keyword": "exacting"}
+{"character": "膜", "keyword": "membrane"}
+{"character": "寞", "keyword": "lonely"}
+{"character": "暮", "keyword": "sunset"}
+{"character": "燃", "keyword": "to ignite"}
+{"character": "咒", "keyword": "curse"}
+{"character": "獸", "keyword": "beast"}
+{"character": "狸", "keyword": "raccoon dog"}
+{"character": "嗅", "keyword": "to smell"}
+{"character": "牡", "keyword": "male"}
+{"character": "牢", "keyword": "jail"}
+{"character": "贊", "keyword": "to praise"}
+{"character": "舍", "keyword": "hut"}
+{"character": "啥", "keyword": "what"}
+{"character": "洽", "keyword": "in agreement"}
+{"character": "旺", "keyword": "prosperous"}
+{"character": "碧", "keyword": "green jade"}
+{"character": "汪", "keyword": "puddle"}
+{"character": "枉", "keyword": "crooked"}
+{"character": "珠", "keyword": "pearl"}
+{"character": "噩", "keyword": "shocking"}
+{"character": "鱷", "keyword": "crocodile"}
+{"character": "鬥", "keyword": "fight"}
+{"character": "栓", "keyword": "plug"}
+{"character": "柱", "keyword": "pillar"}
+{"character": "鉤", "keyword": "hook"}
+{"character": "鈔", "keyword": "paper money"}
+{"character": "銷", "keyword": "to spend"}
+{"character": "鎖", "keyword": "lock"}
+{"character": "鑽", "keyword": "to drill"}
+{"character": "迫", "keyword": "to compel"}
+{"character": "逼", "keyword": "to press"}
+{"character": "逃", "keyword": "to escape"}
+{"character": "逞", "keyword": "to flaunt"}
+{"character": "轟", "keyword": "to rumble"}
+{"character": "軌", "keyword": "rails"}
+{"character": "軋", "keyword": "crush"}
+{"character": "輻", "keyword": "spoke"}
+{"character": "煎", "keyword": "to sauté"}
+{"character": "喻", "keyword": "to explain"}
+{"character": "榆", "keyword": "elm"}
+{"character": "略", "keyword": "outline"}
+{"character": "暈", "keyword": "dizzy"}
+{"character": "渾", "keyword": "muddy"}
+{"character": "膏", "keyword": "paste"}
+{"character": "亨", "keyword": "smooth"}
+{"character": "哼", "keyword": "snort"}
+{"character": "淳", "keyword": "honest"}
+{"character": "鯨", "keyword": "whale"}
+{"character": "贖", "keyword": "to redeem"}
+{"character": "晝", "keyword": "daytime"}
+{"character": "津", "keyword": "saliva"}
+{"character": "釐", "keyword": "fraction"}
+{"character": "枚", "keyword": "small object"}
+{"character": "牧", "keyword": "to herd"}
+{"character": "玫", "keyword": "rose"}
+{"character": "敦", "keyword": "sincere"}
+{"character": "諾", "keyword": "to promise"}
+{"character": "謂", "keyword": "to call"}
+{"character": "詢", "keyword": "to inquire"}
+{"character": "罰", "keyword": "to punish"}
+{"character": "訂", "keyword": "to order"}
+{"character": "詠", "keyword": "to chant"}
+{"character": "諜", "keyword": "espionage"}
+{"character": "註", "keyword": "annotate"}
+{"character": "諒", "keyword": "to forgive"}
+{"character": "讚", "keyword": "praise"}
+{"character": "貳", "keyword": "two"}
+{"character": "膩", "keyword": "tired of"}
+{"character": "洩", "keyword": "discharge"}
+{"character": "划", "keyword": "paddle"}
+{"character": "嘎", "keyword": "ga"}
+{"character": "域", "keyword": "region"}
+{"character": "栽", "keyword": "to plant"}
+{"character": "戚", "keyword": "relative"}
+{"character": "蔑", "keyword": "to disdain"}
+{"character": "喊", "keyword": "to yell"}
+{"character": "濺", "keyword": "to splatter"}
+{"character": "址", "keyword": "address"}
+{"character": "澀", "keyword": "astringent"}
+{"character": "蘋", "keyword": "apple"}
+{"character": "赴", "keyword": "to go to"}
+{"character": "趟", "keyword": "trip"}
+{"character": "堤", "keyword": "dike"}
+{"character": "鍵", "keyword": "key"}
+{"character": "婿", "keyword": "son-in-law"}
+{"character": "裁", "keyword": "to cut out"}
+{"character": "襪", "keyword": "socks"}
+{"character": "滾", "keyword": "to roll"}
+{"character": "衰", "keyword": "to decline"}
+{"character": "衷", "keyword": "inner feelings"}
+{"character": "禪", "keyword": "meditation"}
+{"character": "猿", "keyword": "ape"}
+{"character": "吊", "keyword": "to hang"}
+{"character": "帕", "keyword": "handkerchief"}
+{"character": "帖", "keyword": "invitation"}
+{"character": "帆", "keyword": "sail"}
+{"character": "幅", "keyword": "width of cloth"}
+{"character": "錦", "keyword": "brocade"}
+{"character": "沛", "keyword": "copious"}
+{"character": "柿", "keyword": "persimmon"}
+{"character": "鬧", "keyword": "to make noise"}
+{"character": "棘", "keyword": "thorn bushes"}
+{"character": "棗", "keyword": "jujube"}
+{"character": "蕾", "keyword": "flower bud"}
+{"character": "吞", "keyword": "to swallow"}
+{"character": "妖", "keyword": "bewitching"}
+{"character": "沃", "keyword": "fertile"}
+{"character": "轎", "keyword": "sedan chair"}
+{"character": "垃", "keyword": "garbage"}
+{"character": "啼", "keyword": "weep aloud"}
+{"character": "蒂", "keyword": "stem"}
+{"character": "滴", "keyword": "drop"}
+{"character": "頃", "keyword": "100 Chinese acres"}
+{"character": "匙", "keyword": "spoon"}
+{"character": "乖", "keyword": "well-behaved"}
+{"character": "乘", "keyword": "to ride"}
+{"character": "剩", "keyword": "to be left over"}
+{"character": "棍", "keyword": "rod"}
+{"character": "諧", "keyword": "harmonious"}
+{"character": "柴", "keyword": "firewood"}
+{"character": "敏", "keyword": "agile"}
+{"character": "霉", "keyword": "mildew"}
+{"character": "迄", "keyword": "until"}
+{"character": "砍", "keyword": "to chop"}
+{"character": "坎", "keyword": "pit"}
+{"character": "炊", "keyword": "to cook"}
+{"character": "欽", "keyword": "to admire"}
+{"character": "剖", "keyword": "to cut open"}
+{"character": "菩", "keyword": "bodhisattva"}
+{"character": "芒", "keyword": "awn"}
+{"character": "荒", "keyword": "wasteland"}
+{"character": "謊", "keyword": "lie"}
+{"character": "茫", "keyword": "boundless"}
+{"character": "贏", "keyword": "to win"}
+{"character": "訊", "keyword": "interrogate"}
+{"character": "坊", "keyword": "lane"}
+{"character": "芳", "keyword": "fragrant"}
+{"character": "訪", "keyword": "to visit"}
+{"character": "熬", "keyword": "to stew"}
+{"character": "菸", "keyword": "tobacco"}
+{"character": "榜", "keyword": "roster"}
+{"character": "磅", "keyword": "pound"}
+{"character": "膀", "keyword": "upper arm"}
+{"character": "銳", "keyword": "sharp"}
+{"character": "虹", "keyword": "rainbow"}
+{"character": "蝠", "keyword": "bat"}
+{"character": "蛙", "keyword": "frog"}
+{"character": "蝗", "keyword": "locust"}
+{"character": "蟬", "keyword": "cicada"}
+{"character": "楓", "keyword": "maple"}
+{"character": "胞", "keyword": "placenta"}
+{"character": "炮", "keyword": "firecracker"}
+{"character": "袍", "keyword": "gown"}
+{"character": "雹", "keyword": "hail"}
+{"character": "逐", "keyword": "to pursue"}
+{"character": "遂", "keyword": "to satisfy"}
+{"character": "蒙", "keyword": "to cover"}
+{"character": "朦", "keyword": "hazy"}
+{"character": "豪", "keyword": "unrestrained"}
+{"character": "啄", "keyword": "peck"}
+{"character": "琢", "keyword": "chisel"}
+{"character": "嫁", "keyword": "to marry"}
+{"character": "腸", "keyword": "intestines"}
+{"character": "楊", "keyword": "poplar"}
+{"character": "燙", "keyword": "to scald"}
+{"character": "蕩", "keyword": "squander"}
+{"character": "詳", "keyword": "detailed"}
+{"character": "羨", "keyword": "to envy"}
+{"character": "唯", "keyword": "only"}
+{"character": "堆", "keyword": "pile"}
+{"character": "焦", "keyword": "burnt"}
+{"character": "瞧", "keyword": "to look at"}
+{"character": "礁", "keyword": "reef"}
+{"character": "蕉", "keyword": "banana"}
+{"character": "雕", "keyword": "sculpture"}
+{"character": "截", "keyword": "to sever"}
+{"character": "准", "keyword": "to allow"}
+{"character": "雀", "keyword": "sparrow"}
+{"character": "霍", "keyword": "suddenly"}
+{"character": "奮", "keyword": "to exert"}
+{"character": "奪", "keyword": "to take by force"}
+{"character": "翹", "keyword": "to turn upward"}
+{"character": "塌", "keyword": "to collapse"}
+{"character": "翰", "keyword": "writing brush"}
+{"character": "咽", "keyword": "throat"}
+{"character": "姻", "keyword": "marriage"}
+{"character": "廟", "keyword": "temple"}
+{"character": "廂", "keyword": "side room"}
+{"character": "嘛", "keyword": "obviously"}
+{"character": "磨", "keyword": "to grind"}
+{"character": "廈", "keyword": "tall building"}
+{"character": "廁", "keyword": "toilet"}
+{"character": "悟", "keyword": "to realize"}
+{"character": "忠", "keyword": "loyal"}
+{"character": "悼", "keyword": "to mourn"}
+{"character": "慎", "keyword": "cautious"}
+{"character": "恕", "keyword": "to forgive"}
+{"character": "悄", "keyword": "quiet"}
+{"character": "恍", "keyword": "suddenly"}
+{"character": "惰", "keyword": "lazy"}
+{"character": "恢", "keyword": "to recover"}
+{"character": "恆", "keyword": "permanent"}
+{"character": "慕", "keyword": "to admire"}
+{"character": "恰", "keyword": "exactly"}
+{"character": "惶", "keyword": "fearful"}
+{"character": "愉", "keyword": "pleased"}
+{"character": "愈", "keyword": "more"}
+{"character": "惑", "keyword": "bewildered"}
+{"character": "怔", "keyword": "panic-stricken"}
+{"character": "怖", "keyword": "to be scared"}
+{"character": "添", "keyword": "to increase"}
+{"character": "悔", "keyword": "repent"}
+{"character": "慌", "keyword": "to panic"}
+{"character": "悅", "keyword": "delighted"}
+{"character": "憎", "keyword": "to hate"}
+{"character": "忌", "keyword": "to shun"}
+{"character": "惟", "keyword": "only"}
+{"character": "懼", "keyword": "to fear"}
+{"character": "患", "keyword": "trouble"}
+{"character": "惹", "keyword": "to provoke"}
+{"character": "恩", "keyword": "kindness"}
+{"character": "憶", "keyword": "to recall"}
+{"character": "媳", "keyword": "daughter-in-law"}
+{"character": "熄", "keyword": "to extinguish"}
+{"character": "瑟", "keyword": "Chinese harp"}
+{"character": "泌", "keyword": "to secrete"}
+{"character": "蜜", "keyword": "honey"}
+{"character": "摩", "keyword": "to rub"}
+{"character": "蛾", "keyword": "moth"}
+{"character": "扒", "keyword": "to rake up"}
+{"character": "扣", "keyword": "button"}
+{"character": "捐", "keyword": "to donate"}
+{"character": "拍", "keyword": "to pat"}
+{"character": "啪", "keyword": "bang"}
+{"character": "損", "keyword": "to damage"}
+{"character": "扛", "keyword": "to carry on the shoulder"}
+{"character": "扎", "keyword": "prick"}
+{"character": "拇", "keyword": "thumb"}
+{"character": "拘", "keyword": "to detain"}
+{"character": "抄", "keyword": "to copy"}
+{"character": "拓", "keyword": "to develop"}
+{"character": "捏", "keyword": "to pinch"}
+{"character": "撓", "keyword": "to scratch"}
+{"character": "抹", "keyword": "to smear"}
+{"character": "描", "keyword": "to describe"}
+{"character": "摸", "keyword": "to grope"}
+{"character": "挑", "keyword": "to select"}
+{"character": "拴", "keyword": "to tie"}
+{"character": "拾", "keyword": "to tidy up"}
+{"character": "搭", "keyword": "put up"}
+{"character": "掠", "keyword": "to plunder"}
+{"character": "捨", "keyword": "abandon"}
+{"character": "拭", "keyword": "wipe"}
+{"character": "扯", "keyword": "to pull"}
+{"character": "拖", "keyword": "to drag"}
+{"character": "揚", "keyword": "to hoist"}
+{"character": "搞", "keyword": "to do"}
+{"character": "撞", "keyword": "to bump into"}
+{"character": "摘", "keyword": "to pluck"}
+{"character": "捆", "keyword": "bundle"}
+{"character": "撼", "keyword": "to shake"}
+{"character": "擾", "keyword": "to harass"}
+{"character": "擅", "keyword": "without authority"}
+{"character": "壇", "keyword": "altar"}
+{"character": "顫", "keyword": "to tremble"}
+{"character": "莽", "keyword": "rude"}
+{"character": "戒", "keyword": "to guard against"}
+{"character": "械", "keyword": "machinery"}
+{"character": "誡", "keyword": "to admonish"}
+{"character": "奔", "keyword": "to run quickly"}
+{"character": "噴", "keyword": "to spurt"}
+{"character": "墳", "keyword": "tomb"}
+{"character": "憤", "keyword": "indignant"}
+{"character": "材", "keyword": "material"}
+{"character": "孕", "keyword": "pregnant"}
+{"character": "扔", "keyword": "to throw"}
+{"character": "圾", "keyword": "garbage"}
+{"character": "叉", "keyword": "fork"}
+{"character": "桑", "keyword": "mulberry"}
+{"character": "嗓", "keyword": "throat"}
+{"character": "寇", "keyword": "bandit"}
+{"character": "敲", "keyword": "to knock"}
+{"character": "灌", "keyword": "to irrigate"}
+{"character": "權", "keyword": "authority"}
+{"character": "毅", "keyword": "resolute"}
+{"character": "肢", "keyword": "limb"}
+{"character": "妓", "keyword": "prostitute"}
+{"character": "歧", "keyword": "fork in the road"}
+{"character": "翅", "keyword": "wing"}
+{"character": "淑", "keyword": "refined"}
+{"character": "椒", "keyword": "pepper"}
+{"character": "后", "keyword": "queen"}
+{"character": "盾", "keyword": "shield"}
+{"character": "販", "keyword": "trader"}
+{"character": "扳", "keyword": "to pull"}
+{"character": "覓", "keyword": "to seek"}
+{"character": "妥", "keyword": "appropriate"}
+{"character": "睬", "keyword": "to notice"}
+{"character": "允", "keyword": "to allow"}
+{"character": "勾", "keyword": "cross out"}
+{"character": "晉", "keyword": "to promote"}
+{"character": "宏", "keyword": "great"}
+{"character": "胎", "keyword": "fetus"}
+{"character": "冶", "keyword": "to smelt"}
+{"character": "颱", "keyword": "typhoon"}
+{"character": "怠", "keyword": "idle"}
+{"character": "抬", "keyword": "to lift"}
+{"character": "丟", "keyword": "to lose"}
+{"character": "臺", "keyword": "platform"}
+{"character": "致", "keyword": "to deliver"}
+{"character": "撤", "keyword": "to remove"}
+{"character": "硫", "keyword": "sulfur"}
+{"character": "琉", "keyword": "gemstone"}
+{"character": "疏", "keyword": "sparse"}
+{"character": "蔬", "keyword": "vegetable"}
+{"character": "崩", "keyword": "to collapse"}
+{"character": "岩", "keyword": "rock"}
+{"character": "崎", "keyword": "rugged"}
+{"character": "崖", "keyword": "cliff"}
+{"character": "炭", "keyword": "charcoal"}
+{"character": "碳", "keyword": "carbon"}
+{"character": "盼", "keyword": "to hope for"}
+{"character": "頒", "keyword": "to promulgate"}
+{"character": "芬", "keyword": "fragrance"}
+{"character": "扮", "keyword": "to dress up"}
+{"character": "岔", "keyword": "to diverge"}
+{"character": "頌", "keyword": "to extol"}
+{"character": "訟", "keyword": "to litigate"}
+{"character": "翁", "keyword": "elderly man"}
+{"character": "裕", "keyword": "abundant"}
+{"character": "榕", "keyword": "banyan"}
+{"character": "賞", "keyword": "reward"}
+{"character": "嘗", "keyword": "attempt"}
+{"character": "嚐", "keyword": "taste"}
+{"character": "掌", "keyword": "palm"}
+{"character": "擋", "keyword": "to block"}
+{"character": "膛", "keyword": "chest"}
+{"character": "頗", "keyword": "inclined"}
+{"character": "坡", "keyword": "slope"}
+{"character": "披", "keyword": "to drape over the shoulders"}
+{"character": "彼", "keyword": "the other"}
+{"character": "皺", "keyword": "wrinkles"}
+{"character": "雛", "keyword": "chick"}
+{"character": "趨", "keyword": "to hasten"}
+{"character": "菠", "keyword": "spinach"}
+{"character": "殖", "keyword": "to breed"}
+{"character": "殊", "keyword": "different"}
+{"character": "殘", "keyword": "incomplete"}
+{"character": "咧", "keyword": "to grin"}
+{"character": "裂", "keyword": "to split"}
+{"character": "耿", "keyword": "dedicated"}
+{"character": "恥", "keyword": "shame"}
+{"character": "輯", "keyword": "to edit"}
+{"character": "攝", "keyword": "to take a photo"}
+{"character": "娶", "keyword": "to take a wife"}
+{"character": "扶", "keyword": "to support with the hand"}
+{"character": "熙", "keyword": "splendid"}
+{"character": "腎", "keyword": "kidney"}
+{"character": "募", "keyword": "to recruit"}
+{"character": "脅", "keyword": "to coerce"}
+{"character": "劣", "keyword": "inferior"}
+{"character": "勸", "keyword": "to advise"}
+{"character": "劫", "keyword": "to rob"}
+{"character": "怒", "keyword": "anger"}
+{"character": "茄", "keyword": "eggplant"}
+{"character": "彷", "keyword": "seemingly"}
+{"character": "征", "keyword": "expedition"}
+{"character": "徒", "keyword": "follower"}
+{"character": "徊", "keyword": "to pace back and forth"}
+{"character": "徵", "keyword": "solicit"}
+{"character": "懲", "keyword": "to punish"}
+{"character": "循", "keyword": "to follow"}
+{"character": "徹", "keyword": "thorough"}
+{"character": "役", "keyword": "service"}
+{"character": "衍", "keyword": "to develop"}
+{"character": "衡", "keyword": "to weigh"}
+{"character": "銜", "keyword": "title"}
+{"character": "禿", "keyword": "bald"}
+{"character": "頹", "keyword": "dejected"}
+{"character": "秒", "keyword": "second"}
+{"character": "稍", "keyword": "a little"}
+{"character": "穌", "keyword": "to revive"}
+{"character": "蘇", "keyword": "to revive"}
+{"character": "萎", "keyword": "to wither"}
+{"character": "黏", "keyword": "sticky"}
+{"character": "黎", "keyword": "black"}
+{"character": "漆", "keyword": "paint"}
+{"character": "膝", "keyword": "knee"}
+{"character": "稠", "keyword": "dense"}
+{"character": "稿", "keyword": "draft"}
+{"character": "穎", "keyword": "clever"}
+{"character": "稅", "keyword": "tax"}
+{"character": "稼", "keyword": "crops"}
+{"character": "菌", "keyword": "fungus"}
+{"character": "稚", "keyword": "childish"}
+{"character": "穫", "keyword": "harvest"}
+{"character": "私", "keyword": "private"}
+{"character": "秩", "keyword": "order"}
+{"character": "殼", "keyword": "shell"}
+{"character": "穀", "keyword": "cereal"}
+{"character": "鍬", "keyword": "shovel"}
+{"character": "揪", "keyword": "to hold tight"}
+{"character": "梨", "keyword": "pear"}
+{"character": "犁", "keyword": "plow"}
+{"character": "曆", "keyword": "calendar"}
+{"character": "糕", "keyword": "cake"}
+{"character": "糊", "keyword": "paste"}
+{"character": "粘", "keyword": "to glue"}
+{"character": "糧", "keyword": "provisions"}
+{"character": "菊", "keyword": "chrysanthemum"}
+{"character": "糙", "keyword": "rough"}
+{"character": "粒", "keyword": "grain"}
+{"character": "燦", "keyword": "brilliant"}
+{"character": "粉", "keyword": "powder"}
+{"character": "瞇", "keyword": "squint"}
+{"character": "幣", "keyword": "currency"}
+{"character": "斃", "keyword": "to die"}
+{"character": "蔽", "keyword": "to cover"}
+{"character": "撇", "keyword": "to cast aside"}
+{"character": "弊", "keyword": "fraud"}
+{"character": "筍", "keyword": "bamboo shoot"}
+{"character": "筒", "keyword": "tube"}
+{"character": "築", "keyword": "to construct"}
+{"character": "笨", "keyword": "stupid"}
+{"character": "箭", "keyword": "arrow"}
+{"character": "筋", "keyword": "tendon"}
+{"character": "伍", "keyword": "squad of five"}
+{"character": "仇", "keyword": "animosity"}
+{"character": "倡", "keyword": "to initiate"}
+{"character": "伯", "keyword": "father's older brother"}
+{"character": "仲", "keyword": "middle"}
+{"character": "估", "keyword": "to estimate"}
+{"character": "偵", "keyword": "detect"}
+{"character": "俱", "keyword": "altogether"}
+{"character": "側", "keyword": "side"}
+{"character": "佑", "keyword": "to bless"}
+{"character": "佐", "keyword": "assistant"}
+{"character": "仔", "keyword": "meticulous"}
+{"character": "俏", "keyword": "good-looking"}
+{"character": "倘", "keyword": "if"}
+{"character": "倚", "keyword": "to rely on"}
+{"character": "佳", "keyword": "superb"}
+{"character": "侍", "keyword": "to serve"}
+{"character": "伙", "keyword": "companion"}
+{"character": "宿", "keyword": "to stay overnight"}
+{"character": "伏", "keyword": "to bend over"}
+{"character": "袱", "keyword": "wrapping cloth"}
+{"character": "偷", "keyword": "to steal"}
+{"character": "伐", "keyword": "to fell"}
+{"character": "佩", "keyword": "to admire"}
+{"character": "佈", "keyword": "announce"}
+{"character": "僑", "keyword": "to live abroad"}
+{"character": "億", "keyword": "one hundred million"}
+{"character": "傾", "keyword": "to incline"}
+{"character": "侮", "keyword": "to insult"}
+{"character": "倍", "keyword": "times"}
+{"character": "仿", "keyword": "to imitate"}
+{"character": "傲", "keyword": "arrogant"}
+{"character": "僧", "keyword": "Buddhist monk"}
+{"character": "悠", "keyword": "drawn out"}
+{"character": "俄", "keyword": "Russia"}
+{"character": "儀", "keyword": "servant"}
+{"character": "侄", "keyword": "nephew"}
+{"character": "仙", "keyword": "immortal"}
+{"character": "俗", "keyword": "customs"}
+{"character": "償", "keyword": "to repay"}
+{"character": "臥", "keyword": "to lie down"}
+{"character": "傍", "keyword": "close to"}
+{"character": "俺", "keyword": "I"}
+{"character": "淹", "keyword": "to flood"}
+{"character": "掩", "keyword": "conceal"}
+{"character": "催", "keyword": "to urge"}
+{"character": "摧", "keyword": "to destroy"}
+{"character": "攜", "keyword": "to take along"}
+{"character": "符", "keyword": "symbol"}
+{"character": "貸", "keyword": "loan"}
+{"character": "荷", "keyword": "lotus"}
+{"character": "仗", "keyword": "battle"}
+{"character": "杖", "keyword": "cane"}
+{"character": "夾", "keyword": "press from both sides"}
+{"character": "俠", "keyword": "knight-errant"}
+{"character": "頰", "keyword": "cheek"}
+{"character": "狹", "keyword": "narrow"}
+{"character": "挾", "keyword": "to coerce"}
+{"character": "峽", "keyword": "gorge"}
+{"character": "傘", "keyword": "umbrella"}
+{"character": "聚", "keyword": "to assemble"}
+{"character": "挫", "keyword": "to frustrate"}
+{"character": "劍", "keyword": "saber"}
+{"character": "斂", "keyword": "to restrain"}
+{"character": "撿", "keyword": "to pick up"}
+{"character": "簽", "keyword": "to sign"}
+{"character": "儉", "keyword": "frugal"}
+{"character": "萊", "keyword": "weed"}
+{"character": "葛", "keyword": "kudzu"}
+{"character": "褐", "keyword": "brown"}
+{"character": "竭", "keyword": "to use up"}
+{"character": "歇", "keyword": "to rest"}
+{"character": "揭", "keyword": "to reveal"}
+{"character": "淫", "keyword": "lewd"}
+{"character": "挺", "keyword": "to erect"}
+{"character": "瓦", "keyword": "tile"}
+{"character": "瓷", "keyword": "porcelain"}
+{"character": "瓶", "keyword": "bottle"}
+{"character": "鋁", "keyword": "aluminum"}
+{"character": "宮", "keyword": "palace"}
+{"character": "瑩", "keyword": "lustrous"}
+{"character": "螢", "keyword": "firefly"}
+{"character": "撈", "keyword": "to dredge up"}
+{"character": "煥", "keyword": "glowing"}
+{"character": "旋", "keyword": "to revolve"}
+{"character": "吻", "keyword": "to kiss"}
+{"character": "匆", "keyword": "hurried"}
+{"character": "錫", "keyword": "tin"}
+{"character": "惕", "keyword": "watchful"}
+{"character": "屑", "keyword": "bits"}
+{"character": "尿", "keyword": "urine"}
+{"character": "刷", "keyword": "to brush"}
+{"character": "犀", "keyword": "rhinoceros"}
+{"character": "遲", "keyword": "late"}
+{"character": "漏", "keyword": "to leak"}
+{"character": "屁", "keyword": "fart"}
+{"character": "履", "keyword": "shoe"}
+{"character": "屎", "keyword": "excrement"}
+{"character": "屏", "keyword": "screen"}
+{"character": "屈", "keyword": "bend"}
+{"character": "掘", "keyword": "to dig"}
+{"character": "尺", "keyword": "ruler"}
+{"character": "眉", "keyword": "eyebrows"}
+{"character": "媚", "keyword": "to flatter"}
+{"character": "肩", "keyword": "shoulder"}
+{"character": "妒", "keyword": "to be jealous"}
+{"character": "淚", "keyword": "tears"}
+{"character": "啓", "keyword": "open"}
+{"character": "扇", "keyword": "fan"}
+{"character": "奈", "keyword": "to deal with"}
+{"character": "款", "keyword": "funds"}
+{"character": "祟", "keyword": "evil spirit"}
+{"character": "祝", "keyword": "to wish well"}
+{"character": "祥", "keyword": "auspicious"}
+{"character": "祕", "keyword": "secret"}
+{"character": "慰", "keyword": "to console"}
+{"character": "蔚", "keyword": "luxuriant"}
+{"character": "蒜", "keyword": "garlic"}
+{"character": "棕", "keyword": "palm"}
+{"character": "宙", "keyword": "universe"}
+{"character": "軸", "keyword": "axle"}
+{"character": "袖", "keyword": "sleeve"}
+{"character": "笛", "keyword": "bamboo flute"}
+{"character": "坤", "keyword": "female"}
+{"character": "呻", "keyword": "groan"}
+{"character": "暢", "keyword": "smooth"}
+{"character": "夥", "keyword": "partnership"}
+{"character": "巢", "keyword": "nest"}
+{"character": "棵", "keyword": "plant"}
+{"character": "裸", "keyword": "naked"}
+{"character": "裹", "keyword": "to wrap"}
+{"character": "析", "keyword": "to analyze"}
+{"character": "晰", "keyword": "clear"}
+{"character": "芹", "keyword": "celery"}
+{"character": "折", "keyword": "to break"}
+{"character": "哲", "keyword": "wise"}
+{"character": "逝", "keyword": "pass away"}
+{"character": "誓", "keyword": "vow"}
+{"character": "欣", "keyword": "happy"}
+{"character": "掀", "keyword": "uncover"}
+{"character": "祈", "keyword": "to pray"}
+{"character": "慚", "keyword": "ashamed"}
+{"character": "嶄", "keyword": "towering"}
+{"character": "拆", "keyword": "to take apart"}
+{"character": "炸", "keyword": "to blow up"}
+{"character": "詐", "keyword": "to swindle"}
+{"character": "妻", "keyword": "wife"}
+{"character": "淒", "keyword": "bitter cold"}
+{"character": "棲", "keyword": "perch"}
+{"character": "煞", "keyword": "stop"}
+{"character": "捷", "keyword": "nimble"}
+{"character": "秉", "keyword": "to grasp"}
+{"character": "剝", "keyword": "to peel"}
+{"character": "彙", "keyword": "collection"}
+{"character": "兼", "keyword": "simultaneously"}
+{"character": "賺", "keyword": "to earn"}
+{"character": "嫌", "keyword": "to dislike"}
+{"character": "謙", "keyword": "modest"}
+{"character": "歉", "keyword": "apology"}
+{"character": "廉", "keyword": "honest"}
+{"character": "鐮", "keyword": "sickle"}
+{"character": "簾", "keyword": "curtain"}
+{"character": "睜", "keyword": "to open the eyes"}
+{"character": "掙", "keyword": "struggle"}
+{"character": "箏", "keyword": "kite"}
+{"character": "塘", "keyword": "pond"}
+{"character": "逮", "keyword": "to arrest"}
+{"character": "隸", "keyword": "slave"}
+{"character": "慷", "keyword": "generous"}
+{"character": "糠", "keyword": "chaff"}
+{"character": "耍", "keyword": "mess around"}
+{"character": "耐", "keyword": "to endure"}
+{"character": "喘", "keyword": "to gasp"}
+{"character": "揣", "keyword": "to conjecture"}
+{"character": "糟", "keyword": "messed up"}
+{"character": "遭", "keyword": "to meet with misfortune"}
+{"character": "槽", "keyword": "trough"}
+{"character": "抖", "keyword": "to tremble"}
+{"character": "庸", "keyword": "mediocre"}
+{"character": "傭", "keyword": "servant"}
+{"character": "甩", "keyword": "to throw off"}
+{"character": "惜", "keyword": "to cherish"}
+{"character": "措", "keyword": "to arrange"}
+{"character": "棄", "keyword": "to abandon"}
+{"character": "燕", "keyword": "swallow"}
+{"character": "遮", "keyword": "to cover"}
+{"character": "畔", "keyword": "side"}
+{"character": "拌", "keyword": "to mix"}
+{"character": "叛", "keyword": "to betray"}
+{"character": "券", "keyword": "voucher"}
+{"character": "藤", "keyword": "rattan"}
+{"character": "狀", "keyword": "form"}
+{"character": "牆", "keyword": "wall"}
+{"character": "鼎", "keyword": "cauldron"}
+{"character": "寢", "keyword": "bedroom"}
+{"character": "侵", "keyword": "to invade"}
+{"character": "浸", "keyword": "to immerse"}
+{"character": "贓", "keyword": "stolen goods"}
+{"character": "藏", "keyword": "to store"}
+{"character": "臟", "keyword": "internal organs"}
+{"character": "獎", "keyword": "award"}
+{"character": "漿", "keyword": "thick liquid"}
+{"character": "槳", "keyword": "oar"}
+{"character": "蔣", "keyword": "Jiang"}
+{"character": "淵", "keyword": "abyss"}
+{"character": "肅", "keyword": "solemn"}
+{"character": "嘯", "keyword": "to whistle"}
+{"character": "蕭", "keyword": "desolate"}
+{"character": "鏽", "keyword": "rust"}
+{"character": "芝", "keyword": "sesame"}
+{"character": "貶", "keyword": "to diminish"}
+{"character": "泛", "keyword": "nonspecific"}
+{"character": "歪", "keyword": "askew"}
+{"character": "矯", "keyword": "to rectify"}
+{"character": "矮", "keyword": "short"}
+{"character": "唉", "keyword": "to sigh"}
+{"character": "埃", "keyword": "dust"}
+{"character": "挨", "keyword": "to suffer"}
+{"character": "簇", "keyword": "cluster"}
+{"character": "茅", "keyword": "straw"}
+{"character": "橘", "keyword": "tangerine"}
+{"character": "舒", "keyword": "to relax"}
+{"character": "弘", "keyword": "great"}
+{"character": "夷", "keyword": "barbarian"}
+{"character": "姨", "keyword": "maternal aunt"}
+{"character": "疆", "keyword": "border"}
+{"character": "僵", "keyword": "stiff"}
+{"character": "薑", "keyword": "ginger"}
+{"character": "粥", "keyword": "porridge"}
+{"character": "沸", "keyword": "to boil"}
+{"character": "拂", "keyword": "caress"}
+{"character": "剃", "keyword": "to shave"}
+{"character": "涕", "keyword": "snot"}
+{"character": "梯", "keyword": "ladder"}
+{"character": "朽", "keyword": "rotten"}
+{"character": "聘", "keyword": "to engage"}
+{"character": "犧", "keyword": "sacrifice"}
+{"character": "姊", "keyword": "elder sister"}
+{"character": "躺", "keyword": "to lie down"}
+{"character": "躲", "keyword": "dodge"}
+{"character": "躬", "keyword": "to bow"}
+{"character": "嗜", "keyword": "to hanker"}
+{"character": "拷", "keyword": "flog"}
+{"character": "暑", "keyword": "heat"}
+{"character": "睹", "keyword": "to see"}
+{"character": "賭", "keyword": "to gamble"}
+{"character": "奢", "keyword": "extravagant"}
+{"character": "堵", "keyword": "to block up"}
+{"character": "煮", "keyword": "to boil"}
+{"character": "諸", "keyword": "various"}
+{"character": "儲", "keyword": "to store up"}
+{"character": "屠", "keyword": "to slaughter"}
+{"character": "署", "keyword": "to sign"}
+{"character": "薯", "keyword": "potato"}
+{"character": "歸", "keyword": "to return"}
+{"character": "篩", "keyword": "sieve"}
+{"character": "棺", "keyword": "coffin"}
+{"character": "爹", "keyword": "dad"}
+{"character": "斧", "keyword": "axe"}
+{"character": "咬", "keyword": "to bite"}
+{"character": "狡", "keyword": "crafty"}
+{"character": "趴", "keyword": "to lie prone"}
+{"character": "踏", "keyword": "to step on"}
+{"character": "踐", "keyword": "to trample"}
+{"character": "蹄", "keyword": "hoof"}
+{"character": "捉", "keyword": "to catch"}
+{"character": "踩", "keyword": "to step on"}
+{"character": "蹦", "keyword": "to hop"}
+{"character": "跌", "keyword": "to tumble"}
+{"character": "促", "keyword": "to urge"}
+{"character": "踢", "keyword": "to kick"}
+{"character": "躁", "keyword": "impetuous"}
+{"character": "噪", "keyword": "to chirp"}
+{"character": "澡", "keyword": "bath"}
+{"character": "藻", "keyword": "algae"}
+{"character": "操", "keyword": "to exercise"}
+{"character": "燥", "keyword": "dry"}
+{"character": "躍", "keyword": "to leap"}
+{"character": "戳", "keyword": "to jab"}
+{"character": "耀", "keyword": "show off"}
+{"character": "猾", "keyword": "crafty"}
+{"character": "髓", "keyword": "marrow"}
+{"character": "髒", "keyword": "dirty"}
+{"character": "渦", "keyword": "whirlpool"}
+{"character": "鍋", "keyword": "pot"}
+{"character": "蝸", "keyword": "snail"}
+{"character": "禍", "keyword": "misfortune"}
+{"character": "陌", "keyword": "footpath"}
+{"character": "隙", "keyword": "crevice"}
+{"character": "陡", "keyword": "steep"}
+{"character": "障", "keyword": "barrier"}
+{"character": "陪", "keyword": "to accompany"}
+{"character": "隧", "keyword": "tunnel"}
+{"character": "墜", "keyword": "to fall"}
+{"character": "陋", "keyword": "crude"}
+{"character": "挖", "keyword": "to dig"}
+{"character": "窯", "keyword": "kiln"}
+{"character": "窺", "keyword": "to peep"}
+{"character": "窟", "keyword": "den"}
+{"character": "窄", "keyword": "narrow"}
+{"character": "榨", "keyword": "to extract"}
+{"character": "窘", "keyword": "poor"}
+{"character": "窮", "keyword": "poor"}
+{"character": "窩", "keyword": "nest"}
+{"character": "腔", "keyword": "body cavity"}
+{"character": "累", "keyword": "tired"}
+{"character": "螺", "keyword": "spiral shell"}
+{"character": "紗", "keyword": "yarn"}
+{"character": "綽", "keyword": "ample"}
+{"character": "紹", "keyword": "to connect"}
+{"character": "絮", "keyword": "long-winded"}
+{"character": "繞", "keyword": "to go around"}
+{"character": "紮", "keyword": "bind"}
+{"character": "綿", "keyword": "continuous"}
+{"character": "繪", "keyword": "to paint"}
+{"character": "絡", "keyword": "net"}
+{"character": "綢", "keyword": "silk fabric"}
+{"character": "絨", "keyword": "down"}
+{"character": "締", "keyword": "to conclude"}
+{"character": "紫", "keyword": "purple"}
+{"character": "繁", "keyword": "numerous"}
+{"character": "紡", "keyword": "to spin"}
+{"character": "繭", "keyword": "cocoon"}
+{"character": "纏", "keyword": "to wind around"}
+{"character": "緻", "keyword": "delicate"}
+{"character": "繫", "keyword": "fasten"}
+{"character": "納", "keyword": "to receive"}
+{"character": "紛", "keyword": "disorderly"}
+{"character": "縮", "keyword": "to shrink"}
+{"character": "綜", "keyword": "to sum up"}
+{"character": "紳", "keyword": "gentry"}
+{"character": "緣", "keyword": "reason"}
+{"character": "緒", "keyword": "thread ends"}
+{"character": "絞", "keyword": "to twist"}
+{"character": "緩", "keyword": "unhurried"}
+{"character": "暖", "keyword": "warm"}
+{"character": "援", "keyword": "assist"}
+{"character": "索", "keyword": "rope"}
+{"character": "勃", "keyword": "vigorous"}
+{"character": "脖", "keyword": "neck"}
+{"character": "繳", "keyword": "to hand over"}
+{"character": "邀", "keyword": "to invite"}
+{"character": "繡", "keyword": "embroidery"}
+{"character": "蘿", "keyword": "radish"}
+{"character": "鑼", "keyword": "gong"}
+{"character": "邏", "keyword": "to patrol"}
+{"character": "籮", "keyword": "bamboo basket"}
+{"character": "蠻", "keyword": "barbaric"}
+{"character": "頸", "keyword": "neck"}
+{"character": "莖", "keyword": "stem"}
+{"character": "勁", "keyword": "energy"}
+{"character": "徑", "keyword": "track"}
+{"character": "溪", "keyword": "creek"}
+{"character": "幼", "keyword": "young"}
+{"character": "幽", "keyword": "secluded"}
+{"character": "濕", "keyword": "wet"}
+{"character": "玄", "keyword": "mysterious"}
+{"character": "畜", "keyword": "livestock"}
+{"character": "蓄", "keyword": "to save up"}
+{"character": "牽", "keyword": "to lead along"}
+{"character": "弦", "keyword": "bowstring"}
+{"character": "磁", "keyword": "magnet"}
+{"character": "滋", "keyword": "to nourish"}
+{"character": "慈", "keyword": "kind"}
+{"character": "譏", "keyword": "ridicule"}
+{"character": "爍", "keyword": "bright"}
+{"character": "遜", "keyword": "modest"}
+{"character": "卸", "keyword": "to unload"}
+{"character": "御", "keyword": "imperial"}
+{"character": "禦", "keyword": "to resist"}
+{"character": "卵", "keyword": "eggs"}
+{"character": "孵", "keyword": "to hatch"}
+{"character": "乳", "keyword": "breast"}
+{"character": "浮", "keyword": "to float"}
+{"character": "俘", "keyword": "captive"}
+{"character": "卿", "keyword": "minister"}
+{"character": "貿", "keyword": "trade"}
+{"character": "榴", "keyword": "pomegranate"}
+{"character": "疑", "keyword": "to doubt"}
+{"character": "礙", "keyword": "to obstruct"}
+{"character": "凝", "keyword": "to congeal"}
+{"character": "擬", "keyword": "to draft"}
+{"character": "玲", "keyword": "exquisite"}
+{"character": "鈴", "keyword": "small bell"}
+{"character": "伶", "keyword": "actor"}
+{"character": "嶺", "keyword": "mountain range"}
+{"character": "桶", "keyword": "bucket"}
+{"character": "誦", "keyword": "to read aloud"}
+{"character": "湧", "keyword": "to gush"}
+{"character": "踴", "keyword": "to leap"}
+{"character": "卷", "keyword": "scroll"}
+{"character": "圈", "keyword": "circle"}
+{"character": "捲", "keyword": "roll"}
+{"character": "倦", "keyword": "tired"}
+{"character": "範", "keyword": "model"}
+{"character": "怨", "keyword": "resentment"}
+{"character": "宛", "keyword": "as if"}
+{"character": "腕", "keyword": "wrist"}
+{"character": "婉", "keyword": "tactful"}
+{"character": "碗", "keyword": "bowl"}
+{"character": "詭", "keyword": "deceitful"}
+{"character": "跪", "keyword": "to kneel"}
+{"character": "輿", "keyword": "carriage"}
+{"character": "酬", "keyword": "reward"}
+{"character": "酌", "keyword": "pour wine"}
+{"character": "酷", "keyword": "strong"}
+{"character": "醇", "keyword": "mellow wine"}
+{"character": "醋", "keyword": "vinegar"}
+{"character": "醉", "keyword": "to be drunk"}
+{"character": "粹", "keyword": "pure"}
+{"character": "翠", "keyword": "emerald green"}
+{"character": "碎", "keyword": "broken"}
+{"character": "酸", "keyword": "sour"}
+{"character": "梭", "keyword": "shuttle"}
+{"character": "峻", "keyword": "lofty"}
+{"character": "俊", "keyword": "handsome"}
+{"character": "釁", "keyword": "quarrel"}
+{"character": "醬", "keyword": "sauce"}
+{"character": "猶", "keyword": "just like"}
+{"character": "奠", "keyword": "to establish"}
+{"character": "蹲", "keyword": "to squat"}
+{"character": "逗", "keyword": "to tease"}
+{"character": "豈", "keyword": "how"}
+{"character": "凱", "keyword": "triumphant"}
+{"character": "豎", "keyword": "vertical"}
+{"character": "嘉", "keyword": "to commend"}
+{"character": "嘻", "keyword": "giggle"}
+{"character": "盟", "keyword": "alliance"}
+{"character": "孟", "keyword": "first month of the season"}
+{"character": "猛", "keyword": "fierce"}
+{"character": "盛", "keyword": "flourishing"}
+{"character": "盞", "keyword": "small cup"}
+{"character": "盒", "keyword": "small box"}
+{"character": "盜", "keyword": "thief"}
+{"character": "盪", "keyword": "to swing"}
+{"character": "寧", "keyword": "peaceful"}
+{"character": "盈", "keyword": "full"}
+{"character": "盆", "keyword": "basin"}
+{"character": "盃", "keyword": "trophy cup"}
+{"character": "蘊", "keyword": "to accumulate"}
+{"character": "濫", "keyword": "indiscriminate"}
+{"character": "鑑", "keyword": "ancient bronze mirror"}
+{"character": "尷", "keyword": "awkward"}
+{"character": "尬", "keyword": "awkward"}
+{"character": "拋", "keyword": "to toss"}
+{"character": "耽", "keyword": "to delay"}
+{"character": "枕", "keyword": "pillow"}
+{"character": "覽", "keyword": "to look at"}
+{"character": "攬", "keyword": "take on"}
+{"character": "纜", "keyword": "cable"}
+{"character": "狠", "keyword": "ruthless"}
+{"character": "恨", "keyword": "hate"}
+{"character": "爵", "keyword": "nobility"}
+{"character": "嚼", "keyword": "to chew"}
+{"character": "懇", "keyword": "earnest"}
+{"character": "墾", "keyword": "to reclaim land"}
+{"character": "豹", "keyword": "leopard"}
+{"character": "貓", "keyword": "cat"}
+{"character": "貌", "keyword": "appearance"}
+{"character": "朗", "keyword": "bright"}
+{"character": "狼", "keyword": "wolf"}
+{"character": "飢", "keyword": "starving"}
+{"character": "饒", "keyword": "to spare"}
+{"character": "飾", "keyword": "ornaments"}
+{"character": "飲", "keyword": "beverage"}
+{"character": "蝕", "keyword": "to corrode"}
+{"character": "飽", "keyword": "sated"}
+{"character": "饅", "keyword": "steamed bun"}
+{"character": "餅", "keyword": "round flat cake"}
+{"character": "餃", "keyword": "dumpling"}
+{"character": "餓", "keyword": "to be hungry"}
+{"character": "潛", "keyword": "to submerge"}
+{"character": "蠶", "keyword": "silkworm"}
+{"character": "溉", "keyword": "to irrigate"}
+{"character": "慨", "keyword": "indignant"}
+{"character": "萍", "keyword": "duckweed"}
+{"character": "秤", "keyword": "scale"}
+{"character": "淆", "keyword": "confused"}
+{"character": "艾", "keyword": "Chinese mugwort"}
+{"character": "哎", "keyword": "exclamation"}
+{"character": "拔", "keyword": "to pull out"}
+{"character": "攀", "keyword": "to climb"}
+{"character": "屯", "keyword": "to stockpile"}
+{"character": "頓", "keyword": "to pause"}
+{"character": "噸", "keyword": "ton"}
+{"character": "純", "keyword": "pure"}
+{"character": "屆", "keyword": "to fall due"}
+{"character": "齒", "keyword": "teeth"}
+{"character": "齣", "keyword": "performance"}
+{"character": "齡", "keyword": "age"}
+{"character": "洶", "keyword": "turbulent"}
+{"character": "籬", "keyword": "fence"}
+{"character": "辜", "keyword": "crime"}
+{"character": "宰", "keyword": "to slaughter"}
+{"character": "辨", "keyword": "to differentiate"}
+{"character": "辮", "keyword": "braid"}
+{"character": "臂", "keyword": "arm"}
+{"character": "劈", "keyword": "to split"}
+{"character": "譬", "keyword": "analogy"}
+{"character": "僻", "keyword": "out of the way"}
+{"character": "譯", "keyword": "to translate"}
+{"character": "擇", "keyword": "to choose"}
+{"character": "澤", "keyword": "swamp"}
+{"character": "墊", "keyword": "pad"}
+{"character": "摯", "keyword": "sincere"}
+{"character": "糾", "keyword": "to entangle"}
+{"character": "凌", "keyword": "bully"}
+{"character": "菱", "keyword": "water chestnut"}
+{"character": "陵", "keyword": "hill"}
+{"character": "咳", "keyword": "to cough"}
+{"character": "剎", "keyword": "to brake"}
+{"character": "嚷", "keyword": "to shout"}
+{"character": "釀", "keyword": "to brew"}
+{"character": "塞", "keyword": "to stuff into"}
+{"character": "寨", "keyword": "stockade"}
+{"character": "憲", "keyword": "constitution"}
+{"character": "晴", "keyword": "sunny"}
+{"character": "猜", "keyword": "to guess"}
+{"character": "靖", "keyword": "pacify"}
+{"character": "債", "keyword": "debt"}
+{"character": "蹟", "keyword": "remains"}
+{"character": "牲", "keyword": "domestic animal"}
+{"character": "隆", "keyword": "grand"}
+{"character": "腥", "keyword": "fishy"}
+{"character": "猩", "keyword": "orangutan"}
+{"character": "醒", "keyword": "to awaken"}
+{"character": "瞎", "keyword": "blind"}
+{"character": "轄", "keyword": "to administer"}
+{"character": "契", "keyword": "contract"}
+{"character": "拜", "keyword": "to pay respect"}
+{"character": "潔", "keyword": "clean"}
+{"character": "蜂", "keyword": "bee"}
+{"character": "峰", "keyword": "peak"}
+{"character": "鋒", "keyword": "cutting edge"}
+{"character": "逢", "keyword": "to come upon"}
+{"character": "蓬", "keyword": "disheveled"}
+{"character": "縫", "keyword": "to sew"}
+{"character": "奏", "keyword": "to play music"}
+{"character": "湊", "keyword": "to gather together"}
+{"character": "秦", "keyword": "Qin"}
+{"character": "蠢", "keyword": "clumsy"}
+{"character": "捧", "keyword": "to hold with both hands"}
+{"character": "嘆", "keyword": "to sigh"}
+{"character": "艱", "keyword": "difficult"}
+{"character": "灘", "keyword": "beach"}
+{"character": "畢", "keyword": "to complete"}
+{"character": "唾", "keyword": "saliva"}
+{"character": "吟", "keyword": "recite"}
+{"character": "貪", "keyword": "greedy"}
+{"character": "琴", "keyword": "stringed instrument"}
+{"character": "栗", "keyword": "chestnut"}
+{"character": "潭", "keyword": "deep pool"}
+{"character": "遷", "keyword": "to change"}
+{"character": "覆", "keyword": "to overturn"}
+{"character": "飄", "keyword": "to flutter"}
+{"character": "闆", "keyword": "boss"}
+{"character": "闊", "keyword": "broad"}
+{"character": "閉", "keyword": "close"}
+{"character": "潤", "keyword": "moist"}
+{"character": "閣", "keyword": "pavilion"}
+{"character": "擱", "keyword": "to put aside"}
+{"character": "闡", "keyword": "to expound"}
+{"character": "閱", "keyword": "to read"}
+{"character": "悶", "keyword": "stuffy"}
+{"character": "閃", "keyword": "flash"}
+{"character": "閥", "keyword": "valve"}
+{"character": "閘", "keyword": "sluice gate"}
+{"character": "闢", "keyword": "to open up"}
+{"character": "蒼", "keyword": "ashen"}
+{"character": "搶", "keyword": "to rob"}
+{"character": "菲", "keyword": "fragrant"}
+{"character": "輩", "keyword": "lifetime"}
+{"character": "悲", "keyword": "sad"}
+{"character": "徘", "keyword": "to pace back and forth"}
+{"character": "殲", "keyword": "to annihilate"}
+{"character": "籤", "keyword": "bamboo slip"}
+{"character": "纖", "keyword": "fine"}
+{"character": "喉", "keyword": "throat"}
+{"character": "猴", "keyword": "monkey"}
+{"character": "韓", "keyword": "Korea"}
+{"character": "違", "keyword": "to violate"}
+{"character": "緯", "keyword": "latitude"}
+{"character": "竿", "keyword": "pole"}
+{"character": "罕", "keyword": "rare"}
+{"character": "軒", "keyword": "high"}
+{"character": "肝", "keyword": "liver"}
+{"character": "刊", "keyword": "publication"}
+{"character": "汗", "keyword": "sweat"}
+{"character": "桿", "keyword": "shaft"}
+{"character": "悍", "keyword": "bold"}
+{"character": "徐", "keyword": "slowly"}
+{"character": "敘", "keyword": "to narrate"}
+{"character": "塗", "keyword": "to smear"}
+{"character": "斜", "keyword": "slanting"}
+{"character": "喇", "keyword": "horn"}
+{"character": "嗽", "keyword": "to cough"}
+{"character": "賴", "keyword": "to rely on"}
+{"character": "懶", "keyword": "lazy"}
+{"character": "嫩", "keyword": "tender"}
+{"character": "煉", "keyword": "to smelt"}
+{"character": "鍊", "keyword": "smelt"}
+{"character": "腫", "keyword": "swollen"}
+{"character": "董", "keyword": "director"}
+{"character": "鍾", "keyword": "concentrate"}
+{"character": "痰", "keyword": "phlegm"}
+{"character": "症", "keyword": "disease"}
+{"character": "疼", "keyword": "to hurt"}
+{"character": "癒", "keyword": "get well"}
+{"character": "疫", "keyword": "epidemic"}
+{"character": "癌", "keyword": "cancer"}
+{"character": "疲", "keyword": "tired"}
+{"character": "疾", "keyword": "sickness"}
+{"character": "痴", "keyword": "idiotic"}
+{"character": "瘤", "keyword": "tumor"}
+{"character": "痕", "keyword": "scar"}
+{"character": "癢", "keyword": "itch"}
+{"character": "癱", "keyword": "to be paralyzed"}
+{"character": "瘡", "keyword": "sore"}
+{"character": "穩", "keyword": "stable"}
+{"character": "隱", "keyword": "hidden"}
+{"character": "癮", "keyword": "addiction"}
+{"character": "巨", "keyword": "gigantic"}
+{"character": "渠", "keyword": "canal"}
+{"character": "拒", "keyword": "to refuse"}
+{"character": "矩", "keyword": "square"}
+{"character": "距", "keyword": "distance"}
+{"character": "框", "keyword": "frame"}
+{"character": "筐", "keyword": "basket"}
+{"character": "砸", "keyword": "to smash"}
+{"character": "匯", "keyword": "to converge"}
+{"character": "匠", "keyword": "craftsman"}
+{"character": "匪", "keyword": "bandit"}
+{"character": "匿", "keyword": "to hide"}
+{"character": "兜", "keyword": "pocket"}
+{"character": "嘔", "keyword": "to vomit"}
+{"character": "毆", "keyword": "to beat up"}
+{"character": "軀", "keyword": "human body"}
+{"character": "昂", "keyword": "high"}
+{"character": "抑", "keyword": "curb"}
+{"character": "葵", "keyword": "sunflower"}
+{"character": "僚", "keyword": "official"}
+{"character": "遼", "keyword": "distant"}
+{"character": "瞭", "keyword": "comprehend"}
+{"character": "療", "keyword": "to cure"}
+{"character": "瞪", "keyword": "to glare"}
+{"character": "凳", "keyword": "stool"}
+{"character": "澄", "keyword": "clear"}
+{"character": "潑", "keyword": "to splash"}
+{"character": "撥", "keyword": "to allocate"}
+{"character": "杉", "keyword": "fir"}
+{"character": "彬", "keyword": "elegant"}
+{"character": "衫", "keyword": "shirt"}
+{"character": "彰", "keyword": "conspicuous"}
+{"character": "膨", "keyword": "to inflate"}
+{"character": "趁", "keyword": "to take advantage of"}
+{"character": "診", "keyword": "to diagnose"}
+{"character": "滲", "keyword": "to seep"}
+{"character": "膠", "keyword": "glue"}
+{"character": "謬", "keyword": "erroneous"}
+{"character": "寥", "keyword": "few"}
+{"character": "斑", "keyword": "spot"}
+{"character": "紋", "keyword": "pattern"}
+{"character": "鏟", "keyword": "shovel"}
+{"character": "薩", "keyword": "bodhisattva"}
+{"character": "脊", "keyword": "backbone"}
+{"character": "函", "keyword": "envelope"}
+{"character": "涵", "keyword": "culvert"}
+{"character": "映", "keyword": "to reflect"}
+{"character": "殃", "keyword": "calamity"}
+{"character": "肥", "keyword": "fat"}
+{"character": "爬", "keyword": "to climb"}
+{"character": "疤", "keyword": "scar"}
+{"character": "艷", "keyword": "gorgeous"}
+{"character": "甜", "keyword": "sweet"}
+{"character": "鉗", "keyword": "pliers"}
+{"character": "媒", "keyword": "matchmaker"}
+{"character": "煤", "keyword": "coal"}
+{"character": "謀", "keyword": "scheme"}
+{"character": "棋", "keyword": "chess"}
+{"character": "欺", "keyword": "to deceive"}
+{"character": "旗", "keyword": "flag"}
+{"character": "嘶", "keyword": "hoarse"}
+{"character": "撕", "keyword": "to tear"}
+{"character": "堪", "keyword": "to endure"}
+{"character": "勘", "keyword": "to survey"}
+{"character": "遣", "keyword": "to dispatch"}
+{"character": "譴", "keyword": "to denounce"}
+{"character": "囊", "keyword": "sack"}
+{"character": "潰", "keyword": "to burst"}
+{"character": "櫃", "keyword": "cupboard"}
+{"character": "宜", "keyword": "suitable"}
+{"character": "誼", "keyword": "friendship"}
+{"character": "租", "keyword": "to rent"}
+{"character": "粗", "keyword": "coarse"}
+{"character": "阻", "keyword": "to block"}
+{"character": "疊", "keyword": "to pile up"}
+{"character": "壘", "keyword": "rampart"}
+{"character": "鋤", "keyword": "hoe"}
+{"character": "叢", "keyword": "thicket"}
+{"character": "樸", "keyword": "plain"}
+{"character": "撲", "keyword": "to pounce on"}
+{"character": "僕", "keyword": "servant"}
+{"character": "譜", "keyword": "chart"}
+{"character": "哄", "keyword": "to coax"}
+{"character": "洪", "keyword": "flood"}
+{"character": "烘", "keyword": "to warm by fire"}
+{"character": "恭", "keyword": "respectful"}
+{"character": "拱", "keyword": "arch"}
+{"character": "暴", "keyword": "violent"}
+{"character": "瀑", "keyword": "waterfall"}
+{"character": "爆", "keyword": "to explode"}
+{"character": "殿", "keyword": "palace"}
+{"character": "戴", "keyword": "to put on"}
+{"character": "翼", "keyword": "wing"}
+{"character": "糞", "keyword": "dung"}
+{"character": "撰", "keyword": "to compose"}
+{"character": "啞", "keyword": "mute"}
+{"character": "壺", "keyword": "kettle"}
+{"character": "蟹", "keyword": "crab"}
+{"character": "懈", "keyword": "lax"}
+{"character": "購", "keyword": "to purchase"}
+{"character": "溝", "keyword": "ditch"}
+{"character": "鑰", "keyword": "key"}
+{"character": "籲", "keyword": "plead"}
+{"character": "冊", "keyword": "booklet"}
+{"character": "刪", "keyword": "to delete"}
+{"character": "柵", "keyword": "fence"}
+{"character": "珊", "keyword": "coral"}
+{"character": "遍", "keyword": "everywhere"}
+{"character": "偏", "keyword": "to lean"}
+{"character": "淪", "keyword": "sink"}
+{"character": "倫", "keyword": "human relations"}
+{"character": "抵", "keyword": "to resist"}
+{"character": "氓", "keyword": "hoodlum"}
+{"character": "哺", "keyword": "to feed"}
+{"character": "鋪", "keyword": "shop"}
+{"character": "輔", "keyword": "to supplement"}
+{"character": "捕", "keyword": "to catch"}
+{"character": "敷", "keyword": "to apply"}
+{"character": "浦", "keyword": "riverside"}
+{"character": "蒲", "keyword": "cattail"}
+{"character": "薄", "keyword": "slight"}
+{"character": "簿", "keyword": "register"}
+{"character": "傅", "keyword": "master"}
+{"character": "縛", "keyword": "to bind"}
+{"character": "郭", "keyword": "outer walls"}
+{"character": "廓", "keyword": "wide"}
+{"character": "鄙", "keyword": "low"}
+{"character": "耶", "keyword": "ye"}
+{"character": "爺", "keyword": "grandfather"}
+{"character": "郊", "keyword": "suburbs"}
+{"character": "邦", "keyword": "nation"}
+{"character": "綁", "keyword": "to tie up"}
+{"character": "郵", "keyword": "post"}
+{"character": "鄧", "keyword": "Deng"}
+{"character": "擲", "keyword": "hurl"}
+{"character": "廊", "keyword": "corridor"}
+{"character": "擁", "keyword": "to embrace"}
+{"character": "緞", "keyword": "satin"}
+{"character": "刁", "keyword": "tricky"}
+{"character": "叼", "keyword": "hold in the mouth"}
+{"character": "殷", "keyword": "eager"}
+{"character": "壽", "keyword": "longevity"}
+{"character": "濤", "keyword": "large waves"}
+{"character": "鑄", "keyword": "to cast metal"}
+{"character": "禱", "keyword": "to pray"}
+{"character": "籌", "keyword": "chip"}
+{"character": "伺", "keyword": "to wait upon"}
+{"character": "飼", "keyword": "to feed"}
+{"character": "舶", "keyword": "big boat"}
+{"character": "航", "keyword": "to navigate"}
+{"character": "艇", "keyword": "light boat"}
+{"character": "艦", "keyword": "warship"}
+{"character": "艙", "keyword": "cabin"}
+{"character": "沿", "keyword": "along"}
+{"character": "鉛", "keyword": "lead"}
+{"character": "狐", "keyword": "fox"}
+{"character": "瓣", "keyword": "petal"}
+{"character": "溢", "keyword": "to overflow"}
+{"character": "暇", "keyword": "free time"}
+{"character": "霞", "keyword": "rosy clouds"}
+{"character": "氧", "keyword": "oxygen"}
+{"character": "氛", "keyword": "atmosphere"}
+{"character": "氯", "keyword": "chlorine"}
+{"character": "氫", "keyword": "hydrogen"}
+{"character": "鞏", "keyword": "to consolidate"}
+{"character": "霸", "keyword": "tyrant"}
+{"character": "壩", "keyword": "dam"}
+{"character": "勒", "keyword": "to rein in"}
+{"character": "鞠", "keyword": "to bow"}
+{"character": "靴", "keyword": "boots"}
+{"character": "鞭", "keyword": "whip"}
+{"character": "芽", "keyword": "sprout"}
+{"character": "訝", "keyword": "surprised"}
+{"character": "撐", "keyword": "to prop up"}
+{"character": "雅", "keyword": "elegant"}
+{"character": "邪", "keyword": "evil"}
+{"character": "奧", "keyword": "profound"}
+{"character": "澳", "keyword": "bay"}
+{"character": "懊", "keyword": "remorse"}
+{"character": "悉", "keyword": "to know"}
+{"character": "竊", "keyword": "to steal"}
+{"character": "審", "keyword": "to examine"}
+{"character": "嬸", "keyword": "aunt"}
+{"character": "毯", "keyword": "blanket"}
+{"character": "毫", "keyword": "one thousandth"}
+{"character": "耗", "keyword": "to consume"}
+{"character": "耕", "keyword": "to plow"}
+{"character": "籍", "keyword": "records"}
+{"character": "藉", "keyword": "to borrow"}
+{"character": "托", "keyword": "to entrust"}
+{"character": "畏", "keyword": "to fear"}
+{"character": "喂", "keyword": "hello"}
+{"character": "脹", "keyword": "to swell"}
+{"character": "帳", "keyword": "tent"}
+{"character": "肆", "keyword": "four"}
+{"character": "鬍", "keyword": "beard"}
+{"character": "鬆", "keyword": "loose"}
+{"character": "鵬", "keyword": "mythological bird"}
+{"character": "鳴", "keyword": "to chirp"}
+{"character": "鴻", "keyword": "swan"}
+{"character": "鴿", "keyword": "pigeon"}
+{"character": "鶴", "keyword": "crane"}
+{"character": "鶯", "keyword": "oriole"}
+{"character": "鵲", "keyword": "magpie"}
+{"character": "鷗", "keyword": "gull"}
+{"character": "鴉", "keyword": "crow"}
+{"character": "鵝", "keyword": "goose"}
+{"character": "烏", "keyword": "crow"}
+{"character": "嗚", "keyword": "hum"}
+{"character": "搗", "keyword": "to pound"}
+{"character": "寓", "keyword": "residence"}
+{"character": "愚", "keyword": "stupid"}
+{"character": "偶", "keyword": "idol"}
+{"character": "厲", "keyword": "stern"}
+{"character": "勵", "keyword": "to encourage"}
+{"character": "鋼", "keyword": "steel"}
+{"character": "崗", "keyword": "hillock"}
+{"character": "綱", "keyword": "guiding principle"}
+{"character": "逆", "keyword": "to go against"}
+{"character": "溯", "keyword": "to go upstream"}
+{"character": "塑", "keyword": "plastic"}
+{"character": "缸", "keyword": "vat"}
+{"character": "罐", "keyword": "jar"}
+{"character": "鬱", "keyword": "depressed"}
+{"character": "鹽", "keyword": "salt"}
+{"character": "鹹", "keyword": "salty"}
+{"character": "掏", "keyword": "to draw out"}
+{"character": "淘", "keyword": "to rinse"}
+{"character": "陶", "keyword": "pottery"}
+{"character": "謠", "keyword": "rumor"}
+{"character": "冤", "keyword": "injustice"}
+{"character": "饞", "keyword": "gluttonous"}
+{"character": "挽", "keyword": "to pull"}
+{"character": "勉", "keyword": "strive"}
+{"character": "橡", "keyword": "rubber tree"}
+{"character": "豫", "keyword": "pleased"}
+{"character": "騰", "keyword": "to prance"}
+{"character": "碼", "keyword": "number"}
+{"character": "馴", "keyword": "to tame"}
+{"character": "瑪", "keyword": "agate"}
+{"character": "駐", "keyword": "to be stationed"}
+{"character": "驕", "keyword": "proud"}
+{"character": "馳", "keyword": "to gallop"}
+{"character": "螞", "keyword": "ant"}
+{"character": "憑", "keyword": "proof"}
+{"character": "駛", "keyword": "to drive"}
+{"character": "騷", "keyword": "to disturb"}
+{"character": "駕", "keyword": "to drive"}
+{"character": "騾", "keyword": "mule"}
+{"character": "駁", "keyword": "to refute"}
+{"character": "闖", "keyword": "to rush"}
+{"character": "驅", "keyword": "to urge on"}
+{"character": "騙", "keyword": "to deceive"}
+{"character": "驟", "keyword": "to trot"}
+{"character": "遞", "keyword": "to hand over"}
+{"character": "虜", "keyword": "captive"}
+{"character": "虐", "keyword": "cruel"}
+{"character": "膚", "keyword": "skin"}
+{"character": "盧", "keyword": "Lu"}
+{"character": "爐", "keyword": "stove"}
+{"character": "蘆", "keyword": "reed"}
+{"character": "驢", "keyword": "donkey"}
+{"character": "虧", "keyword": "loss"}
+{"character": "污", "keyword": "filthy"}
+{"character": "愕", "keyword": "stunned"}
+{"character": "誇", "keyword": "to exaggerate"}
+{"character": "垮", "keyword": "to collapse"}
+{"character": "跨", "keyword": "to straddle"}
+{"character": "獻", "keyword": "to donate"}
+{"character": "融", "keyword": "to melt"}
+{"character": "隔", "keyword": "to separate"}
+{"character": "濾", "keyword": "to filter"}
+{"character": "慶", "keyword": "to celebrate"}
+{"character": "薦", "keyword": "to recommend"}
+{"character": "傑", "keyword": "outstanding"}
+{"character": "瞬", "keyword": "instant"}
+{"character": "麟", "keyword": "unicorn"}
+{"character": "憐", "keyword": "to pity"}
+{"character": "鄰", "keyword": "neighbor"}
+{"character": "曬", "keyword": "to bask"}
+{"character": "灑", "keyword": "to sprinkle"}
+{"character": "罷", "keyword": "to cease"}
+{"character": "擺", "keyword": "to arrange"}
+{"character": "唇", "keyword": "lips"}
+{"character": "辱", "keyword": "disgrace"}
+{"character": "震", "keyword": "to quake"}
+{"character": "振", "keyword": "to vibrate"}
+{"character": "魄", "keyword": "vigor"}
+{"character": "槐", "keyword": "scholar tree"}
+{"character": "魅", "keyword": "enchanting"}
+{"character": "瑰", "keyword": "marvelous"}
+{"character": "魂", "keyword": "soul"}
+{"character": "愧", "keyword": "ashamed"}
+{"character": "魁", "keyword": "chief"}
+{"character": "醜", "keyword": "ugly"}
+{"character": "壟", "keyword": "ridge"}
+{"character": "寵", "keyword": "to pamper"}
+{"character": "龐", "keyword": "huge"}
+{"character": "攏", "keyword": "to draw near"}
+{"character": "聾", "keyword": "deaf"}
+{"character": "籠", "keyword": "cage"}
+{"character": "插", "keyword": "to insert"}
+{"character": "毀", "keyword": "to destroy"}
+{"character": "舅", "keyword": "maternal uncle"}
+{"character": "樁", "keyword": "stake"}
+{"character": "鑿", "keyword": "bore a hole"}
+{"character": "鼠", "keyword": "mouse"}
+{"character": "竄", "keyword": "to flee"}
+{"character": "臘", "keyword": "cured meat"}
+{"character": "蠟", "keyword": "wax"}
+{"character": "獵", "keyword": "to hunt"}
+{"character": "艘", "keyword": "boat"}
+{"character": "嫂", "keyword": "elder brother's wife"}
+{"character": "瘦", "keyword": "thin"}
+{"character": "搜", "keyword": "to search"}
+{"character": "稻", "keyword": "rice plant"}
+{"character": "蹈", "keyword": "to tread"}
+{"character": "滔", "keyword": "torrential"}
+{"character": "陷", "keyword": "pitfall"}
+{"character": "焰", "keyword": "flame"}
+{"character": "餡", "keyword": "filling"}
+{"character": "輛", "keyword": "vehicle"}
+{"character": "瞞", "keyword": "to conceal"}
+{"character": "爽", "keyword": "refreshing"}
+{"character": "綴", "keyword": "to sew"}
+{"character": "碰", "keyword": "to bump"}
+{"character": "挪", "keyword": "to move"}
+{"character": "誣", "keyword": "accuse falsely"}
+{"character": "譽", "keyword": "reputation"}
+{"character": "嶼", "keyword": "islet"}
+{"character": "傻", "keyword": "stupid"}
+{"character": "磚", "keyword": "brick"}
+{"character": "惠", "keyword": "favor"}
+{"character": "穗", "keyword": "ear of grain"}
+{"character": "曠", "keyword": "spacious"}
+{"character": "礦", "keyword": "mine"}
+{"character": "擴", "keyword": "to enlarge"}
+{"character": "聰", "keyword": "smart"}
+{"character": "蔥", "keyword": "onion"}
+{"character": "膽", "keyword": "gall bladder"}
+{"character": "瞻", "keyword": "look upward"}
+{"character": "摟", "keyword": "to put one's arm around"}
+{"character": "屢", "keyword": "repeatedly"}
+{"character": "濁", "keyword": "turbid"}
+{"character": "燭", "keyword": "candle"}
+{"character": "觸", "keyword": "to touch"}
+{"character": "囑", "keyword": "to urge"}
+{"character": "欄", "keyword": "fence"}
+{"character": "攔", "keyword": "impede"}
+{"character": "蹤", "keyword": "tracks"}
+{"character": "聳", "keyword": "to shrug"}
+{"character": "劑", "keyword": "dose"}
+{"character": "齋", "keyword": "abstain"}
+{"character": "擠", "keyword": "to squeeze"}
+{"character": "鈕", "keyword": "button"}
+{"character": "羞", "keyword": "shy"}
+{"character": "紐", "keyword": "knob"}
+{"character": "脾", "keyword": "spleen"}
+{"character": "啤", "keyword": "beer"}
+{"character": "碑", "keyword": "stele"}
+{"character": "赫", "keyword": "glorious"}
+{"character": "嚇", "keyword": "to frighten"}
+{"character": "奕", "keyword": "radiating"}
+{"character": "跡", "keyword": "trace"}
+{"character": "辭", "keyword": "to resign"}
+{"character": "龜", "keyword": "tortoise"}
+{"character": "繩", "keyword": "rope"}
+{"character": "蠅", "keyword": "fly"}
+{"character": "蝴", "keyword": "butterfly"}
+{"character": "蝶", "keyword": "butterfly"}
+{"character": "蜘", "keyword": "spider"}
+{"character": "蛛", "keyword": "spider"}
+{"character": "駱", "keyword": "camel"}
+{"character": "駝", "keyword": "camel"}
+{"character": "蜻", "keyword": "dragonfly"}
+{"character": "蜓", "keyword": "dragonfly"}
+{"character": "鳳", "keyword": "male phoenix"}
+{"character": "凰", "keyword": "female phoenix"}
+{"character": "橄", "keyword": "olive"}
+{"character": "欖", "keyword": "olive"}
+{"character": "玻", "keyword": "glass"}
+{"character": "璃", "keyword": "glass"}
+{"character": "咖", "keyword": "coffee"}
+{"character": "啡", "keyword": "coffee"}
+{"character": "葡", "keyword": "grape"}
+{"character": "萄", "keyword": "grape"}
+{"character": "吩", "keyword": "to instruct"}
+{"character": "咐", "keyword": "to instruct"}
+{"character": "乒", "keyword": "ping"}
+{"character": "乓", "keyword": "pong"}
+{"character": "崔", "keyword": "Cui"}
+{"character": "曹", "keyword": "Cao"}
+{"character": "劉", "keyword": "Liu"}
+{"character": "潘", "keyword": "Pan"}
+{"character": "梁", "keyword": "bridge"}
+{"character": "沈", "keyword": "Shen"}
+{"character": "鄭", "keyword": "Zheng"}
+{"character": "譚", "keyword": "Tan"}
+{"character": "趙", "keyword": "Zhao"}
+{"character": "姚", "keyword": "Yao"}
+{"character": "魯", "keyword": "rude"}
+{"character": "姜", "keyword": "Jiang"}
+{"character": "范", "keyword": "Fan"}
+{"character": "薛", "keyword": "Xue"}
+{"character": "涂", "keyword": "Tu"}
+{"character": "彭", "keyword": "Peng"}
+{"character": "郁", "keyword": "Yu"}
+{"character": "馮", "keyword": "Feng"}
+{"character": "魏", "keyword": "Wei"}
+{"character": "岳", "keyword": "wife's parents"}
+{"character": "彿", "keyword": "seemingly"}
+{"character": "莉", "keyword": "jasmine"}
+{"character": "湘", "keyword": "Hunan"}
+{"character": "甸", "keyword": "pasture"}
+{"character": "滄", "keyword": "dark blue"}
+{"character": "穆", "keyword": "solemn"}
+{"character": "娜", "keyword": "na"}
+{"character": "瓊", "keyword": "fine jade"}
+{"character": "琳", "keyword": "beautiful jade"}
+{"character": "鈞", "keyword": "30 Chinese pounds"}
+{"character": "喲", "keyword": "oh!"}
+{"character": "砲", "keyword": "cannon"}
+{"character": "蒐", "keyword": "search"}
+{"character": "芙", "keyword": "hibiscus"}
+{"character": "蓉", "keyword": "hibiscus"}
+{"character": "充", "keyword": "sufficient"}
+{"character": "皮", "keyword": "skin"}
