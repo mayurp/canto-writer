@@ -23,8 +23,7 @@ type StrokeAnimatorProps = {
   onQuizComplete?: (summary: QuizSummary) => void
   showOutline?: boolean
   onClearStrokes?: () => void
-  staticColors?: boolean
-  onIntroComplete?: () => void
+  debugStrokeColors?: boolean
   hintTrigger?: number
 }
 
@@ -35,8 +34,7 @@ export function StrokeAnimator({
   onQuizComplete,
   showOutline = false,
   onClearStrokes,
-  staticColors = false,
-  onIntroComplete,
+  debugStrokeColors = false,
   hintTrigger,
 }: StrokeAnimatorProps) {
   // Refs for HanziWriter and stroke data
@@ -51,10 +49,12 @@ export function StrokeAnimator({
   // Reactive signal for when stroke data is available (ref changes aren't reactive)
   const [strokesReady, setStrokesReady] = useState(false)
 
-  // Internal state to track if the color learning intro is currently playing
-  const [isIntroPlaying, setIsIntroPlaying] = useState(
-    () => showOutline && !staticColors,
+  // Local gate that controls color-overlay visibility and blocks writing while it is shown.
+  const [showColorOverlay, setShowColorOverlay] = useState(
+    () => showOutline || debugStrokeColors,
   )
+  const canWrite = !showColorOverlay
+  const showGuideDot = showOutline && !showColorOverlay
 
   // Colored stroke animation hook
   const {
@@ -78,19 +78,24 @@ export function StrokeAnimator({
     currentIndex: strokeGuideIndexRef,
   } = useStrokeGuideAnimation({ strokeShapesRef })
 
-  // Trigger hint intro when hintTrigger changes
+  // Keep the color overlay in sync with the current card/mode.
+  useEffect(() => {
+    setShowColorOverlay(showOutline || debugStrokeColors)
+  }, [character, showOutline, debugStrokeColors])
+
+  // Trigger a visual replay when the parent increments hintTrigger.
   const prevHintTriggerRef = useRef(hintTrigger)
   useEffect(() => {
     if (
       hintTrigger !== undefined &&
       hintTrigger !== prevHintTriggerRef.current
     ) {
-      if (!staticColors) {
-        setIsIntroPlaying(true)
+      if (!showColorOverlay) {
+        setShowColorOverlay(true)
       }
       prevHintTriggerRef.current = hintTrigger
     }
-  }, [hintTrigger, staticColors])
+  }, [hintTrigger, showColorOverlay])
 
   // Styles
   const style = useMemo(
@@ -102,7 +107,7 @@ export function StrokeAnimator({
     [],
   )
 
-  // Main HanziWriter setup effect
+  // Main HanziWriter setup effect — re-runs when character/size/session changes.
   useEffect(() => {
     if (!writerContainerRef.current) return
 
@@ -122,6 +127,9 @@ export function StrokeAnimator({
       strokeColor: STROKE_COLOR,
       delayBetweenLoops: 1200,
     })
+    // Hide the black character fill immediately. We only want the outline
+    // or the color intro overlay to show until the user starts writing.
+    writer.hideCharacter()
 
     const handleCorrectStroke = (strokeData: StrokeData) => {
       const targetShape = strokeShapesRef.current[strokeData.strokeNum]
@@ -154,7 +162,6 @@ export function StrokeAnimator({
       }
     }
 
-    writer.hideCharacter()
     strokeGuideIndexRef.current = 0
     if (!showOutline) {
       stopStrokeGuideAnimation()
@@ -220,20 +227,14 @@ export function StrokeAnimator({
 
   // Effect to handle mode transitions without resetting the writer
   useEffect(() => {
-    if (
-      !isIntroPlaying &&
-      showOutline &&
-      strokesReady &&
-      strokeShapesRef.current.length > 0
-    ) {
+    if (showGuideDot && strokesReady && strokeShapesRef.current.length > 0) {
       const initialIndex = strokeGuideIndexRef.current
       if (initialIndex < strokeShapesRef.current.length) {
         startStrokeGuideAnimation(initialIndex)
       }
     }
   }, [
-    isIntroPlaying,
-    showOutline,
+    showGuideDot,
     strokesReady,
     startStrokeGuideAnimation,
     strokeGuideIndexRef,
@@ -251,13 +252,18 @@ export function StrokeAnimator({
           type="button"
           className="stroke-clear-button"
           onClick={onClearStrokes}
+          disabled={!canWrite}
           aria-label="Clear strokes"
           title="Clear strokes"
         >
           ✕
         </button>
       )}
-      <div ref={writerContainerRef} className="stroke-animator__writer" />
+      <div
+        ref={writerContainerRef}
+        className="stroke-animator__writer"
+        style={{ pointerEvents: canWrite ? 'auto' : 'none' }}
+      />
       <svg
         className="stroke-animator__overlay"
         viewBox={CHARACTER_VIEWBOX}
@@ -266,17 +272,14 @@ export function StrokeAnimator({
         aria-hidden="true"
       >
         <StrokeMorphOverlay />
-        {isIntroPlaying || staticColors ? (
+        {showColorOverlay ? (
           <StrokeColorOverlay
-            staticColors={staticColors}
-            onComplete={() => {
-              setIsIntroPlaying(false)
-              onIntroComplete?.()
-            }}
+            staticColors={debugStrokeColors}
+            onComplete={() => setShowColorOverlay(false)}
           />
-        ) : (
-          showOutline && <StrokeGuideOverlay />
-        )}
+        ) : showGuideDot ? (
+          <StrokeGuideOverlay />
+        ) : null}
       </svg>
     </div>
   )

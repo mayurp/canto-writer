@@ -40,7 +40,7 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
     () => [...cards].sort((a, b) => getDueTimestamp(a) - getDueTimestamp(b)),
     [cards],
   )
-  // Don't use hearbeat here as the timestamp is after the date
+  // Don't use heartbeat here as the timestamp is after the date
   // given by hydrate to New cards (which don't have srs records).
   const due = sorted.filter((card) => card.dueDate <= endOfDay(new Date()))
   const dueCount = due.length
@@ -50,10 +50,18 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
       ? (sorted[0]?.dueDate ?? null)
       : (currentCard?.dueDate ?? null)
 
+  // Ref always holds the latest cards so callbacks below never operate on
+  // stale data — regardless of when their closures were captured. This
+  // prevents the production bug where useLiveQuery fires between card
+  // capture and Next click, causing gradeCard to silently operate on an
+  // old cards array.
+  const cardsRef = useRef(cards)
+  cardsRef.current = cards
+
   const gradeCard = useCallback(
     (cardId: string, grading: GradingInfo) => {
       const manager = managerRef.current
-      const newCards = manager.gradeCard(cards, cardId, grading)
+      const newCards = manager.gradeCard(cardsRef.current, cardId, grading)
       const updatedCard = newCards.find((card) => card.id === cardId)
       if (updatedCard) {
         void db.srsCards.put(manager.serializeCard(updatedCard))
@@ -61,12 +69,13 @@ export const useScheduler = (definitions: FlashcardDefinition[]) => {
       setCards(newCards)
       setHeartbeat(Date.now())
     },
-    [cards],
+    [], // cardsRef.current is always fresh — no dep needed
   )
 
   const shouldShowOutline = useCallback(
-    (cardId: string) => managerRef.current.shouldShowOutline(cards, cardId),
-    [cards],
+    (cardId: string) =>
+      managerRef.current.shouldShowOutline(cardsRef.current, cardId),
+    [], // same — reads via ref
   )
 
   return {

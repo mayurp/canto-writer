@@ -1,11 +1,6 @@
 import './styles/PracticeView.css'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { QuizSummary } from 'hanzi-writer'
-import {
-  ReviewRating,
-  type ReviewRating as ReviewRatingType,
-  type GradingInfo,
-} from '../srs/types'
 import { StrokeAnimator } from './StrokeAnimator'
 import { useSettingsContext } from '../context/SettingsContext'
 import { useSchedulerContext } from '../context/SchedulerContext'
@@ -17,55 +12,22 @@ import { ComponentCards } from './ComponentCards'
 import { CharacterSearch } from './CharacterSearch'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
 import { AudioButton } from './AudioButton'
-import { PointsSoundVariant, playPointsSound } from '../utils/pointsSound'
+import { ReviewRating } from '../srs/types'
+import type { GradingInfo } from '../srs/types'
+import type { ReviewRating as ReviewRatingType } from '../srs/types'
+import {
+  computeLearnedOutline,
+  computePoints,
+  getSoundVariant,
+  ratingFromMistakes,
+} from '../srs/quizGrading'
+import { playPointsSound } from '../utils/pointsSound'
 
 const ratingLabels: Record<ReviewRatingType, string> = {
   [ReviewRating.Again]: 'Again',
   [ReviewRating.Hard]: 'Hard',
   [ReviewRating.Good]: 'Good',
   [ReviewRating.Easy]: 'Easy',
-}
-
-const ratingFromMistakes = (
-  summary: QuizSummary,
-  guidedRun: boolean,
-): ReviewRatingType => {
-  if (guidedRun) return ReviewRating.Again
-  const count = summary.totalMistakes ?? 0
-  if (count === 0) return ReviewRating.Easy
-  if (count <= 2) return ReviewRating.Good
-  if (count <= 4) return ReviewRating.Hard
-  return ReviewRating.Again
-}
-
-const POINTS_BASE = 10
-const POINTS_GUIDED_BONUS = 10
-const POINTS_RATING_BONUS: Record<ReviewRatingType, number> = {
-  [ReviewRating.Again]: 0,
-  [ReviewRating.Hard]: 10,
-  [ReviewRating.Good]: 20,
-  [ReviewRating.Easy]: 50,
-}
-
-const computePoints = (input: {
-  guidedMode: boolean
-  learnedOutline: boolean
-  rating: ReviewRatingType
-}): number => {
-  let points = POINTS_BASE
-  if (input.guidedMode) {
-    if (input.learnedOutline) points += POINTS_GUIDED_BONUS
-  } else {
-    points += POINTS_RATING_BONUS[input.rating]
-  }
-  return points
-}
-
-const getSoundVariant = (points: number): PointsSoundVariant => {
-  if (points >= 35) return PointsSoundVariant.Perfect
-  if (points >= 30) return PointsSoundVariant.Great
-  if (points >= 20) return PointsSoundVariant.Good
-  return PointsSoundVariant.Standard
 }
 
 const PRONUNCIATION_DELAY_MS = 500
@@ -106,9 +68,9 @@ export function PracticeView({
   const { animationState } = useUserStatsContext()
   const { characterData } = useCharacterDataContext()
   const triggerPointsAnimation = animationState.trigger
+
   const [writerSize, setWriterSize] = useState<number | null>(null)
-  const [strokeSession, setStrokeSession] = useState(0)
-  const [cardCompleted, setCardCompleted] = useState(false)
+  const [sessionKey, setSessionKey] = useState(0)
   const [pendingGrading, setPendingGrading] = useState<GradingInfo | null>(null)
   const [hintTrigger, setHintTrigger] = useState(0)
   const [debugCharacterOverride, setDebugCharacterOverride] = useState<
@@ -119,22 +81,30 @@ export function PracticeView({
   const showStrokeOutline = currentCardId
     ? shouldShowOutline(currentCardId)
     : false
+  const isCompleted = pendingGrading !== null
+  const nextButtonEnabled = pendingGrading !== null
+
   const strokeWrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    setSessionKey(0)
+    setPendingGrading(null)
+    setHintTrigger(0)
+  }, [currentCardId])
+
+  useEffect(() => {
+    // If the card is null, the observer mounting logic above handles it.
+    // We add currentCardId to deps so that if the element remounts with the same
+    // instance, we re-observe.
     if (!strokeWrapperRef.current || typeof ResizeObserver === 'undefined')
       return
 
-    // Note that a resize will recreate HanziWriter which will reset the stroke session
-    // We make an attempt to disable zoom so mostly this will only be triggered by an
-    // orientation change.
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect
         if (width > 0 && height > 0) {
           setWriterSize((prev) => {
             const next = calculateWriterSize(width, height)
-            // Only update if change is significant (> 2px) to avoid minor jitter
             return prev === null || Math.abs(prev - next) > 2 ? next : prev
           })
         }
@@ -154,9 +124,6 @@ export function PracticeView({
       : currentCard?.meaning
 
   useEffect(() => {
-    // This is triggered twice, once on intialization (examples empty) and 2nd time
-    // when examples finishing loading. We early out to prevent audio playing twice
-    // and also so we have the example text for buildPronunciationUtterance
     const loadedExamples = Object.keys(examples).length > 0
     if (!isSupported || !displayCharacter || !loadedExamples) return
     const timer = window.setTimeout(() => {
@@ -166,14 +133,7 @@ export function PracticeView({
       )
     }, PRONUNCIATION_DELAY_MS)
     return () => window.clearTimeout(timer)
-  }, [
-    currentCard,
-    displayCharacter,
-    examples,
-    isSupported,
-    playPronunciation,
-    voiceRate,
-  ])
+  }, [displayCharacter, examples, isSupported, playPronunciation, voiceRate])
 
   const handleCardPronunciation = useCallback(() => {
     if (!isSupported || !displayCharacter) return
@@ -184,52 +144,59 @@ export function PracticeView({
 
   const handleQuizComplete = useCallback(
     (summary: QuizSummary) => {
-      const guidedRun = showStrokeOutline
-      const rating = ratingFromMistakes(summary, guidedRun)
-      const learnedOutline = guidedRun
-        ? (summary.totalMistakes ?? 0) === 0
-        : rating === ReviewRating.Good || rating === ReviewRating.Easy
-
+      const rating = ratingFromMistakes(summary, showStrokeOutline)
+      const learnedOutline = computeLearnedOutline(
+        showStrokeOutline,
+        summary,
+        rating,
+      )
       const points = computePoints({
-        guidedMode: guidedRun,
+        guidedMode: showStrokeOutline,
         learnedOutline,
         rating,
       })
 
-      setCardCompleted(true)
-      const soundVariant = getSoundVariant(points)
       setPendingGrading({ rating, learnedOutline })
       triggerPointsAnimation(points)
-      playPointsSound(soundVariant)
+      playPointsSound(getSoundVariant(points))
     },
     [showStrokeOutline, triggerPointsAnimation],
   )
 
-  const handleRating = useCallback(
-    (rating: ReviewRatingType) => {
-      if (!currentCard) return
-      setPendingGrading((prev) => ({
-        rating,
-        learnedOutline: prev?.learnedOutline ?? currentCard.learnedOutline,
-      }))
-      setCardCompleted(true)
-    },
-    [currentCard],
-  )
-
   const handleStrokeReset = useCallback(() => {
-    setStrokeSession((prev) => prev + 1)
-    setCardCompleted(false)
     setPendingGrading(null)
+    setSessionKey((current) => current + 1)
   }, [])
 
+  const submitGrade = useCallback(
+    (grading: GradingInfo) => {
+      if (!currentCardId) return
+      gradeCard(currentCardId, grading)
+      setPendingGrading(null)
+      setHintTrigger(0)
+      setSessionKey((current) => current + 1)
+      setDebugCharacterOverride(null)
+    },
+    [currentCardId, gradeCard],
+  )
+
   const handleNextCard = useCallback(() => {
-    if (!pendingGrading || !currentCardId) return
-    gradeCard(currentCardId, pendingGrading)
-    setPendingGrading(null)
-    setCardCompleted(false)
-    setDebugCharacterOverride(null)
-  }, [currentCardId, gradeCard, pendingGrading])
+    if (!pendingGrading) return
+    submitGrade(pendingGrading)
+  }, [pendingGrading, submitGrade])
+
+  const handleDebugRating = useCallback(
+    (rating: ReviewRatingType) => {
+      submitGrade({
+        rating,
+        learnedOutline:
+          pendingGrading?.learnedOutline ??
+          currentCard?.learnedOutline ??
+          false,
+      })
+    },
+    [currentCard?.learnedOutline, pendingGrading, submitGrade],
+  )
 
   const displayOrder = useMemo(() => {
     if (!currentCard) return null
@@ -258,10 +225,6 @@ export function PracticeView({
 
   const orderLabel = settings.orderMode === 'rth' ? 'RTH frame' : 'Opt frame'
 
-  // PointsAnimationLayer is outside the keyed card div so that animation and
-  // sounds in flight aren't destroyed and restarted if the user presses 'Next'
-  // part way through.
-
   return (
     <section className="card-stage">
       <PointsAnimationLayer />
@@ -288,7 +251,7 @@ export function PracticeView({
             <p className="card-order">
               {orderLabel} #{displayOrder}
             </p>
-            {(cardCompleted || showStrokeOutline) && currentCard.story && (
+            {(isCompleted || showStrokeOutline) && currentCard.story && (
               <div className="card-story">
                 <p>{currentCard.story}</p>
               </div>
@@ -297,8 +260,6 @@ export function PracticeView({
         </div>
 
         <div className="component-cards-wrapper">
-          {/* TODO: investigate — displayCharacter can theoretically be undefined here,
-              passing '' may cause unexpected rendering in ComponentCards */}
           <ComponentCards
             character={displayCharacter ?? ''}
             visible={isDebugOverride || showStrokeOutline}
@@ -307,14 +268,13 @@ export function PracticeView({
         </div>
 
         <div ref={strokeWrapperRef} className="stroke-wrapper">
-          {/* TODO: investigate — passing '' to HanziWriter when displayCharacter is undefined */}
           {writerSize !== null && (
             <StrokeAnimator
               character={displayCharacter ?? ''}
               size={writerSize}
-              sessionKey={strokeSession}
+              sessionKey={sessionKey}
               showOutline={isDebugOverride || showStrokeOutline}
-              staticColors={isDebugOverride}
+              debugStrokeColors={isDebugOverride}
               onQuizComplete={handleQuizComplete}
               onClearStrokes={handleStrokeReset}
               hintTrigger={hintTrigger}
@@ -327,20 +287,20 @@ export function PracticeView({
             <button
               type="button"
               className="next-button"
-              disabled={!cardCompleted || !pendingGrading?.rating}
+              disabled={!nextButtonEnabled}
               onClick={handleNextCard}
             >
               Next
             </button>
           </div>
-          {cardCompleted && settings.debug && (
+          {isCompleted && settings.debug && (
             <div className="grading-buttons">
               {(Object.keys(ratingLabels) as ReviewRatingType[]).map(
                 (rating) => (
                   <button
                     key={rating}
                     className={`grade-button grade-${rating}`}
-                    onClick={() => handleRating(rating)}
+                    onClick={() => handleDebugRating(rating)}
                   >
                     {ratingLabels[rating]}
                   </button>
