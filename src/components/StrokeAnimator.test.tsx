@@ -124,10 +124,12 @@ vi.mock('../hooks/useStrokeColorAnimation', async () => {
 function StrokeAnimatorHarness({
   showOutline = true,
   debugStrokeColors = false,
+  sessionKey = 0,
   onClearStrokes = vi.fn(),
 }: {
   showOutline?: boolean
   debugStrokeColors?: boolean
+  sessionKey?: number
   onClearStrokes?: () => void
 }) {
   const [hintTrigger, setHintTrigger] = useState(0)
@@ -143,7 +145,7 @@ function StrokeAnimatorHarness({
       <StrokeAnimator
         character="好"
         size={260}
-        sessionKey={0}
+        sessionKey={sessionKey}
         showOutline={showOutline}
         debugStrokeColors={debugStrokeColors}
         onClearStrokes={onClearStrokes}
@@ -231,6 +233,31 @@ describe('StrokeAnimator', () => {
     })
     expect(screen.getByRole('button', { name: 'Clear strokes' })).toBeEnabled()
     expect(mockWriter.quiz).toHaveBeenCalledTimes(1)
+  })
+
+  // A fresh guided session on the same card should restore the color overlay.
+  it('restores the guided color overlay when sessionKey changes on the same card', async () => {
+    const { rerender } = render(<StrokeAnimatorHarness sessionKey={0} />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('color-overlay')).toBeInTheDocument()
+    })
+
+    fireEvent.click(screen.getByTestId('color-overlay'))
+
+    await waitFor(() => {
+      expect(screen.getByTestId('guide-overlay')).toBeInTheDocument()
+    })
+
+    rerender(<StrokeAnimatorHarness sessionKey={1} />)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('color-overlay')).toBeInTheDocument()
+    })
+
+    expect(document.querySelector('.stroke-animator__writer')).toHaveStyle({
+      pointerEvents: 'none',
+    })
   })
 
   // Free-writing mode should start the quiz immediately with no intro/guide overlays.

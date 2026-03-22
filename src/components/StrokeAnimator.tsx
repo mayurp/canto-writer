@@ -81,7 +81,7 @@ export function StrokeAnimator({
   // Keep the color overlay in sync with the current card/mode.
   useEffect(() => {
     setShowColorOverlay(showOutline || debugStrokeColors)
-  }, [character, showOutline, debugStrokeColors])
+  }, [character, sessionKey, showOutline, debugStrokeColors])
 
   // Trigger a visual replay when the parent increments hintTrigger.
   const prevHintTriggerRef = useRef(hintTrigger)
