@@ -1,5 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react'
 import { useVocabExamples } from '../hooks/useVocabExamples'
+import { useLibraryConfig } from '../hooks/useLibraryConfig'
 
 const VocabExamplesContext = createContext<
   ReturnType<typeof useVocabExamples> | undefined
@@ -10,7 +11,8 @@ export const VocabExamplesProvider = ({
 }: {
   children: ReactNode
 }) => {
-  const vocabState = useVocabExamples()
+  const { config } = useLibraryConfig()
+  const vocabState = useVocabExamples(config.vocabCsvUrl)
   return (
     <VocabExamplesContext.Provider value={vocabState}>
       {children}

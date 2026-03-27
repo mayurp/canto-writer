@@ -6,6 +6,7 @@ import { useParentModeContext } from '../context/ParentModeContext'
 import { useVocabExamplesContext } from '../context/VocabExamplesContext'
 import { SortableHeader } from './SortableHeader'
 import { useSortableTable } from '../hooks/useSortableTable'
+import { LibraryConfigModal } from './LibraryConfigModal'
 
 type LibraryViewProps = {
   deck: FlashcardDefinition[]
@@ -26,6 +27,7 @@ export function LibraryView({
   const { isUnlocked: parentModeUnlocked } = useParentModeContext()
   const { examples, loading, error } = useVocabExamplesContext()
   const [showAdded, setShowAdded] = useState(false)
+  const [configOpen, setConfigOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const { sortColumn, sortDirection, handleSort } =
     useSortableTable<LibrarySortColumn>('order')
@@ -33,10 +35,10 @@ export function LibraryView({
   const showRthColumn = settings.debug || settings.orderMode === 'rth'
   const showOptColumn = settings.debug || settings.orderMode === 'opt'
 
-  const curatedDeck = useMemo(
-    () => deck.filter((card) => Boolean(examples[card.character])),
-    [deck, examples],
-  )
+  const curatedDeck = useMemo(() => {
+    if (error) return deck
+    return deck.filter((card) => Boolean(examples[card.character]))
+  }, [deck, examples, error])
 
   const sortedLibrary = useMemo(() => {
     const byOrder = [...curatedDeck]
@@ -124,18 +126,7 @@ export function LibraryView({
     return (
       <section className="manager-panel">
         <div className="manager-card">
-          <p>Loading curated characters…</p>
-        </div>
-      </section>
-    )
-  }
-
-  if (error) {
-    return (
-      <section className="manager-panel">
-        <div className="manager-card">
-          <p>Failed to load curated characters.</p>
-          <p className="error-detail">{error}</p>
+          <p>Loading characters…</p>
         </div>
       </section>
     )
@@ -144,7 +135,18 @@ export function LibraryView({
   return (
     <section className="manager-panel">
       <header className="manager-header library-header">
-        <p className="tagline">Add or remove cards from deck.</p>
+        <div className="library-header-row">
+          <p className="tagline library-tagline">
+            Add or remove cards from deck.
+          </p>
+          <button
+            type="button"
+            className="clear-link library-data-source-trigger"
+            onClick={() => setConfigOpen(true)}
+          >
+            📁 Data Source
+          </button>
+        </div>
         <div className="library-controls-row">
           <input
             className="library-search"
@@ -163,6 +165,16 @@ export function LibraryView({
           </label>
         </div>
       </header>
+
+      {error && (
+        <div className="manager-card library-error-banner">
+          <p className="library-error-title">Vocabulary Source Error</p>
+          <p className="library-error-message">{error}</p>
+          <p className="library-error-hint">
+            Showing all characters instead of curated list.
+          </p>
+        </div>
+      )}
 
       <section className="selected-panel">
         {visibleCards.length === 0 ? (
@@ -251,6 +263,11 @@ export function LibraryView({
           </div>
         )}
       </section>
+
+      <LibraryConfigModal
+        open={configOpen}
+        onClose={() => setConfigOpen(false)}
+      />
     </section>
   )
 }

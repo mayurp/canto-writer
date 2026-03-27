@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
 import { parseCsv } from '../utils/csv'
 
-const vocabCsvUrl =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vR7KqKH122Xg_5m1wt529Gq_2zTOhjfp8W8N1gSBG5xv-_2Yfx9z2sAENA38RugrG5SNdOc0hhizjop/pub?gid=473425943&single=true&output=csv'
-
 type VocabExamples = Record<string, string[]>
 
 type VocabState = {
@@ -24,7 +21,7 @@ const buildExampleMap = (rows: Record<string, string>[]): VocabExamples => {
   }, {} as VocabExamples)
 }
 
-export const useVocabExamples = () => {
+export const useVocabExamples = (vocabCsvUrl: string) => {
   const [state, setState] = useState<VocabState>({
     examples: {},
     loading: true,
@@ -58,7 +55,7 @@ export const useVocabExamples = () => {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [vocabCsvUrl])
 
   return state
 }

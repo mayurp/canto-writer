@@ -4,12 +4,14 @@ import type { SettingsRecord } from './Settings'
 import type { DeckSelectionRecord } from './DeckSelection'
 import type { SrsCardRecord } from './SrsCard'
 import type { UserStatsRecord } from './UserStats'
+import type { LibraryConfigRecord } from './LibraryConfig'
 
 export default class CantoWriterDB extends Dexie {
   settings!: DexieCloudTable<SettingsRecord, 'id'>
   deckSelections!: DexieCloudTable<DeckSelectionRecord, 'id'>
   srsCards!: DexieCloudTable<SrsCardRecord, 'id'>
   userStats!: DexieCloudTable<UserStatsRecord, 'id'>
+  libraryConfig!: DexieCloudTable<LibraryConfigRecord, 'id'>
 
   constructor() {
     super('CantoWriterDB', { addons: [dexieCloud] })
@@ -25,6 +27,14 @@ export default class CantoWriterDB extends Dexie {
       deckSelections: 'id',
       srsCards: 'id, cardId',
       userStats: 'id',
+    })
+
+    this.version(3).stores({
+      settings: 'id',
+      deckSelections: 'id',
+      srsCards: 'id, cardId',
+      userStats: 'id',
+      libraryConfig: 'id',
     })
 
     this.cloud.configure({
