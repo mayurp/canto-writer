@@ -17,12 +17,14 @@ import { ReviewRating } from '../srs/types'
 import type { GradingInfo } from '../srs/types'
 import type { ReviewRating as ReviewRatingType } from '../srs/types'
 import {
+  computeQuizResult,
+  quizResultToSrsRating,
   computeLearnedOutline,
-  computePoints,
-  getSoundVariant,
-  ratingFromMistakes,
+  quizResultToPoints,
+  quizResultToSound,
+  QuizResult,
 } from '../srs/quizGrading'
-import { playPointsSound, PointsSoundVariant } from '../utils/pointsSound'
+import { playPointsSound } from '../utils/pointsSound'
 
 const ratingLabels: Record<ReviewRatingType, string> = {
   [ReviewRating.Again]: 'Again',
@@ -146,27 +148,15 @@ export function PracticeView({
 
   const handleQuizComplete = useCallback(
     (summary: QuizSummary) => {
-      const rating = ratingFromMistakes(summary, showStrokeOutline)
-      const learnedOutline = computeLearnedOutline(
-        showStrokeOutline,
-        summary,
-        rating,
-      )
-      const points = computePoints({
-        guidedMode: showStrokeOutline,
-        learnedOutline,
-        rating,
-      })
+      const result = computeQuizResult(showStrokeOutline, summary)
 
-      setPendingGrading({ rating, learnedOutline })
-      triggerPointsAnimation(points)
-      // TODO: using "resolved" grading which takes leanredOutput into
-      // account instead of using points to determine sound variant
-      // and confetti trigger
-      const soundVariant = getSoundVariant(points)
-      playPointsSound(soundVariant)
-      if (soundVariant === PointsSoundVariant.Perfect)
-        setConfettiTrigger((c) => c + 1)
+      setPendingGrading({
+        rating: quizResultToSrsRating(result),
+        learnedOutline: computeLearnedOutline(result),
+      })
+      triggerPointsAnimation(quizResultToPoints(result))
+      playPointsSound(quizResultToSound(result))
+      if (result === QuizResult.ReviewPerfect) setConfettiTrigger((c) => c + 1)
     },
     [showStrokeOutline, triggerPointsAnimation],
   )
