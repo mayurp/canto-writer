@@ -8,6 +8,7 @@ import { useVocabExamplesContext } from '../context/VocabExamplesContext'
 import { useUserStatsContext } from '../context/UserStatsContext'
 import { useCharacterDataContext } from '../context/CharacterDataContext'
 import { PointsAnimationLayer } from './PointsAnimation'
+import { ConfettiAnimation } from './ConfettiAnimation'
 import { ComponentCards } from './ComponentCards'
 import { CharacterSearch } from './CharacterSearch'
 import { buildPronunciationUtterance } from '../utils/pronunciation'
@@ -21,7 +22,7 @@ import {
   getSoundVariant,
   ratingFromMistakes,
 } from '../srs/quizGrading'
-import { playPointsSound } from '../utils/pointsSound'
+import { playPointsSound, PointsSoundVariant } from '../utils/pointsSound'
 
 const ratingLabels: Record<ReviewRatingType, string> = {
   [ReviewRating.Again]: 'Again',
@@ -76,6 +77,7 @@ export function PracticeView({
   const [debugCharacterOverride, setDebugCharacterOverride] = useState<
     string | null
   >(null)
+  const [confettiTrigger, setConfettiTrigger] = useState(0)
 
   const currentCardId = currentCard?.id ?? null
   const showStrokeOutline = currentCardId
@@ -158,7 +160,13 @@ export function PracticeView({
 
       setPendingGrading({ rating, learnedOutline })
       triggerPointsAnimation(points)
-      playPointsSound(getSoundVariant(points))
+      // TODO: using "resolved" grading which takes leanredOutput into
+      // account instead of using points to determine sound variant
+      // and confetti trigger
+      const soundVariant = getSoundVariant(points)
+      playPointsSound(soundVariant)
+      if (soundVariant === PointsSoundVariant.Perfect)
+        setConfettiTrigger((c) => c + 1)
     },
     [showStrokeOutline, triggerPointsAnimation],
   )
@@ -228,6 +236,7 @@ export function PracticeView({
   return (
     <section className="card-stage">
       <PointsAnimationLayer />
+      <ConfettiAnimation trigger={confettiTrigger} />
       <div
         className={`study-card ${settings.debug ? 'has-debug' : ''}`}
         key={currentCard.id}
